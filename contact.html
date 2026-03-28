@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>お問い合わせ | Diostella</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" href="favicon.ico">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ナビゲーション -->
+  <nav class="nav scrolled">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">Diostella</a>
+      <div class="nav-links">
+        <a href="index.html#about">About</a>
+        <a href="index.html#works">Works</a>
+        <a href="index.html#news">News</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <button class="nav-toggle" aria-label="メニュー">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- お問い合わせページ -->
+  <section class="contact-page">
+    <div class="container">
+      <h1 class="contact-page-title">Contact</h1>
+      <p class="contact-page-lead">お問い合わせは下記フォームよりお願いいたします。<br>内容を確認のうえ、折り返しご連絡いたします。</p>
+
+      <form class="contact-form" id="contactForm">
+        <div class="form-group">
+          <label for="name">お名前 <span class="required">*</span></label>
+          <input type="text" id="name" name="name" placeholder="山田 太郎" required>
+        </div>
+
+        <div class="form-group">
+          <label for="email">メールアドレス <span class="required">*</span></label>
+          <input type="email" id="email" name="email" placeholder="example@email.com" required>
+        </div>
+
+        <div class="form-group">
+          <label for="category">お問い合わせ種別 <span class="required">*</span></label>
+          <select id="category" name="category" required>
+            <option value="">選択してください</option>
+            <option value="business">お仕事のご依頼</option>
+            <option value="media">メディア掲載</option>
+            <option value="other">その他</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="message">お問い合わせ内容 <span class="required">*</span></label>
+          <textarea id="message" name="message" placeholder="お問い合わせ内容をご記入ください" rows="6" required></textarea>
+        </div>
+
+        <button type="submit" class="btn-submit">送信する</button>
+      </form>
+
+      <div class="contact-thanks" id="contactThanks" style="display:none;">
+        <div class="thanks-icon">&#10003;</div>
+        <h2>送信完了</h2>
+        <p>お問い合わせありがとうございます。<br>内容を確認のうえ、折り返しご連絡いたします。</p>
+        <a href="index.html" class="back-link">トップページに戻る</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- フッター -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <span class="footer-logo">Diostella</span>
+        <p class="footer-copy">&copy; 2026 Diostella. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
