@@ -10,24 +10,9 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <nav class="nav scrolled"><div class="nav-inner"><a href="index.html" class="nav-logo">Diostella</a><ul class="nav-links"><li class="nav-item"><a href="about/message.html">About</a><ul class="nav-dropdown"><li><a href="about/message.html">代表メッセージ</a></li><li><a href="about/profile.html">会社概要</a></li><li><a href="about/officers.html">役員一覧</a></li><li><a href="about/history.html">沿革</a></li><li><a href="about/office.html">事業所案内</a></li></ul></li><li class="nav-item"><a href="works/index.html">Works</a><ul class="nav-dropdown"><li><a href="works/manga.html">漫画・アニメ</a></li><li><a href="works/game.html">ゲーム</a></li><li><a href="works/app.html">アプリ</a></li></ul></li><li class="nav-item"><a href="news/index.html">News</a></li><li class="nav-item"><a href="recruit/index.html">Recruit</a></li><li class="nav-item"><a href="contact.html">Contact</a></li></ul><button class="nav-toggle" aria-label="メニュー"><span></span><span></span><span></span></button></div></nav>
+  <div class="mobile-menu"><a href="index.html">TOP</a><a href="about/message.html">About</a><div class="mobile-sub"><a href="about/message.html">代表メッセージ</a><a href="about/profile.html">会社概要</a><a href="about/officers.html">役員一覧</a><a href="about/history.html">沿革</a><a href="about/office.html">事業所案内</a></div><a href="works/index.html">Works</a><div class="mobile-sub"><a href="works/manga.html">漫画・アニメ</a><a href="works/game.html">ゲーム</a><a href="works/app.html">アプリ</a></div><a href="news/index.html">News</a><a href="recruit/index.html">Recruit</a><a href="contact.html">Contact</a></div>
 
-  <!-- ナビゲーション -->
-  <nav class="nav scrolled">
-    <div class="nav-inner">
-      <a href="index.html" class="nav-logo">Diostella</a>
-      <div class="nav-links">
-        <a href="index.html#about">About</a>
-        <a href="index.html#works">Works</a>
-        <a href="index.html#news">News</a>
-        <a href="contact.html">Contact</a>
-      </div>
-      <button class="nav-toggle" aria-label="メニュー">
-        <span></span><span></span><span></span>
-      </button>
-    </div>
-  </nav>
-
-  <!-- お問い合わせページ -->
   <section class="contact-page">
     <div class="container">
       <h1 class="contact-page-title">Contact</h1>
@@ -38,12 +23,10 @@
           <label for="name">お名前 <span class="required">*</span></label>
           <input type="text" id="name" name="name" placeholder="山田 太郎" required>
         </div>
-
         <div class="form-group">
           <label for="email">メールアドレス <span class="required">*</span></label>
           <input type="email" id="email" name="email" placeholder="example@email.com" required>
         </div>
-
         <div class="form-group">
           <label for="category">お問い合わせ種別 <span class="required">*</span></label>
           <select id="category" name="category" required>
@@ -53,12 +36,10 @@
             <option value="other">その他</option>
           </select>
         </div>
-
         <div class="form-group">
           <label for="message">お問い合わせ内容 <span class="required">*</span></label>
           <textarea id="message" name="message" placeholder="お問い合わせ内容をご記入ください" rows="6" required></textarea>
         </div>
-
         <button type="submit" class="btn-submit">送信する</button>
       </form>
 
@@ -71,16 +52,7 @@
     </div>
   </section>
 
-  <!-- フッター -->
-  <footer class="footer">
-    <div class="container">
-      <div class="footer-inner">
-        <span class="footer-logo">Diostella</span>
-        <p class="footer-copy">&copy; 2026 Diostella. All rights reserved.</p>
-      </div>
-    </div>
-  </footer>
-
+  <footer class="footer"><div class="container"><div class="footer-grid"><div class="footer-col"><h4>About</h4><ul><li><a href="about/message.html">代表メッセージ</a></li><li><a href="about/profile.html">会社概要</a></li><li><a href="about/officers.html">役員一覧</a></li><li><a href="about/history.html">沿革</a></li><li><a href="about/office.html">事業所案内</a></li></ul></div><div class="footer-col"><h4>Works</h4><ul><li><a href="works/manga.html">漫画・アニメ</a></li><li><a href="works/game.html">ゲーム</a></li><li><a href="works/app.html">アプリ</a></li></ul></div><div class="footer-col"><h4>その他</h4><ul><li><a href="news/index.html">News</a></li><li><a href="recruit/index.html">Recruit</a></li><li><a href="contact.html">Contact</a></li></ul></div></div><div class="footer-bottom"><span class="footer-logo">Diostella</span><p class="footer-copy">&copy; 2026 Diostella. All rights reserved.</p></div></div></footer>
   <script src="script.js"></script>
 </body>
 </html>
