@@ -27,29 +27,30 @@
     </div>
   </nav>
 
-  <!-- ヒーロー：写真右 + 一言左 -->
+  <!-- ヒーロー：左テキスト + 右写真 -->
   <section class="about-hero">
-    <div class="about-hero-inner">
-      <div class="about-hero-text">
-        <p class="about-hero-role">Founder</p>
-        <h1 class="about-hero-name">渡辺 康之助</h1>
-        <p class="about-hero-name-en">Kounosuke Watanabe</p>
-        <p class="about-hero-message">
-          誠実に、本当に良いと思えるものだけを作る。<br>
-          関わるすべての人にとっての光でありたい。
-        </p>
-      </div>
-      <div class="about-hero-photo">
-        <img src="founder.jpg" alt="渡辺 康之助">
+    <div class="container">
+      <div class="about-hero-inner">
+        <div class="about-hero-text">
+          <p class="about-hero-role">Founder</p>
+          <h1 class="about-hero-name">渡辺 康之助</h1>
+          <p class="about-hero-name-en">Kounosuke Watanabe</p>
+          <p class="about-hero-message">
+            誠実に、本当に良いと思えるものだけを作る。<br>
+            関わるすべての人にとっての光でありたい。
+          </p>
+        </div>
+        <div class="about-hero-photo">
+          <img src="founder.jpg" alt="渡辺 康之助">
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- プロフィール + タブ -->
+  <!-- タブセクション -->
   <section class="about-detail">
     <div class="container">
 
-      <!-- タブ -->
       <div class="about-tabs">
         <button class="about-tab active" data-tab="profile">Profile</button>
         <button class="about-tab" data-tab="company">Company</button>
@@ -57,7 +58,23 @@
 
       <!-- Profile タブ -->
       <div class="about-tab-content active" id="tab-profile">
-        <div class="profile-section">
+        <div class="profile-grid">
+          <div class="profile-table-wrap">
+            <table class="profile-table">
+              <tr><th>生年月日</th><td>1995年2月23日（31歳）</td></tr>
+              <tr><th>星座</th><td>魚座</td></tr>
+              <tr><th>干支</th><td>猪</td></tr>
+              <tr><th>血液型</th><td>A型</td></tr>
+              <tr><th>身長</th><td>166.9cm</td></tr>
+              <tr><th>体重</th><td>53.5kg</td></tr>
+              <tr><th>足のサイズ</th><td>26cm</td></tr>
+              <tr><th>趣味</th><td>ゲーム（ポケモン / ドラクエ / どうぶつの森）</td></tr>
+              <tr><th>好きな食べ物</th><td>寿司 / ペペロンチーノ / わらび餅</td></tr>
+            </table>
+          </div>
+        </div>
+
+        <div class="profile-about-section">
           <div class="profile-block">
             <h3>Diostellaについて</h3>
             <p><strong>Dio</strong>（神）+ <strong>Stella</strong>（星）= <strong>神の星</strong></p>
@@ -89,7 +106,6 @@
           <tr><th>会社名</th><td>Diostella（ディオステラ）</td></tr>
           <tr><th>代表</th><td>渡辺 康之助</td></tr>
           <tr><th>設立</th><td>2026年</td></tr>
-          <!-- TODO: 法人化後に追加 -->
           <!--
           <tr><th>資本金</th><td>XXX万円</td></tr>
           <tr><th>所在地</th><td>東京都...</td></tr>
