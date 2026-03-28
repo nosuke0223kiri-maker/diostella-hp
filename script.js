@@ -30,6 +30,16 @@ if (toggle) {
   });
 }
 
+// Aboutページ タブ切り替え
+document.querySelectorAll('.about-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.about-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.about-tab-content').forEach(c => c.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById('tab-' + tab.dataset.tab).classList.add('active');
+  });
+});
+
 // お問い合わせフォーム送信
 const form = document.getElementById('contactForm');
 const thanks = document.getElementById('contactThanks');

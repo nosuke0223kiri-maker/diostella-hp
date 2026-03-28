@@ -283,6 +283,209 @@ section {
 }
 
 
+/* ========== About Page ========== */
+
+.about-page {
+  padding: 140px 0 100px;
+}
+
+.about-page-title {
+  font-family: var(--font-display);
+  font-size: 2.4rem;
+  font-weight: 400;
+  color: var(--gold);
+  letter-spacing: 0.12em;
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.about-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 0;
+  margin-bottom: 48px;
+  border-bottom: 1px solid var(--border);
+}
+
+.about-tab {
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  background: none;
+  border: none;
+  padding: 12px 32px;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: all 0.3s;
+}
+
+.about-tab:hover {
+  color: var(--text);
+}
+
+.about-tab.active {
+  color: var(--gold);
+  border-bottom-color: var(--gold);
+}
+
+.about-tab-content {
+  display: none;
+}
+
+.about-tab-content.active {
+  display: block;
+}
+
+.about-founder-page {
+  display: flex;
+  align-items: flex-start;
+  gap: 48px;
+  margin-bottom: 64px;
+}
+
+.about-founder-page .founder-photo img {
+  width: 240px;
+  height: 320px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.founder-role {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.founder-name-large {
+  font-size: 1.6rem;
+  font-weight: 500;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+
+.founder-name-en-large {
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  letter-spacing: 0.05em;
+  margin-bottom: 24px;
+}
+
+.founder-bio {
+  font-size: 0.95rem;
+  color: var(--text-sub);
+  line-height: 2.2;
+}
+
+.about-origin-page {
+  max-width: 640px;
+}
+
+.about-origin-page h3 {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: 0.08em;
+  margin-bottom: 20px;
+}
+
+.about-origin-page p {
+  color: var(--text-sub);
+  font-size: 0.95rem;
+  margin-bottom: 12px;
+}
+
+.about-origin-page strong {
+  color: var(--gold);
+  font-weight: 600;
+}
+
+.philosophy-block {
+  margin-top: 48px;
+}
+
+.philosophy-block h3 {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: 0.08em;
+  margin-bottom: 20px;
+}
+
+.philosophy-block .philosophy-main {
+  font-size: 1.25rem;
+  color: var(--text);
+  font-weight: 500;
+  line-height: 2.2;
+  border-left: 3px solid var(--gold-dim);
+  padding-left: 20px;
+  margin-bottom: 16px;
+}
+
+.philosophy-block p {
+  color: var(--text-sub);
+  font-size: 0.95rem;
+  margin-bottom: 12px;
+}
+
+/* Company Table */
+.company-table {
+  width: 100%;
+  max-width: 640px;
+  border-collapse: collapse;
+}
+
+.company-table tr {
+  border-bottom: 1px solid var(--border);
+}
+
+.company-table th {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  text-align: left;
+  padding: 16px 20px 16px 0;
+  white-space: nowrap;
+  width: 120px;
+  vertical-align: top;
+}
+
+.company-table td {
+  font-size: 0.9rem;
+  color: var(--text);
+  padding: 16px 0;
+}
+
+.company-table td a {
+  color: var(--gold);
+}
+
+@media (max-width: 768px) {
+  .about-founder-page {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 24px;
+  }
+
+  .about-founder-page .founder-photo img {
+    width: 180px;
+    height: 240px;
+  }
+
+  .about-tab {
+    padding: 12px 20px;
+    font-size: 0.85rem;
+  }
+}
+
+
 /* ========== Founder ========== */
 
 .about-founder {

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About | Diostella</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" href="favicon.ico">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ナビゲーション -->
+  <nav class="nav scrolled">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">Diostella</a>
+      <div class="nav-links">
+        <a href="about.html">About</a>
+        <a href="index.html#works">Works</a>
+        <a href="index.html#news">News</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <button class="nav-toggle" aria-label="メニュー">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- About ページ -->
+  <section class="about-page">
+    <div class="container">
+      <h1 class="about-page-title">About</h1>
+
+      <!-- タブ -->
+      <div class="about-tabs">
+        <button class="about-tab active" data-tab="founder">代表紹介</button>
+        <button class="about-tab" data-tab="company">会社概要</button>
+      </div>
+
+      <!-- 代表紹介 タブ -->
+      <div class="about-tab-content active" id="tab-founder">
+        <div class="about-founder-page">
+          <div class="founder-photo">
+            <img src="founder.jpg" alt="渡辺 康之助">
+          </div>
+          <div class="founder-detail">
+            <p class="founder-role">代表</p>
+            <h2 class="founder-name-large">渡辺 康之助</h2>
+            <p class="founder-name-en-large">Kounosuke Watanabe</p>
+            <p class="founder-bio">
+              誠実に、本当に良いと思えるものだけを作る。<br>
+              関わるすべての人にとっての光でありたい。
+            </p>
+          </div>
+        </div>
+
+        <div class="about-origin-page">
+          <h3>Diostellaについて</h3>
+          <div class="origin-name">
+            <p><strong>Dio</strong>（神）+ <strong>Stella</strong>（星）= <strong>神の星</strong></p>
+          </div>
+          <p>ラテン語・イタリア語の造語。夜空で最も輝く一番星 —— 明けの明星を意味する。</p>
+          <p>まだ暗い中で最初に光を届ける存在でありたい。そして、関わってくれる全ての人にとっての光であり、守りでありたい。それがこの名前に込めた想い。</p>
+
+          <div class="philosophy-block">
+            <h3>理念</h3>
+            <p class="philosophy-main">誠実に、与える側でいる。大切な人を守る側でいる。</p>
+            <p>流行りに媚びず、本当に良いと思えるものだけを作る。コンテンツを通じて価値を届け、受け取ってくれる人の力になる。</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 会社概要 タブ -->
+      <div class="about-tab-content" id="tab-company">
+        <table class="company-table">
+          <tr><th>会社名</th><td>Diostella（ディオステラ）</td></tr>
+          <tr><th>代表</th><td>渡辺 康之助</td></tr>
+          <tr><th>設立</th><td>2026年</td></tr>
+          <!-- TODO: 法人化後に追加 -->
+          <!--
+          <tr><th>資本金</th><td>XXX万円</td></tr>
+          <tr><th>所在地</th><td>東京都...</td></tr>
+          -->
+          <tr><th>事業内容</th><td>漫画・アニメ制作、ゲーム開発、アプリ開発、SNS運用</td></tr>
+          <tr><th>URL</th><td><a href="https://diostella.jp">diostella.jp</a></td></tr>
+          <!-- TODO: メール設定後に追加 -->
+          <!--
+          <tr><th>お問い合わせ</th><td><a href="mailto:info@diostella.jp">info@diostella.jp</a></td></tr>
+          -->
+        </table>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- フッター -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <span class="footer-logo">Diostella</span>
+        <p class="footer-copy">&copy; 2026 Diostella. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
