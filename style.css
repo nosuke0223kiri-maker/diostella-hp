@@ -285,38 +285,91 @@ section {
 
 /* ========== About Page ========== */
 
-.about-page {
-  padding: 140px 0 100px;
+/* Hero: 左テキスト + 右写真 */
+.about-hero {
+  padding-top: 64px;
+  background: var(--bg-section);
 }
 
-.about-page-title {
+.about-hero-inner {
+  display: flex;
+  align-items: center;
+  max-width: 1000px;
+  margin: 0 auto;
+  min-height: 480px;
+}
+
+.about-hero-text {
+  flex: 1;
+  padding: 60px 48px 60px 24px;
+}
+
+.about-hero-role {
   font-family: var(--font-display);
-  font-size: 2.4rem;
-  font-weight: 400;
+  font-size: 0.8rem;
+  font-weight: 600;
   color: var(--gold);
-  letter-spacing: 0.12em;
-  text-align: center;
-  margin-bottom: 40px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.about-hero-name {
+  font-size: 2rem;
+  font-weight: 500;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+
+.about-hero-name-en {
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  letter-spacing: 0.08em;
+  margin-bottom: 32px;
+}
+
+.about-hero-message {
+  font-size: 1rem;
+  color: var(--text-sub);
+  line-height: 2.2;
+}
+
+.about-hero-photo {
+  flex-shrink: 0;
+}
+
+.about-hero-photo img {
+  width: 340px;
+  height: 480px;
+  object-fit: cover;
+  object-position: top;
+  display: block;
+}
+
+/* Detail section with tabs */
+.about-detail {
+  padding: 64px 0 100px;
 }
 
 .about-tabs {
   display: flex;
-  justify-content: center;
   gap: 0;
   margin-bottom: 48px;
   border-bottom: 1px solid var(--border);
 }
 
 .about-tab {
-  font-family: var(--font-body);
-  font-size: 0.9rem;
-  font-weight: 500;
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 600;
   color: var(--text-muted);
   background: none;
   border: none;
-  padding: 12px 32px;
+  padding: 14px 28px;
   cursor: pointer;
   border-bottom: 2px solid transparent;
+  letter-spacing: 0.08em;
   transition: all 0.3s;
 }
 
@@ -337,55 +390,16 @@ section {
   display: block;
 }
 
-.about-founder-page {
-  display: flex;
-  align-items: flex-start;
-  gap: 48px;
-  margin-bottom: 64px;
-}
-
-.about-founder-page .founder-photo img {
-  width: 240px;
-  height: 320px;
-  object-fit: cover;
-  border-radius: 8px;
-}
-
-.founder-role {
-  font-size: 0.8rem;
-  font-weight: 500;
-  color: var(--text-muted);
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  margin-bottom: 8px;
-}
-
-.founder-name-large {
-  font-size: 1.6rem;
-  font-weight: 500;
-  color: var(--text);
-  margin-bottom: 4px;
-}
-
-.founder-name-en-large {
-  font-family: var(--font-display);
-  font-size: 0.9rem;
-  color: var(--text-muted);
-  letter-spacing: 0.05em;
-  margin-bottom: 24px;
-}
-
-.founder-bio {
-  font-size: 0.95rem;
-  color: var(--text-sub);
-  line-height: 2.2;
-}
-
-.about-origin-page {
+/* Profile tab */
+.profile-section {
   max-width: 640px;
 }
 
-.about-origin-page h3 {
+.profile-block {
+  margin-bottom: 48px;
+}
+
+.profile-block h3 {
   font-family: var(--font-display);
   font-size: 1.15rem;
   font-weight: 600;
@@ -394,32 +408,20 @@ section {
   margin-bottom: 20px;
 }
 
-.about-origin-page p {
+.profile-block p {
   color: var(--text-sub);
   font-size: 0.95rem;
   margin-bottom: 12px;
+  line-height: 2;
 }
 
-.about-origin-page strong {
+.profile-block strong {
   color: var(--gold);
   font-weight: 600;
 }
 
-.philosophy-block {
-  margin-top: 48px;
-}
-
-.philosophy-block h3 {
-  font-family: var(--font-display);
-  font-size: 1.15rem;
-  font-weight: 600;
-  color: var(--text);
-  letter-spacing: 0.08em;
-  margin-bottom: 20px;
-}
-
-.philosophy-block .philosophy-main {
-  font-size: 1.25rem;
+.profile-block .philosophy-main {
+  font-size: 1.2rem;
   color: var(--text);
   font-weight: 500;
   line-height: 2.2;
@@ -428,10 +430,20 @@ section {
   margin-bottom: 16px;
 }
 
-.philosophy-block p {
-  color: var(--text-sub);
-  font-size: 0.95rem;
-  margin-bottom: 12px;
+.business-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.biz-tag {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--accent);
+  background: rgba(61, 90, 128, 0.08);
+  padding: 6px 16px;
+  border-radius: 20px;
+  letter-spacing: 0.03em;
 }
 
 /* Company Table */
@@ -467,16 +479,23 @@ section {
 }
 
 @media (max-width: 768px) {
-  .about-founder-page {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    gap: 24px;
+  .about-hero-inner {
+    flex-direction: column-reverse;
+    min-height: auto;
   }
 
-  .about-founder-page .founder-photo img {
-    width: 180px;
-    height: 240px;
+  .about-hero-text {
+    padding: 32px 24px;
+    text-align: center;
+  }
+
+  .about-hero-photo img {
+    width: 100%;
+    height: 360px;
+  }
+
+  .about-hero-name {
+    font-size: 1.6rem;
   }
 
   .about-tab {

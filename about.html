@@ -27,51 +27,63 @@
     </div>
   </nav>
 
-  <!-- About ページ -->
-  <section class="about-page">
+  <!-- ヒーロー：写真右 + 一言左 -->
+  <section class="about-hero">
+    <div class="about-hero-inner">
+      <div class="about-hero-text">
+        <p class="about-hero-role">Founder</p>
+        <h1 class="about-hero-name">渡辺 康之助</h1>
+        <p class="about-hero-name-en">Kounosuke Watanabe</p>
+        <p class="about-hero-message">
+          誠実に、本当に良いと思えるものだけを作る。<br>
+          関わるすべての人にとっての光でありたい。
+        </p>
+      </div>
+      <div class="about-hero-photo">
+        <img src="founder.jpg" alt="渡辺 康之助">
+      </div>
+    </div>
+  </section>
+
+  <!-- プロフィール + タブ -->
+  <section class="about-detail">
     <div class="container">
-      <h1 class="about-page-title">About</h1>
 
       <!-- タブ -->
       <div class="about-tabs">
-        <button class="about-tab active" data-tab="founder">代表紹介</button>
-        <button class="about-tab" data-tab="company">会社概要</button>
+        <button class="about-tab active" data-tab="profile">Profile</button>
+        <button class="about-tab" data-tab="company">Company</button>
       </div>
 
-      <!-- 代表紹介 タブ -->
-      <div class="about-tab-content active" id="tab-founder">
-        <div class="about-founder-page">
-          <div class="founder-photo">
-            <img src="founder.jpg" alt="渡辺 康之助">
-          </div>
-          <div class="founder-detail">
-            <p class="founder-role">代表</p>
-            <h2 class="founder-name-large">渡辺 康之助</h2>
-            <p class="founder-name-en-large">Kounosuke Watanabe</p>
-            <p class="founder-bio">
-              誠実に、本当に良いと思えるものだけを作る。<br>
-              関わるすべての人にとっての光でありたい。
-            </p>
-          </div>
-        </div>
-
-        <div class="about-origin-page">
-          <h3>Diostellaについて</h3>
-          <div class="origin-name">
+      <!-- Profile タブ -->
+      <div class="about-tab-content active" id="tab-profile">
+        <div class="profile-section">
+          <div class="profile-block">
+            <h3>Diostellaについて</h3>
             <p><strong>Dio</strong>（神）+ <strong>Stella</strong>（星）= <strong>神の星</strong></p>
+            <p>ラテン語・イタリア語の造語。夜空で最も輝く一番星 —— 明けの明星を意味する。</p>
+            <p>まだ暗い中で最初に光を届ける存在でありたい。そして、関わってくれる全ての人にとっての光であり、守りでありたい。</p>
           </div>
-          <p>ラテン語・イタリア語の造語。夜空で最も輝く一番星 —— 明けの明星を意味する。</p>
-          <p>まだ暗い中で最初に光を届ける存在でありたい。そして、関わってくれる全ての人にとっての光であり、守りでありたい。それがこの名前に込めた想い。</p>
 
-          <div class="philosophy-block">
+          <div class="profile-block">
             <h3>理念</h3>
             <p class="philosophy-main">誠実に、与える側でいる。大切な人を守る側でいる。</p>
             <p>流行りに媚びず、本当に良いと思えるものだけを作る。コンテンツを通じて価値を届け、受け取ってくれる人の力になる。</p>
           </div>
+
+          <div class="profile-block">
+            <h3>事業領域</h3>
+            <div class="business-tags">
+              <span class="biz-tag">漫画・アニメ</span>
+              <span class="biz-tag">ゲーム</span>
+              <span class="biz-tag">アプリ</span>
+              <span class="biz-tag">SNS</span>
+            </div>
+          </div>
         </div>
       </div>
 
-      <!-- 会社概要 タブ -->
+      <!-- Company タブ -->
       <div class="about-tab-content" id="tab-company">
         <table class="company-table">
           <tr><th>会社名</th><td>Diostella（ディオステラ）</td></tr>
@@ -84,7 +96,6 @@
           -->
           <tr><th>事業内容</th><td>漫画・アニメ制作、ゲーム開発、アプリ開発、SNS運用</td></tr>
           <tr><th>URL</th><td><a href="https://diostella.jp">diostella.jp</a></td></tr>
-          <!-- TODO: メール設定後に追加 -->
           <!--
           <tr><th>お問い合わせ</th><td><a href="mailto:info@diostella.jp">info@diostella.jp</a></td></tr>
           -->
