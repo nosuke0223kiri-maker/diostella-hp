@@ -3,8 +3,8 @@
   "configurations": [
     {
       "name": "diostella-hp",
-      "runtimeExecutable": "python3",
-      "runtimeArgs": ["-m", "http.server", "8080"],
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["serve", "-l", "8080", "/Users/kounosuke/Desktop/Diostella/開発/HP/diostella-hp"],
       "port": 8080
     }
   ]
