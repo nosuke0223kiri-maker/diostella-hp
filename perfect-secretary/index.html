@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>完璧秘書 — Executive Edition | あなたの毎日を、お支えします</title>
+  <meta name="description" content="16のアプリがこれひとつに。AI秘書・トーク・SNS・フリマ・クリエイター販売・食事管理・家計簿まで、あなた専属の秘書がビジネスと日常をまるごとサポート。">
+  <link rel="icon" href="icon-512x512.png">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Noto+Serif+JP:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Particles Canvas -->
+  <canvas id="particles"></canvas>
+
+  <!-- Navigation -->
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="#" class="nav-logo">完璧秘書</a>
+      <div class="nav-links">
+        <a href="#features">機能</a>
+        <a href="#gallery">画面</a>
+        <a href="#secretary">秘書紹介</a>
+        <a href="#promise">約束</a>
+        <a href="#cta" class="nav-cta">ダウンロード</a>
+      </div>
+      <button class="nav-toggle" id="navToggle" aria-label="メニュー">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#features">機能</a>
+    <a href="#gallery">画面</a>
+    <a href="#secretary">秘書紹介</a>
+    <a href="#promise">約束</a>
+    <a href="#cta" class="nav-cta">ダウンロード</a>
+  </div>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-badge">Executive Edition</div>
+      <h1 class="hero-title">完璧秘書</h1>
+      <p class="hero-subtitle">あなたの毎日を、お支えします</p>
+      <p class="hero-description">
+        16のアプリが、<span class="gold">これひとつ</span>に。<br>
+        AI秘書・トーク・SNS・フリマ・クリエイター販売まで。<br>
+        <em>あなた専属の秘書が、ビジネスも日常もまるごとサポート。</em>
+      </p>
+      <div class="hero-actions">
+        <a href="#cta" class="btn btn-primary">無料でダウンロード</a>
+        <a href="#features" class="btn btn-secondary">詳しく見る</a>
+      </div>
+      <div class="store-badges hero-badges">
+        <a href="https://apps.apple.com/jp/app/id6789704151" class="store-btn" aria-label="App Storeからダウンロード">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+          <span class="store-txt"><small>Download on the</small>App Store</span>
+        </a>
+        <a href="https://play.google.com/store/apps/details?id=jp.diostella.hisho" class="store-btn" aria-label="Google Playで手に入れよう">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3.6 1.8c-.3.3-.5.8-.5 1.4v17.6c0 .6.2 1.1.5 1.4l.1.1 9.9-9.9v-.2L3.7 1.7l-.1.1zm13.6 6.9L14 11.9l3.2 3.2 3.8-2.2c1.1-.6 1.1-1.6 0-2.2l-3.8-2zm-.9 7.1L13.1 12.6 3.6 22.2c.4.4 1 .4 1.7 0l11-6.4zM13.1 11.4l3.2-3.2-11-6.3c-.7-.4-1.3-.3-1.7 0l9.5 9.5z"/></svg>
+          <span class="store-txt"><small>GET IT ON</small>Google Play</span>
+        </a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="phone-mockup">
+        <div class="phone-screen">
+          <img src="screens/home.webp" alt="完璧秘書 ホーム画面" class="screen-img">
+        </div>
+      </div>
+    </div>
+    <div class="scroll-indicator">
+      <span>Scroll</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- Problem Section -->
+  <section class="problem">
+    <div class="container">
+      <div class="problem-grid">
+        <div class="problem-text">
+          <h2>アプリが多すぎて、<br><span class="gold">疲れていませんか？</span></h2>
+          <p>メッセージ、SNS、フリマ、カレンダー、家計簿、食事記録...<br>
+          毎日いくつものアプリを行き来する日々。</p>
+          <p>完璧秘書なら、すべてがひとつに。<br>
+          しかも、あなた専属の秘書が常にそばでサポートしてくれます。</p>
+        </div>
+        <div class="problem-stats">
+          <div class="stat">
+            <span class="stat-number">16</span>
+            <span class="stat-label">のアプリ機能を統合</span>
+          </div>
+          <div class="stat">
+            <span class="stat-number">1</span>
+            <span class="stat-label">つのアプリですべて完結</span>
+          </div>
+          <div class="stat">
+            <span class="stat-number">365日</span>
+            <span class="stat-label">24時間、秘書がいつでもそばに</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="features" id="features">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Features</span>
+        <h2>すべてが揃った、<span class="gold">究極のオールインワン</span></h2>
+        <p>つながる・楽しむ・売り買いする・ととのえる。必要なものはすべてここに。</p>
+      </div>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+          <h3>秘書チャット（AI搭載）</h3>
+          <p>話しかけるだけで予定・タスク・メモを作成。AIモードでは本物のAIがあなたの相談相手に。</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8z"/></svg></div>
+          <h3>トーク</h3>
+          <p>友達とDM・グループトーク・音声通話。二次元コードで友達追加。秘書との会話もここから。</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+          <h3>SNS</h3>
+          <p>写真とつぶやきを投稿。なう（ストーリー）・リポスト・引用共有・インサイト分析まで。</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M12 2 2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div>
+          <h3>メディア</h3>
+          <p>音楽・漫画・絵・動画を投稿して販売できるクリエイターマーケット。漫画は週刊連載スタイルも。</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg></div>
+          <h3>フリマ</h3>
+          <p>出品も購入もアプリ内で完結。決済はエスクロー型で、受け取り確認まで安心。</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+          <h3>出会い</h3>
+          <p>プロフィールから気になる相手を探してマッチング。健全運営のための年齢確認つき。</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div>
+          <h3>写真</h3>
+          <p>招待コードで共有アルバム。撮る時から使える加工カメラ、1年前の「思い出」スライドショーも。</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M7 2v9"/><path d="M4.5 2v4.5a2.5 2.5 0 0 0 5 0V2"/><path d="M7 11v11"/><path d="M17 2c-2 2.5-2.5 5-2.5 7.5H17V22"/></svg></div>
+          <h3>食事管理</h3>
+          <p>23栄養素を自動計算。料理データベース545品、献立提案つき。記録は量調整もできて簡単。</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg></div>
+          <h3>家計簿</h3>
+          <p>家計と事業帳簿の2本立て。家事按分・CSV取込・申告書の数字出力まで対応する本格派。</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+          <h3>運動管理</h3>
+          <p>基礎代謝と消費カロリーを自動計算。種目別の記録と重量推移グラフで成長が見える。</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+          <h3>占い</h3>
+          <p>タロット・四柱推命・手相・風水など12種類。毎日引ける「今日の一枚」で運試し。</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+          <h3>カレンダー</h3>
+          <p>色分け・期間イベント・日本の祝日自動表示。招待コードで恋人や家族と丸ごと共有も。</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
+          <h3>メモ</h3>
+          <p>自動保存・ピン留め・検索。タスクと毎日の習慣もメモに統合、秘書がお預かりします。</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+          <h3>タイマー</h3>
+          <p>カウントダウン・ストップウォッチ・ポモドーロ。お気に入り登録で毎日のリズムづくりに。</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg></div>
+          <h3>天気予報</h3>
+          <p>全国47都道府県対応。7日間予報と1時間ごとの詳細、マイセットで3地域をすぐ切替。</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg></div>
+          <h3>シール</h3>
+          <p>集めて、シール帳に貼って、友達と交換。トークで送れるコレクションアイテム。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Gallery / Real Screenshots Section -->
+  <section class="gallery" id="gallery">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Gallery</span>
+        <h2>実際の<span class="gold">画面</span></h2>
+        <p>黒と金を基調とした、洗練されたエグゼクティブデザイン。すべて実際のアプリ画面です。</p>
+      </div>
+      <div class="gallery-showcase">
+        <div class="gallery-item">
+          <div class="phone-mockup small">
+            <div class="phone-screen">
+              <img src="screens/chat.webp" alt="秘書チャット画面" class="screen-img" loading="lazy">
+            </div>
+          </div>
+          <p class="gallery-caption">秘書チャット — 話しかけるだけで予定登録</p>
+        </div>
+        <div class="gallery-item">
+          <div class="phone-mockup small">
+            <div class="phone-screen">
+              <img src="screens/weather.webp" alt="天気予報画面" class="screen-img" loading="lazy">
+            </div>
+          </div>
+          <p class="gallery-caption">天気予報 — 週間＋1時間ごと・秘書の一言つき</p>
+        </div>
+        <div class="gallery-item">
+          <div class="phone-mockup small">
+            <div class="phone-screen">
+              <img src="screens/calendar.webp" alt="カレンダー画面" class="screen-img" loading="lazy">
+            </div>
+          </div>
+          <p class="gallery-caption">カレンダー — 家族や恋人と丸ごと共有</p>
+        </div>
+        <div class="gallery-item">
+          <div class="phone-mockup small">
+            <div class="phone-screen">
+              <img src="screens/fortune.webp" alt="占い画面" class="screen-img" loading="lazy">
+            </div>
+          </div>
+          <p class="gallery-caption">占い — 命術・卜術・相術の12種類</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Secretary Section -->
+  <section class="secretary" id="secretary">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Secretary</span>
+        <h2>あなた専属の<span class="gold">パーソナル秘書</span></h2>
+        <p>選べる2人の秘書が、あなたのスタイルに合わせてサポート。</p>
+      </div>
+      <div class="secretary-grid">
+        <div class="secretary-card">
+          <div class="secretary-img-wrap">
+            <img src="IMG_1943-removebg-preview.png" alt="麗華 - 女性秘書" class="secretary-img">
+          </div>
+          <div class="secretary-info">
+            <h3>麗華 <span class="secretary-ruby">Reika</span></h3>
+            <p class="secretary-role">女性秘書</p>
+            <p>的確で丁寧なサポート。スケジュール管理から日々の励ましまで、あなたのビジネスパートナーとして寄り添います。</p>
+          </div>
+        </div>
+        <div class="secretary-card">
+          <div class="secretary-img-wrap">
+            <img src="IMG_1944-removebg-preview.png" alt="誠 - 男性秘書" class="secretary-img">
+          </div>
+          <div class="secretary-info">
+            <h3>誠 <span class="secretary-ruby">Makoto</span></h3>
+            <p class="secretary-role">男性秘書</p>
+            <p>落ち着いた雰囲気で的確にアシスト。冷静な判断力であなたの日々をスマートにサポートします。</p>
+          </div>
+        </div>
+      </div>
+      <div class="secretary-features">
+        <div class="sf-item">
+          <span class="sf-mark">✦</span>
+          <span>AIモード搭載 — 本物のAIと自然な会話</span>
+        </div>
+        <div class="sf-item">
+          <span class="sf-mark">✦</span>
+          <span>トーンも選べる（丁寧・フレンドリー）、名前の変更も自由</span>
+        </div>
+        <div class="sf-item">
+          <span class="sf-mark">✦</span>
+          <span>誕生日には特別なお祝い演出</span>
+        </div>
+        <div class="sf-item">
+          <span class="sf-mark">✦</span>
+          <span>PINロック＆ゲストモードでプライバシーも安心</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Promise Section -->
+  <section class="promise" id="promise">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Promise</span>
+        <h2>私たちの<span class="gold">約束</span></h2>
+        <p>Diostellaは「信頼と安全のジャパンブランド」を目指す、日本のアプリスタジオです。</p>
+      </div>
+      <div class="promise-grid">
+        <div class="promise-card">
+          <h3>時間を、あなたに返す</h3>
+          <p>滞在時間を奪い合う設計はしません。用事は秘書に任せて、あなたは人生に集中する。それがこのアプリの目指す形です。</p>
+        </div>
+        <div class="promise-card">
+          <h3>クリエイターに90%</h3>
+          <p>作品販売の仲介手数料は10%だけ。購入代金は運営を経由せず、決済会社からクリエイターへ直接届きます。</p>
+        </div>
+        <div class="promise-card">
+          <h3>データの主導権はあなたに</h3>
+          <p>データはまず端末の中に保存。写真の加工も端末内で完結し、顔のデータを外部に送りません。</p>
+        </div>
+        <div class="promise-card">
+          <h3>数字で競わせない</h3>
+          <p>SNSのいいねの数が見えるのは投稿した本人だけ。誰かと比べるためではなく、つながるためのSNSです。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Target Section -->
+  <section class="target">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">For You</span>
+        <h2>こんな方に<span class="gold">おすすめ</span></h2>
+      </div>
+      <div class="target-grid">
+        <div class="target-card">
+          <div class="target-mark">✦</div>
+          <h3>個人事業主</h3>
+          <p>スケジュール、帳簿、タスクをひとつで管理。秘書がサポートしてくれるから、ひとりでも安心。</p>
+        </div>
+        <div class="target-card">
+          <div class="target-mark">✦</div>
+          <h3>クリエイター</h3>
+          <p>音楽・漫画・絵の作品を投稿してそのまま販売。SNSで発信も、ぜんぶこのアプリの中で。</p>
+        </div>
+        <div class="target-card">
+          <div class="target-mark">✦</div>
+          <h3>ミニマリスト</h3>
+          <p>いくつものアプリを使い分ける必要なし。シンプルに、必要なものだけを美しくまとめました。</p>
+        </div>
+        <div class="target-card">
+          <div class="target-mark">✦</div>
+          <h3>上質を求める方</h3>
+          <p>黒と金の洗練されたデザイン。毎日使うアプリだからこそ、美しさにこだわりました。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="cta" id="cta">
+    <div class="container">
+      <div class="cta-content">
+        <h2>あなたの秘書が、<br><span class="gold">お待ちしています。</span></h2>
+        <p>基本無料ではじめられます。ダウンロードはこちらから。</p>
+        <div class="store-badges cta-badges">
+          <a href="https://apps.apple.com/jp/app/id6789704151" class="store-btn large" aria-label="App Storeからダウンロード">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+            <span class="store-txt"><small>Download on the</small>App Store</span>
+          </a>
+          <a href="https://play.google.com/store/apps/details?id=jp.diostella.hisho" class="store-btn large" aria-label="Google Playで手に入れよう">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3.6 1.8c-.3.3-.5.8-.5 1.4v17.6c0 .6.2 1.1.5 1.4l.1.1 9.9-9.9v-.2L3.7 1.7l-.1.1zm13.6 6.9L14 11.9l3.2 3.2 3.8-2.2c1.1-.6 1.1-1.6 0-2.2l-3.8-2zm-.9 7.1L13.1 12.6 3.6 22.2c.4.4 1 .4 1.7 0l11-6.4zM13.1 11.4l3.2-3.2-11-6.3c-.7-.4-1.3-.3-1.7 0l9.5 9.5z"/></svg>
+            <span class="store-txt"><small>GET IT ON</small>Google Play</span>
+          </a>
+        </div>
+        <p class="cta-note">アプリ内課金あり — 主要機能は無料でお使いいただけます</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <span class="footer-logo">完璧秘書</span>
+          <span class="footer-edition">Executive Edition</span>
+        </div>
+        <div class="footer-links">
+          <a href="legal.html">特定商取引法に基づく表記</a>
+          <a href="https://diostella.jp/contact.html">お問い合わせ</a>
+        </div>
+        <a href="https://diostella.jp" target="_blank" class="footer-parent">&copy; 2026 Diostella</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
