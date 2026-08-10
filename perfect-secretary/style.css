@@ -856,6 +856,14 @@ body {
   color: var(--text-muted);
 }
 
+/* 親会社リンク＝UA既定の青リンク色が黒金テーマで浮くため明示（2026-08-10検品） */
+.footer-parent {
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+.footer-parent:hover { color: var(--gold); }
+
 .footer-copy {
   font-size: 0.75rem;
   color: var(--text-muted);
