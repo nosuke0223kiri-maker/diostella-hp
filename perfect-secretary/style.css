@@ -1020,6 +1020,8 @@ body {
   opacity: 0.75;
   letter-spacing: 0.05em;
 }
+/* 未公開のComing Soonバッジ＝押せない見た目（公開時にクラスを外す・2026-08-10検品） */
+.store-btn.soon { pointer-events: none; cursor: default; opacity: 0.6; }
 .store-btn.large { padding: 13px 26px; }
 .store-btn.large svg { width: 32px; height: 32px; }
 .store-btn.large .store-txt { font-size: 1.2rem; }
