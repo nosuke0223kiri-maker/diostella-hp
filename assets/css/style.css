@@ -163,6 +163,9 @@ img { max-width: 100%; height: auto; }
   padding: 4px;
 }
 
+/* スマホ用スライドメニュー＝広い画面では出さない（指定がなく中身が生で出ていた・2026-08-12） */
+.mobile-menu { display: none; }
+
 .nav-toggle span {
   display: block;
   width: 22px;
@@ -827,6 +830,7 @@ img { max-width: 100%; height: auto; }
 
   /* Mobile menu */
   .mobile-menu {
+    display: block;
     position: fixed;
     top: 0; right: -100%;
     width: 280px;
@@ -994,14 +998,25 @@ img { max-width: 100%; height: auto; }
   border-radius: 0;
   overflow: hidden;
 }
+/* 社名入りの絵に差し替え（2026-08-12）＝切り抜かず絵の比率のまま全幅で出す */
 .hero-img {
   width: 100%;
   max-width: none;
-  height: min(78vh, 720px);
-  object-fit: cover;
+  height: auto;
   border-radius: 0;
 }
-.hero-visual .hero-title { font-size: clamp(3rem, 8vw, 5.5rem); }
+/* 社名は絵に焼き込み済み＝重ね文字は画面から外す（検索エンジン・読み上げには残す） */
+.hero-visual .hero-title {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  animation: none;
+}
 .hero-visual::after {
   content: '';
   position: absolute;
@@ -1017,7 +1032,8 @@ img { max-width: 100%; height: auto; }
 .work-img {
   width: 44%;
   flex: 0 0 44%;
-  aspect-ratio: 4 / 3;
+  /* 絵が16:9＝4:3で切ると左の題字が落ちるため比率を絵に合わせる（2026-08-12） */
+  aspect-ratio: 16 / 9;
   height: auto;
   object-fit: cover;
 }
@@ -1030,5 +1046,4 @@ img { max-width: 100%; height: auto; }
 @media (max-width: 768px) {
   .work-card { flex-direction: column; }
   .work-img { width: 100%; flex: none; aspect-ratio: 16 / 9; }
-  .hero-img { height: 56vh; }
 }
