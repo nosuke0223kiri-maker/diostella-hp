@@ -66,7 +66,7 @@
 
   <div class="legal-wrap">
     <h1 class="legal-title">プライバシーポリシー</h1>
-    <p class="legal-date">2026年8月10日</p>
+    <p class="legal-date">2026年8月12日</p>
 
     <p>本ポリシーは、渡辺康之助（屋号：Diostella）が提供するアプリ「完璧秘書」における利用者情報の取り扱いを定めるものです。</p>
 
@@ -107,10 +107,22 @@
       <li>氏名・住所等の本人確認情報（現バージョンでは不要です）</li>
     </ul>
 
-    <h3 class="legal-h3">6. データの削除</h3>
+    <h3 class="legal-h3">6. データの保護（セキュリティ対策）</h3>
+    <p>利用者のデータ（機微情報を含む）は、以下の仕組みで保護されます。</p>
+    <ul>
+      <li>通信の暗号化：アプリとサーバー間のすべての通信は TLS（HTTPS）で暗号化されます</li>
+      <li>保存時の暗号化：サーバー（Supabase）に保存されるデータは、保存時にも暗号化（AES-256）されています</li>
+      <li>アクセス制御：サーバー上のデータはアカウント単位のアクセス制御（Row Level Security）で保護され、認証された本人（および本人が共有を許可した相手）以外はアクセスできません</li>
+      <li>Google カレンダーデータの保護：予定データおよびアクセストークンはサーバーに保存されず、お使いの端末内でのみ扱われます。トークンは約1時間で自動失効し、認可にはアプリ内に秘密鍵を持たない方式（PKCE）を採用しています</li>
+      <li>アクセスの最小化：運営者による本番データへのアクセスは、障害対応・法令対応等の必要最小限に限定されます</li>
+      <li>インシデント対応：万一データの漏えい等が発生した場合は、速やかに利用者への通知および法令に基づく対応を行います</li>
+      <li><em>Sensitive data, including Google user data, is encrypted in transit (TLS/HTTPS) and at rest (AES-256), protected by per-account access control, and Google Calendar data and access tokens are stored only on the user's device and never on our servers.</em></li>
+    </ul>
+
+    <h3 class="legal-h3">7. データの削除</h3>
     <p>アカウントとすべてのデータ（サーバー上を含む）は、設定の「アカウントを削除する」でいつでも完全に削除できます。個別の投稿・作品・写真は、各アプリ内の削除操作で削除できます。</p>
 
-    <h3 class="legal-h3">7. 外部サービス</h3>
+    <h3 class="legal-h3">8. 外部サービス</h3>
     <ul>
       <li>天気（気象庁）：機能に必要な最小限の情報（地域コード等）のみが端末から直接送信されます</li>
       <li>ニュース：運営サーバーが配信元から記事情報を取得して全員に同じ内容を配ります（利用者の個人データは配信元に送信されません）</li>
@@ -118,7 +130,7 @@
       <li>Google カレンダー：第3条のとおり、利用者の許可時のみ読み取り専用で連携します</li>
     </ul>
 
-    <h3 class="legal-h3">8. 改定</h3>
+    <h3 class="legal-h3">9. 改定</h3>
     <p>本ポリシーの重要な変更時は、アプリ内でお知らせします。</p>
 
     <h2 class="legal-h2">お問い合わせ</h2>
