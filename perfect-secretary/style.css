@@ -1119,3 +1119,82 @@ body {
   transition: color 0.3s ease;
 }
 .footer-links a:hover { color: #d4af37; }
+
+/* ── Plans Section（料金プラン・2026-08-11追加＝target-card系の値を踏襲） ── */
+.plans {
+  position: relative;
+  z-index: 1;
+  padding: 120px 0;
+  background: linear-gradient(180deg, var(--black) 0%, var(--black-light) 100%);
+}
+.plans-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+.plan-card {
+  text-align: center;
+  padding: 48px 32px;
+  background: var(--black-card);
+  border: 1px solid rgba(212, 175, 55, 0.08);
+  border-radius: 12px;
+  transition: all 0.4s;
+}
+.plan-card.featured { border-color: rgba(212, 175, 55, 0.45); }
+.plan-card h3 {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  letter-spacing: 0.1em;
+  margin-bottom: 16px;
+  color: var(--gold);
+}
+.plan-price {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  letter-spacing: 0.05em;
+  margin-bottom: 8px;
+}
+.plan-per {
+  font-size: 0.85rem;
+  color: var(--text-dim);
+}
+.plan-desc {
+  font-size: 0.85rem;
+  color: var(--text-dim);
+  margin-bottom: 24px;
+}
+.plan-list {
+  list-style: none;
+  padding: 0;
+  text-align: left;
+}
+.plan-list li {
+  font-size: 0.85rem;
+  color: var(--text-dim);
+  line-height: 1.8;
+  padding: 8px 0 8px 22px;
+  position: relative;
+  border-bottom: 1px solid rgba(212, 175, 55, 0.08);
+}
+.plan-list li:last-child { border-bottom: none; }
+.plan-list li::before {
+  content: '✦';
+  position: absolute;
+  left: 0;
+  color: var(--gold);
+  font-size: 0.7rem;
+}
+.plans-note {
+  text-align: center;
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  margin-top: 40px;
+}
+.plans-note a { color: var(--gold); text-decoration: none; }
+.plans-note a:hover { text-decoration: underline; }
+@media (max-width: 1024px) {
+  .plans-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 768px) {
+  .plans-grid { grid-template-columns: 1fr; }
+}
