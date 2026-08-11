@@ -17,7 +17,7 @@
   --text-muted:  #999999;
   --accent:      #3d5a80;
   --border:      #e5e3de;
-  --font-display: 'Cormorant Garamond', serif;
+  --font-display: 'Cormorant Garamond', 'Noto Serif JP', serif;
   --font-body:    'Noto Sans JP', sans-serif;
   --nav-height:  64px;
 }
@@ -979,4 +979,56 @@ img { max-width: 100%; height: auto; }
 }
 @media (max-width: 900px) {
   .pillar-grid { grid-template-columns: 1fr; }
+}
+
+/* ── ヒーロー刷新（余白だらけの浮きカード→全幅の夜空バンド・2026-08-12こうくん指摘） ── */
+.hero {
+  min-height: auto;
+  background: #050510;
+  padding-top: var(--nav-height);
+}
+.hero-content { width: 100%; }
+.hero-visual {
+  display: block;
+  width: 100%;
+  border-radius: 0;
+  overflow: hidden;
+}
+.hero-img {
+  width: 100%;
+  max-width: none;
+  height: min(78vh, 720px);
+  object-fit: cover;
+  border-radius: 0;
+}
+.hero-visual .hero-title { font-size: clamp(3rem, 8vw, 5.5rem); }
+.hero-visual::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 120px;
+  background: linear-gradient(transparent, var(--bg));
+  pointer-events: none;
+}
+
+/* ── Worksカード刷新（横長すぎる画像→左絵・右文の横割り・2026-08-12こうくん指摘） ── */
+.works-grid { grid-template-columns: 1fr; max-width: 900px; margin: 0 auto; }
+.work-card { display: flex; align-items: stretch; }
+.work-img {
+  width: 44%;
+  flex: 0 0 44%;
+  aspect-ratio: 4 / 3;
+  height: auto;
+  object-fit: cover;
+}
+.work-card .work-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+@media (max-width: 768px) {
+  .work-card { flex-direction: column; }
+  .work-img { width: 100%; flex: none; aspect-ratio: 16 / 9; }
+  .hero-img { height: 56vh; }
 }
