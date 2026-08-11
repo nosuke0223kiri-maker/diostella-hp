@@ -1198,3 +1198,79 @@ body {
 @media (max-width: 768px) {
   .plans-grid { grid-template-columns: 1fr; }
 }
+
+/* ── 秘書13人グリッド（2026-08-12こうくん指摘＝旧2人・旧立ち絵を現行13人へ） ── */
+.sec-roster {
+  display: grid;
+  grid-template-columns: repeat(11, 1fr);
+  gap: 12px;
+  margin-top: 48px;
+  align-items: end;
+}
+.sec-roster-item { text-align: center; }
+.sec-roster-item img {
+  width: 100%;
+  height: 150px;
+  object-fit: contain;
+  object-position: bottom;
+  filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.5));
+  transition: transform 0.4s cubic-bezier(0.2, 0.7, 0.3, 1);
+}
+.sec-roster-item:hover img { transform: translateY(-6px) scale(1.04); }
+.sec-roster-item span {
+  display: block;
+  margin-top: 8px;
+  font-family: var(--font-jp, 'Noto Serif JP', serif);
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  letter-spacing: 0.15em;
+}
+.sec-roster-note {
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--text-dim);
+  margin-top: 24px;
+}
+@media (max-width: 1024px) { .sec-roster { grid-template-columns: repeat(6, 1fr); } }
+@media (max-width: 640px)  { .sec-roster { grid-template-columns: repeat(4, 1fr); } .sec-roster-item img { height: 110px; } }
+
+/* ── プラン比較表（2026-08-12こうくん指摘＝雑な箇条書き→確定値の詳細比較） ── */
+.plans-policy {
+  text-align: center;
+  font-size: 0.95rem;
+  color: var(--text);
+  line-height: 2;
+  margin: 40px 0 24px;
+}
+.plan-table-wrap { overflow-x: auto; }
+.plan-table {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+}
+.plan-table th, .plan-table td {
+  padding: 14px 12px;
+  border-bottom: 1px solid rgba(212, 175, 55, 0.12);
+  text-align: center;
+  color: var(--text-dim);
+  line-height: 1.7;
+}
+.plan-table tbody th {
+  text-align: left;
+  color: var(--text);
+  font-weight: 400;
+  white-space: nowrap;
+}
+.plan-table thead th {
+  font-family: var(--font-jp, 'Noto Serif JP', serif);
+  color: var(--gold);
+  letter-spacing: 0.1em;
+  border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+}
+.plan-table td.pt-featured, .plan-table thead th.pt-featured {
+  background: rgba(212, 175, 55, 0.05);
+  color: var(--text);
+}
+.plan-table thead th.pt-featured { color: var(--gold); }
