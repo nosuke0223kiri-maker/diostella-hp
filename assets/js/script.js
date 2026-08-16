@@ -116,3 +116,44 @@ if (form) {
     window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
   });
 })();
+
+/* ── 「設計の理由を読む」＝ポップアップ表示（2026-08-16こうくん指示）
+   カード内で開くとその場が伸びて周りのカードがずれるため、中央のダイアログに出す。
+   本文は各カードの <template> に置いてあり、押された時にここへ差し込む。 */
+(function () {
+  const buttons = document.querySelectorAll('.staff-card .staff-more[data-note]');
+  if (!buttons.length) return;
+
+  const dlg = document.createElement('dialog');
+  dlg.className = 'note-dialog';
+  dlg.innerHTML =
+    '<div class="note-head">' +
+      '<img class="note-photo" alt="">' +
+      '<div class="note-id"><h3 class="note-title"></h3><p class="note-role"></p></div>' +
+      '<button type="button" class="note-close" aria-label="閉じる">×</button>' +
+    '</div>' +
+    '<div class="note-body"></div>';
+  document.body.appendChild(dlg);
+
+  const close = () => dlg.close();
+  dlg.querySelector('.note-close').addEventListener('click', close);
+  // 背景（ダイアログの外側）を押したら閉じる
+  dlg.addEventListener('click', (e) => { if (e.target === dlg) close(); });
+
+  buttons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const card = btn.closest('.staff-card');
+      const tpl = card.querySelector('template.staff-note');
+      if (!tpl) return;
+      const photo = card.querySelector('img');
+      const dp = dlg.querySelector('.note-photo');
+      dp.src = photo ? photo.getAttribute('src') : '';
+      dp.alt = btn.dataset.note;
+      dlg.querySelector('.note-title').textContent = btn.dataset.note;
+      dlg.querySelector('.note-role').textContent = (card.querySelector('.staff-role') || {}).textContent || '';
+      dlg.querySelector('.note-body').innerHTML = tpl.innerHTML;
+      dlg.querySelector('.note-body').scrollTop = 0;
+      dlg.showModal();
+    });
+  });
+})();

@@ -918,47 +918,74 @@ img { max-width: 100%; height: auto; }
    役員の写真(160px)より大きく見えてしまう。縦の長さも倍になる（2026-08-16こうくん指摘） */
 @media (max-width: 480px) { .staff-grid { grid-template-columns: repeat(2, 1fr); gap: 20px 14px; } }
 
-/* ── 社員カードのうち、設計の理由を持つメンバーは開閉式（2026-08-16こうくん指示＝
-      別セクションで同じ人を出すのをやめ社員一覧へ統合。目印は写真の角の丸ボタン＝
-      文字リンクを1行足すとカードごとに高さがバラついて雑に見えたため） ── */
-.staff-card.has-note > summary {
-  list-style: none;
-  cursor: pointer;
-  display: block;
-  position: relative;
-}
-.staff-card.has-note > summary::-webkit-details-marker { display: none; }
-/* 目印＝押せると分かる形にする。記号だけだと何が出るか伝わらず、
-   裸の文字リンクだと後付けに見えたため、小さな枠付きボタンにした（2026-08-16こうくん指摘） */
+/* ── 「設計の理由を読む」＝ボタン＋ポップアップ（2026-08-16こうくん指示）
+      カード内で開くと周りのカードがずれるため、中央のダイアログに出す ── */
 .staff-more {
   display: inline-block;
   margin-top: 10px;
   padding: 5px 12px;
   border: 1px solid var(--gold-dim);
   border-radius: 999px;
+  background: none;
+  font-family: inherit;
   font-size: 0.72rem;
   color: var(--gold);
   letter-spacing: 0.03em;
   line-height: 1.6;
+  cursor: pointer;
   transition: background 0.25s, border-color 0.25s;
 }
-.staff-more::after { content: ' ＋'; }
-.staff-card.has-note[open] .staff-more::after { content: ' −'; }
-.staff-card.has-note[open] .staff-more { background: var(--gold-bg); border-color: var(--gold); }
-.staff-card.has-note > summary:hover .staff-more { background: var(--gold-bg); }
+.staff-more:hover { background: var(--gold-bg); border-color: var(--gold); }
 
-/* 開いたら本文が読める幅に広げる。写真は大きくせず横に置く */
-.staff-card.has-note[open] { grid-column: 1 / -1; }
-.staff-card.has-note[open] > summary {
-  display: grid;
-  grid-template-columns: 120px 1fr;
-  column-gap: 16px;
-  align-items: start;
+.note-dialog {
+  width: min(680px, calc(100vw - 32px));
+  max-height: min(80vh, 720px);
+  padding: 28px 26px 26px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--bg);
+  color: var(--text);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.22);
+  overflow: auto;
+  overscroll-behavior: contain;
+  position: fixed;   /* 閉じるボタンの位置の基準 */
 }
-.staff-card.has-note[open] > summary img { margin-bottom: 0; }
-.staff-card.has-note[open] > summary > :not(img) { grid-column: 2; }
-.staff-note-body { padding-top: 14px; }
-.staff-note-body .officer-bio { font-size: 0.88rem; }
+.note-dialog::backdrop { background: rgba(0, 0, 0, 0.45); }
+
+/* 頭＝写真・名前・担当・閉じるを1行に。文字だけだと素っ気ないので顔を出す（2026-08-16こうくん指摘） */
+.note-head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding-bottom: 16px;
+  margin-bottom: 18px;
+  border-bottom: 1px solid var(--border);
+}
+.note-photo {
+  width: 64px; height: 64px;
+  flex: 0 0 64px;
+  object-fit: cover;
+  object-position: center top;
+  border-radius: 10px;   /* アプリのタイルと同じ角丸 */
+}
+.note-id { min-width: 0; flex: 1 1 auto; }
+/* 閉じるは隅に置く＝頭の並びに入れると名前との間が大きく空いて不格好（2026-08-16こうくん指摘） */
+.note-close {
+  position: absolute;
+  top: 14px; right: 14px;
+  width: 28px; height: 28px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg);
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  line-height: 1;
+  cursor: pointer;
+}
+.note-close:hover { border-color: var(--gold); color: var(--gold); }
+.note-title { font-size: 1.1rem; font-weight: 500; margin-bottom: 1px; }
+.note-role { font-size: 0.76rem; color: var(--gold); }
+.note-body { font-size: 0.9rem; color: var(--text-sub); line-height: 2; }
 
 /* ── 3本柱カード（トップAbout・2026-08-11 会社方針の言語化に合わせて追加） ── */
 .pillar-grid {

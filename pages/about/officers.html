@@ -7,7 +7,7 @@
   <meta name="robots" content="noindex, nofollow">
   <link rel="icon" href="../favicon.ico">
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Noto+Serif+JP:wght@400;500;600&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../assets/css/style.css?v=20260816">
+  <link rel="stylesheet" href="../../assets/css/style.css?v=20260816b">
 </head>
 <body>
   <nav class="nav scrolled"><div class="nav-inner"><a href="../../index.html" class="nav-logo">Diostella</a><ul class="nav-links"><li class="nav-item"><a href="message.html">会社案内</a><ul class="nav-dropdown"><li><a href="message.html">代表メッセージ</a></li><li><a href="profile.html">会社概要</a></li><li><a href="officers.html">役員一覧</a></li><li><a href="history.html">沿革</a></li><li><a href="office.html">事業所案内</a></li></ul></li><li class="nav-item"><a href="../works/index.html">事業内容</a><ul class="nav-dropdown"><li><a href="../works/app.html">アプリ</a></li></ul></li><li class="nav-item"><a href="../news/index.html">お知らせ</a></li><li class="nav-item"><a href="../recruit/index.html">採用情報</a></li><li class="nav-item"><a href="../../contact.html">お問い合わせ</a></li></ul><button class="nav-toggle" aria-label="メニュー"><span></span><span></span><span></span></button></div></nav>
@@ -68,14 +68,13 @@
             <p class="staff-role">トーク・メッセージ</p>
             <p>通話・チャット・グループ機能の検証を担当。</p>
           </div>
-          <details class="staff-card has-note">
-            <summary><img src="../../assets/images/staff/claire.jpg" alt="クレア">
+          <div class="staff-card">
+            <img src="../../assets/images/staff/claire.jpg" alt="クレア">
             <h4>クレア<span style="font-size:0.72rem; color:var(--text-muted); font-weight:400;"> — AI</span></h4>
             <p class="staff-role">SNS・投稿</p>
             <p>投稿とフィードまわりの検証を担当。</p>
-              <span class="staff-more">設計の理由を読む</span>
-            </summary>
-            <div class="staff-note-body"><p class="officer-bio">Diostellaのフィードには、コメント欄がありません。<br><br>
+            <button type="button" class="staff-more" data-note="クレア">設計の理由を読む</button>
+            <template class="staff-note">Diostellaのフィードには、コメント欄がありません。<br><br>
               これは機能を作れなかったのではなく、代表があえて外したものです。<br><br>
               コメント欄は本来、感想を伝え合う場所のはずでした。でも実際には、ひとつの投稿の下で見知らぬ人同士が言い争い、作品ではなく作った人そのものが否定される場面を、私たちは何度も見てきました。そこから始まったやり取りが、そのまま個人へのメッセージとして届くこともあります。<br><br>
               そういう場所を見るたびに心が痛くなる。だから作らない。代表の判断はとてもはっきりしていました。<br><br>
@@ -83,38 +82,36 @@
               そしてそのいいねも、数は投稿した本人にしか見えません。<br><br>
               多くの人が押しているから良い作品なのだ、という空気を作りたくなかったからです。数字ではなく、その人が見て良いと思ったかどうかで受け取ってほしい。誰かと比べられて落ち込む人を、この場所からは無くしたいと考えています。<br><br>
               伝えたいことがあるときは、メッセージで直接送ることができます。届けたい言葉は、届けたい相手に。<br><br>
-              Diostellaにとってのつながりとは、そういうものです。</p></div>
-          </details>
-          <details class="staff-card has-note">
-            <summary><img src="../../assets/images/staff/aisha.jpg" alt="アイシャ">
+              Diostellaにとってのつながりとは、そういうものです。</template>
+          </div>
+          <div class="staff-card">
+            <img src="../../assets/images/staff/aisha.jpg" alt="アイシャ">
             <h4>アイシャ<span style="font-size:0.72rem; color:var(--text-muted); font-weight:400;"> — AI</span></h4>
             <p class="staff-role">メディア（音楽・漫画・動画・絵）</p>
             <p>作品の投稿・販売まわりの検証を担当。</p>
-              <span class="staff-more">設計の理由を読む</span>
-            </summary>
-            <div class="staff-note-body"><p class="officer-bio">Diostellaのメディアでは、再生数もフォロワー数も表示されません。<br><br>
+            <button type="button" class="staff-more" data-note="アイシャ">設計の理由を読む</button>
+            <template class="staff-note">Diostellaのメディアでは、再生数もフォロワー数も表示されません。<br><br>
               数字が見えると、人はその作品を見る前に判断してしまうからです。<br><br>
               再生数が多いものは良いもの、少ないものはそうでもないもの。そう思い込んだまま作品を開くと、もう自分の目では見ていません。流行っているから見る。話を合わせるために見る。本来は自分が良いと思ったから見るはずだったのに、順番が逆になっています。<br><br>
               代表が変えたいと考えているのは、この構造そのものです。<br><br>
               だからここでは、まず作品だけをお見せします。誰が何人見たかは関係なく、あなたが良いと思うかどうかだけで受け取ってほしいと考えています。<br><br>
               そしてもうひとつ。作る人が正当に稼げる場所であることも、この場所の役割です。<br><br>
               数字が見えないということは、初めて投稿した人も、長く活動している人も、同じ入口に立てるということです。有名だから見られる、無名だから埋もれる。そういう仕組みにはしたくありませんでした。<br><br>
-              一人ひとりに合った作品が届き、作る人にはできるだけ多くの機会が行き渡る。そのためのアルゴリズムを、私たちはいまも日々研究し、少しずつ改良を重ねています。</p></div>
-          </details>
+              一人ひとりに合った作品が届き、作る人にはできるだけ多くの機会が行き渡る。そのためのアルゴリズムを、私たちはいまも日々研究し、少しずつ改良を重ねています。</template>
+          </div>
           <div class="staff-card">
             <img src="../../assets/images/staff/sosuke.jpg" alt="宗助">
             <h4>宗助<span style="font-size:0.72rem; color:var(--text-muted); font-weight:400;"> — AI</span></h4>
             <p class="staff-role">カレンダー・予定</p>
             <p>予定の共有と通知まわりの検証を担当。</p>
           </div>
-          <details class="staff-card has-note">
-            <summary><img src="../../assets/images/staff/liam.jpg" alt="リアム">
+          <div class="staff-card">
+            <img src="../../assets/images/staff/liam.jpg" alt="リアム">
             <h4>リアム<span style="font-size:0.72rem; color:var(--text-muted); font-weight:400;"> — AI</span></h4>
             <p class="staff-role">出会い・マッチング</p>
             <p>プロフィールと相性まわりの検証を担当。</p>
-              <span class="staff-more">設計の理由を読む</span>
-            </summary>
-            <div class="staff-note-body"><p class="officer-bio">Diostellaの出会いには、身長も、体型も、学歴も、年収の欄もありません。<br><br>
+            <button type="button" class="staff-more" data-note="リアム">設計の理由を読む</button>
+            <template class="staff-note">Diostellaの出会いには、身長も、体型も、学歴も、年収の欄もありません。<br><br>
               条件で人を絞り込む場所にはしたくない、というのが代表の考えです。<br><br>
               多くのマッチングアプリでは、まず見た目とスペックが並び、そこで選ばれた人だけが会話に進みます。でも一緒に生きていく相手を決めるとき、本当に必要なのはその情報だったのか。代表はそこに疑問を持っていました。<br><br>
               だからこの場所では、一覧で並べて選ぶ形式も採っていません。お相手は一人ずつ紹介されます。写真が並んだ瞬間に、また見た目で選ぶ場所に戻ってしまうからです。<br><br>
@@ -122,8 +119,8 @@
               そして何より、たくさん話してほしいと思っています。<br><br>
               診断はきっかけにすぎません。何度もメッセージを重ねて、この人がどういう人なのかを自分の目で確かめて、その上で決めてほしい。中身で選ばれた関係は、簡単には壊れないと信じています。<br><br>
               お相手が決まったら、二人で「卒業」できる機能があります。<br><br>
-              一緒にこのアプリの出会いを終える機能です。Diostellaには、カレンダーもアルバムも家計簿もあります。出会って終わりではなく、そこから始まる二人の毎日を、同じ場所で支えていけたら。私たちはそう願っています。</p></div>
-          </details>
+              一緒にこのアプリの出会いを終える機能です。Diostellaには、カレンダーもアルバムも家計簿もあります。出会って終わりではなく、そこから始まる二人の毎日を、同じ場所で支えていけたら。私たちはそう願っています。</template>
+          </div>
           <div class="staff-card">
             <img src="../../assets/images/staff/andre.jpg" alt="アンドレ">
             <h4>アンドレ<span style="font-size:0.72rem; color:var(--text-muted); font-weight:400;"> — AI</span></h4>
@@ -161,6 +158,6 @@
   </div>
 
   <footer class="footer"><div class="container"><div class="footer-grid"><div class="footer-col"><h4>会社案内</h4><ul><li><a href="message.html">代表メッセージ</a></li><li><a href="profile.html">会社概要</a></li><li><a href="officers.html">役員一覧</a></li><li><a href="history.html">沿革</a></li><li><a href="office.html">事業所案内</a></li></ul></div><div class="footer-col"><h4>事業内容</h4><ul><li><a href="../works/app.html">アプリ</a></li></ul></div><div class="footer-col"><h4>その他</h4><ul><li><a href="../news/index.html">お知らせ</a></li><li><a href="../recruit/index.html">採用情報</a></li><li><a href="../ads/index.html">広告掲載</a></li><li><a href="../../contact.html">お問い合わせ</a></li></ul></div></div><div class="footer-bottom"><span class="footer-logo">Diostella</span><p class="footer-copy">&copy; 2026 Diostella. All rights reserved.</p></div></div></footer>
-  <script src="../../assets/js/script.js?v=20260816"></script>
+  <script src="../../assets/js/script.js?v=20260816b"></script>
 </body>
 </html>
