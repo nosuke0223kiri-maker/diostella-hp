@@ -43,7 +43,10 @@ if (fadeEls.length > 0) {
         entry.target.classList.add('visible');
       }
     });
-  }, { threshold: 0.1 });
+    // threshold は 0＝「1pxでも見えたら表示」。
+    // 0.1（10%）だと、広告ページのように本文全体を1つの .fade-in で囲んだ縦に長い要素
+    // （実測82,139px）で交差率が画面高さ÷要素高さ＝数%にしかならず、永久に表示されない（2026-08-14修正）
+  }, { threshold: 0 });
 
   fadeEls.forEach(el => observer.observe(el));
 }

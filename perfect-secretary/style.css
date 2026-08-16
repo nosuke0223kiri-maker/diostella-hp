@@ -1,5 +1,5 @@
 /* ========================================
-   完璧秘書 — Executive Edition Landing Page
+   完璧秘書 ランディングページ
    ======================================== */
 
 :root {
@@ -152,6 +152,24 @@ body {
   letter-spacing: 0.2em;
 }
 
+/* 規約類＝主メニューより一段控えめに（2026-08-16） */
+.mobile-menu-legal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  margin-top: 8px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(212, 175, 55, 0.15);
+  width: 220px;
+}
+.mobile-menu-legal a {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  color: var(--text-dim);
+}
+
 /* ---- Hero ---- */
 .hero {
   position: relative;
@@ -284,12 +302,15 @@ body {
 }
 
 .phone-mockup {
+  /* 高さ＝スクショの比率(780:1633)に内側を合わせた値。ズレると object-fit:cover が下を切り落とす
+     （吹き出しが見切れる原因だった・2026-08-16）。内側 = 幅 − 枠線2px×2 − 余白5px×2 */
   width: 280px;
-  height: 560px;
+  height: 571px;
   border-radius: 36px;
   border: 2px solid rgba(212, 175, 55, 0.3);
   background: var(--black-light);
-  padding: 12px;
+  /* 実機の縁はほぼ無い＝12pxだとモックだけ額縁みたいに太かった（2026-08-16こうくん指摘） */
+  padding: 5px;
   position: relative;
   box-shadow:
     0 0 60px rgba(212, 175, 55, 0.1),
@@ -311,13 +332,14 @@ body {
 
 .phone-mockup.small {
   width: 240px;
-  height: 480px;
+  height: 487px; /* 同上＝スクショ比率に合わせた高さ */
 }
 
 .phone-screen {
   width: 100%;
   height: 100%;
-  border-radius: 24px;
+  /* 枠と同心にする＝外枠36px − 枠線2px − 内側余白5px = 29px（余白を変えたらここも合わせる） */
+  border-radius: 29px;
   overflow: hidden;
   background: var(--black);
   display: flex;
@@ -543,12 +565,11 @@ body {
 
 .section-tag {
   display: inline-block;
-  font-family: var(--font-accent);
-  font-style: italic;
+  /* 日本語化したので飾りフォント（英字用の斜体）を外す＝斜体の和文は読みにくい（2026-08-16） */
+  font-family: var(--font-body);
   font-size: 0.85rem;
   color: var(--gold);
-  letter-spacing: 0.4em;
-  text-transform: uppercase;
+  letter-spacing: 0.3em;
   margin-bottom: 12px;
 }
 
@@ -727,6 +748,9 @@ body {
 .gallery-item {
   text-align: center;
 }
+/* スマホ絵は幅固定のブロック＝text-alignでは中央に来ない。
+   項目の幅はキャプションの文字数で変わるので、揃えないと1枚ずつ左右にズレる（2026-08-16こうくん指摘） */
+.gallery-item .phone-mockup { margin-left: auto; margin-right: auto; }
 
 .gallery-caption {
   font-family: var(--font-accent);
@@ -939,6 +963,20 @@ body {
     grid-template-columns: 1fr;
   }
 
+  /* スマホは1列＝縦に積むとアイコンと見出しが離れて間延びする。
+     アイコンを見出しの横に置き、余白も詰める（2026-08-16こうくん指摘） */
+  .feature-card {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-areas: "icon title" "desc desc";
+    column-gap: 14px;
+    align-items: center;
+    padding: 22px 20px;
+  }
+  .feature-icon { grid-area: icon; margin-bottom: 0; line-height: 0; }
+  .feature-card h3 { grid-area: title; margin-bottom: 0; }
+  .feature-card p { grid-area: desc; margin-top: 10px; }
+
   .secretary-grid {
     grid-template-columns: 1fr;
   }
@@ -953,7 +991,7 @@ body {
 
   .phone-mockup.small {
     width: 200px;
-    height: 400px;
+    height: 403px; /* スクショ比率(780:1633)に合わせた高さ。幅を変えたらここも計算し直す */
   }
 
   .footer-inner {
@@ -966,7 +1004,7 @@ body {
 @media (max-width: 480px) {
   .phone-mockup {
     width: 240px;
-    height: 480px;
+    height: 487px; /* スクショ比率(780:1633)に合わせた高さ。幅を変えたらここも計算し直す */
   }
 
   .hero-title {
@@ -1027,6 +1065,14 @@ body {
 .store-btn.large .store-txt { font-size: 1.2rem; }
 @media (max-width: 768px) {
   .hero-badges { justify-content: center; }
+  /* 縦積みになるスマホ幅では2つのバッジの横幅を揃える。箱ごと固定すると内側の余白が偏るので、
+     文字ブロックの幅だけ長い方（Google Play）に合わせる＝余白は元のまま（2026-08-16） */
+  /* スマホ幅ではヒーローが縦に詰まってスクロール表示がスマホ実機の画面に重なる＝
+     実機画面の中に「SCROLL」が浮いて見えて意味不明になるので消す（2026-08-16） */
+  .scroll-indicator { display: none; }
+  .store-badges { flex-direction: column; align-items: center; }
+  .store-btn .store-txt { min-width: 106px; }
+  .store-btn.large .store-txt { min-width: 122px; }
 }
 
 /* ===== Real Screenshots ===== */
@@ -1046,7 +1092,8 @@ body {
   height: 30px;
   fill: none;
   stroke: #d4af37;
-  stroke-width: 1.5;
+  /* アプリ本体の線幅規格に合わせる（uiIcons.jsx = 1.7・2026-08-16にアイコンをアプリから移植） */
+  stroke-width: 1.7;
   stroke-linecap: round;
   stroke-linejoin: round;
 }
@@ -1161,8 +1208,10 @@ body {
 .plan-desc {
   font-size: 0.85rem;
   color: var(--text-dim);
-  margin-bottom: 24px;
+  margin-bottom: 0; /* 下の機能リストは比較表に移したので余白だけ残っていた（2026-08-16） */
 }
+/* 機能リストが続く場合だけ間を空ける（将来戻した時用） */
+.plan-desc:not(:last-child) { margin-bottom: 24px; }
 .plan-list {
   list-style: none;
   padding: 0;
@@ -1197,14 +1246,33 @@ body {
 }
 @media (max-width: 768px) {
   .plans-grid { grid-template-columns: 1fr; }
+  /* スマホ＝1列。48pxの上下余白は縦長になりすぎるので詰める（2026-08-16こうくん指摘） */
+  .plan-card { padding: 24px 20px; }
+
+  /* セクションの上下余白＝PCの120pxのままだと、スマホでは見出しの前に画面半分の空白ができる（2026-08-16） */
+  .problem, .features, .secretary, .gallery, .target, .cta, .plans { padding: 56px 0; }
+  .promise { padding: 56px 0; }
+  .section-header { margin-bottom: 32px; }
 }
 
-/* ── 秘書13人グリッド（2026-08-12こうくん指摘＝旧2人・旧立ち絵を現行13人へ） ── */
+/* ── 秘書一覧グリッド（2026-08-12＝旧2人→13人／2026-08-16＝キャラ5人追加で18人・渡辺は非掲載） ── */
+/* 女性/男性/キャラの3グループ＝アプリの秘書選択と同じ並び（2026-08-16）。
+   列数は「1マスが縦長になりすぎない」値にする＝正方形のキャラ絵が幅で頭打ちになって
+   人の立ち絵より背が縮むのを防ぐため（6列＝1マス比率1.2・3列＝1.0） */
+.sec-roster-group { margin-top: 40px; }
+.sec-roster-label {
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  letter-spacing: 0.25em;
+  color: var(--gold);
+  text-align: center;
+  margin-bottom: 8px;
+}
 .sec-roster {
   display: grid;
-  grid-template-columns: repeat(11, 1fr);
+  grid-template-columns: repeat(6, 1fr);
   gap: 12px;
-  margin-top: 48px;
+  margin-top: 0;
   align-items: end;
 }
 .sec-roster-item { text-align: center; }
@@ -1231,8 +1299,7 @@ body {
   color: var(--text-dim);
   margin-top: 24px;
 }
-@media (max-width: 1024px) { .sec-roster { grid-template-columns: repeat(6, 1fr); } }
-@media (max-width: 640px)  { .sec-roster { grid-template-columns: repeat(4, 1fr); } .sec-roster-item img { height: 110px; } }
+@media (max-width: 640px)  { .sec-roster { grid-template-columns: repeat(3, 1fr); } .sec-roster-item img { height: 110px; } }
 
 /* ── プラン比較表（2026-08-12こうくん指摘＝雑な箇条書き→確定値の詳細比較） ── */
 .plans-policy {
@@ -1242,14 +1309,18 @@ body {
   line-height: 2;
   margin: 40px 0 24px;
 }
-.plan-table-wrap { overflow-x: auto; }
+.plan-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
 .plan-table {
   width: 100%;
   max-width: 900px;
+  /* スマホで列が潰れて1文字ずつ改行されるのを防ぐ＝最低幅を割ったら横スクロールに逃がす（2026-08-16） */
+  min-width: 560px;
   margin: 0 auto;
   border-collapse: collapse;
   font-size: 0.88rem;
 }
+.plan-table tbody th { min-width: 170px; }
+.plan-table thead th:not(:first-child), .plan-table td { min-width: 112px; }
 .plan-table th, .plan-table td {
   padding: 14px 12px;
   border-bottom: 1px solid rgba(212, 175, 55, 0.12);

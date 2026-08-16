@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>入稿シミュレータ | Diostella</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" href="../favicon.ico">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Noto+Serif+JP:wght@400;500;600&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/css/style.css">
+  <style>
+    /* ===== 入稿シミュレータ専用 =====
+       ⚠️ここから下はアプリ（完璧秘書）の実装を再現した見本です。
+       アプリ側の規格（比率・帯の高さ・文字サイズ・色）を変えたら、このファイルも必ず直してください。
+       正本＝02_products/秘書アプリ/src/Dating.jsx（出会い面）＋index.html :root（トークン） */
+
+    .sim-layout { display:grid; grid-template-columns:1fr 340px; gap:40px; align-items:start; }
+    @media (max-width: 900px) { .sim-layout { grid-template-columns:1fr; } }
+
+    .sim-panel { min-width:0; }
+    .sim-step { margin-bottom:28px; }
+    .sim-step-t { font-size:0.95rem; color:var(--gold); margin-bottom:10px; letter-spacing:0.04em; }
+
+    /* 画像の受け口 */
+    .sim-drop { display:block; border:1px dashed var(--border); border-radius:6px; padding:28px 20px; text-align:center; color:var(--text-muted); cursor:pointer; transition:border-color 0.3s, background 0.3s; }
+    .sim-drop:hover, .sim-drop.over { border-color:var(--gold); background:var(--gold-bg); color:var(--text-sub); }
+    .sim-drop input { display:none; }
+    .sim-file { font-size:0.85rem; color:var(--text-sub); margin-top:8px; overflow-wrap:anywhere; }
+
+    /* 比率の選択 */
+    .sim-ratios { display:flex; flex-wrap:wrap; gap:8px; }
+    .sim-ratio { border:1px solid var(--border); background:#fff; border-radius:4px; padding:8px 14px; font-family:inherit; font-size:0.85rem; color:var(--text-sub); cursor:pointer; transition:all 0.25s; }
+    .sim-ratio:hover { border-color:var(--gold-dim); }
+    .sim-ratio.on { border-color:var(--gold); background:var(--gold-bg); color:var(--gold); }
+
+    /* ズーム */
+    .sim-zoom { display:flex; align-items:center; gap:12px; }
+    .sim-zoom input[type=range] { flex:1; accent-color:var(--gold); }
+    .sim-zoom-v { font-size:0.85rem; color:var(--text-muted); width:48px; text-align:right; }
+
+    /* 文字入力 */
+    .sim-field { margin-bottom:14px; }
+    .sim-label { display:block; font-size:0.8rem; color:var(--text-muted); margin-bottom:6px; }
+    .sim-input, .sim-textarea { width:100%; border:1px solid var(--border); border-radius:4px; padding:10px 12px; font-family:inherit; font-size:0.9rem; color:var(--text); background:#fff; }
+    .sim-input:focus, .sim-textarea:focus { outline:none; border-color:var(--gold-dim); }
+    .sim-textarea { resize:vertical; min-height:88px; line-height:1.8; }
+    .sim-over { color:#b03a3a; }
+
+    /* 書き出し */
+    .sim-export { display:inline-block; border:1px solid var(--gold); background:var(--gold); color:#fff; border-radius:4px; padding:13px 30px; font-family:inherit; font-size:0.92rem; cursor:pointer; transition:opacity 0.25s; }
+    .sim-export:hover { opacity:0.85; }
+    .sim-export:disabled { opacity:0.35; cursor:default; }
+    .sim-export-note { font-size:0.82rem; color:var(--text-muted); margin-top:10px; line-height:1.8; }
+
+    /* ===== iPhone プレビュー（402×874pt を 0.78 倍で表示）===== */
+    .sim-stage { position:sticky; top:90px; }
+    .sim-scale { width:314px; height:682px; }             /* 402×0.78 / 874×0.78 */
+    .sim-phone {
+      width:402px; height:874px; transform:scale(0.78); transform-origin:top left;
+      position:relative; overflow:hidden; border-radius:34px;
+      background:#000; color:#e8e0d0;
+      font-family:'Noto Serif JP', serif; font-variant-numeric:lining-nums;
+      text-shadow:0 1px 2px rgba(0,0,0,0.4);
+      --gold:#d4af37; --gold-mid:rgba(212,175,55,0.5);
+      --txt:#e8e0d0; --txt-dim:rgba(232,224,208,0.5);
+      --card:#141414; --ui-bd:#312b19; --ui-sel-bg:#312b19;
+      --ui-line:linear-gradient(90deg,transparent,rgba(212,175,55,0.5),transparent);
+      --ui-sel-line:linear-gradient(90deg,transparent,rgba(212,175,55,1),transparent);
+      --ui-sh:0 1px 2px rgba(0,0,0,0.4);
+    }
+    /* 上62pt＝セーフエリア（実機のiPhone 17で実測）。時計とDynamic Island */
+    .sim-sa { height:62px; position:relative; }
+    .sim-clock { position:absolute; left:34px; top:20px; font-size:15px; color:#fff; }
+    .sim-island { position:absolute; left:50%; top:11px; transform:translateX(-50%); width:126px; height:37px; background:#0a0a0a; border-radius:19px; }
+    /* ヘッダー＝高さ50＋下線1（アプリの --hdr-minh + border） */
+    .sim-hdr { height:50px; position:relative; display:flex; align-items:center; justify-content:center;
+      border-bottom:1px solid var(--ui-bd); background:linear-gradient(to top,#141414 0%,#141414 55%,#000 100%); }
+    .sim-hdr-t { font-size:15px; letter-spacing:0.2em; color:var(--gold); }
+    .sim-hdr-back { position:absolute; left:16px; width:30px; height:30px; display:flex; align-items:center; justify-content:center;
+      border:1px solid var(--ui-bd); border-radius:6px; box-shadow:var(--ui-sh); color:var(--gold-mid); font-size:24px; line-height:1; padding-bottom:4px; }
+    .sim-hdr-f { position:absolute; right:16px; border:1px solid var(--ui-bd); border-radius:6px; box-shadow:var(--ui-sh);
+      padding:6px 10px; font-size:11px; line-height:16px; color:var(--txt-dim); }
+    /* 本体＝画面874 − セーフエリア62 − ヘッダー50 ＝762。上10・左右16・下92（48 + 10 + セーフエリア34） */
+    .sim-main { height:762px; padding:10px 16px 92px; display:flex; flex-direction:column; }
+    /* カード＝外寸612pt（内寸610）。プロフィールカードとまったく同じ枠 */
+    .sim-card { flex:1; min-height:0; display:flex; flex-direction:column; position:relative; overflow:hidden;
+      background:var(--ui-line) no-repeat top / 100% 1px, var(--card);
+      border:1px solid var(--ui-bd); border-radius:6px; box-shadow:var(--ui-sh); }
+    .sim-media { position:relative; flex:none; width:100%; overflow:hidden; background:#0a0a0a; cursor:grab; touch-action:none; }
+    .sim-media.drag { cursor:grabbing; }
+    .sim-media img { position:absolute; left:50%; top:50%; transform-origin:center; user-select:none; -webkit-user-drag:none; max-width:none; }
+    .sim-media-empty { display:flex; align-items:center; justify-content:center; height:100%; color:rgba(232,224,208,0.25); font-size:13px; }
+    .sim-badge { position:absolute; top:10px; left:10px; z-index:2; font-size:11px; line-height:16px; padding:6px 10px;
+      background:rgba(0,0,0,0.45); color:rgba(255,255,255,0.85); border:1px solid rgba(255,255,255,0.25); border-radius:6px; }
+    /* 文章エリア＝アプリと同じく中スクロール（本文が長いと「詳しく見る」は下へ送られる）。バーはWebViewに合わせて隠す */
+    .sim-txt { padding:12px 14px 14px; flex:1; min-height:0; display:flex; flex-direction:column; overflow-y:auto; scrollbar-width:none; }
+    .sim-txt::-webkit-scrollbar { display:none; }
+    /* 文字組み＝テキスト投稿面と同じ .ad-post-line（15px・行送り1.5・間隔6／社名と見出しが白100・本文が白50） */
+    .sim-adv, .sim-ttl, .sim-bd { font-size:15px; line-height:1.5; margin:6px 0 0; white-space:pre-wrap; word-break:break-word; }
+    .sim-adv { margin:0; color:var(--txt); }
+    .sim-ttl { color:var(--txt); }
+    .sim-bd  { color:var(--txt-dim); }
+    /* 「詳しく見る」＝38系の帯（1+10+16+10+1＝36pt）。ほかの掲載面（.ad-post-cta / .ad-tile-cta）と同じ形 */
+    .sim-cta { flex:none; margin:0; box-sizing:border-box; text-align:center; font-size:13px; line-height:16px; padding:10px;
+      color:var(--gold); background:var(--ui-sel-line) no-repeat top / 100% 1px, var(--ui-sel-bg); }
+    .sim-next { margin-top:10px; text-align:center; font-size:13px; line-height:16px; padding:10px 0;
+      background:var(--ui-line) no-repeat top / 100% 1px, var(--card); border:1px solid var(--ui-bd); border-radius:6px; box-shadow:var(--ui-sh); color:var(--txt-dim); }
+    /* 下部タブ＝14 + 38 + (10+34) */
+    .sim-tab { position:absolute; left:0; right:0; bottom:0; display:flex; gap:10px; padding:14px 16px 44px; }
+    .sim-tab span { flex:1; text-align:center; font-size:13px; line-height:16px; padding:10px 0; border:1px solid var(--ui-bd); border-radius:6px;
+      background:var(--ui-line) no-repeat top / 100% 1px, var(--card); color:rgba(232,224,208,0.25); box-shadow:var(--ui-sh); }
+    .sim-tab span.on { background:var(--ui-sel-line) no-repeat top / 100% 1px, var(--ui-sel-bg); color:var(--gold); }
+
+    .sim-readout { margin-top:16px; font-size:0.82rem; color:var(--text-muted); line-height:1.9; }
+    .sim-readout b { color:var(--text-sub); font-weight:400; }
+    .sim-warn { margin-top:10px; padding:10px 12px; border:1px solid var(--gold-dim); background:var(--gold-bg); border-radius:4px; font-size:0.82rem; line-height:1.9; color:var(--text-sub); }
+  </style>
+</head>
+<body>
+  <nav class="nav scrolled"><div class="nav-inner"><a href="../../index.html" class="nav-logo">Diostella</a><ul class="nav-links"><li class="nav-item"><a href="../about/message.html">会社案内</a><ul class="nav-dropdown"><li><a href="../about/message.html">代表メッセージ</a></li><li><a href="../about/profile.html">会社概要</a></li><li><a href="../about/officers.html">役員一覧</a></li><li><a href="../about/history.html">沿革</a></li><li><a href="../about/office.html">事業所案内</a></li></ul></li><li class="nav-item"><a href="../works/index.html">事業内容</a><ul class="nav-dropdown"><li><a href="../works/app.html">アプリ</a></li></ul></li><li class="nav-item"><a href="../news/index.html">お知らせ</a></li><li class="nav-item"><a href="../recruit/index.html">採用情報</a></li><li class="nav-item"><a href="../../contact.html">お問い合わせ</a></li></ul><button class="nav-toggle" aria-label="メニュー"><span></span><span></span><span></span></button></div></nav>
+  <div class="mobile-menu"><a href="../../index.html">トップ</a><a href="../about/message.html">会社案内</a><div class="mobile-sub"><a href="../about/message.html">代表メッセージ</a><a href="../about/profile.html">会社概要</a><a href="../about/officers.html">役員一覧</a><a href="../about/history.html">沿革</a><a href="../about/office.html">事業所案内</a></div><a href="../works/index.html">事業内容</a><div class="mobile-sub"><a href="../works/app.html">アプリ</a></div><a href="../news/index.html">お知らせ</a><a href="../recruit/index.html">採用情報</a><a href="index.html">広告掲載</a><a href="../../contact.html">お問い合わせ</a></div>
+
+  <div class="page-wrapper">
+    <div class="container"><div class="breadcrumb"><a href="../../index.html">Diostella</a><span>></span><a href="index.html">広告掲載について</a><span>></span>入稿シミュレータ</div></div>
+    <div class="page-layout">
+      <aside class="sidebar"><div class="sidebar-section"><div class="sidebar-title">広告掲載</div><ul class="sidebar-links"><li><a href="index.html">広告掲載について</a></li><li><a href="simulator.html" class="active">入稿シミュレータ</a></li><li><a href="../../contact.html">お問い合わせ</a></li></ul></div></aside>
+      <main class="page-main">
+        <h1 class="page-title">入稿シミュレータ</h1>
+
+        <p style="line-height:2; margin-bottom:12px;">
+          ご入稿予定の素材と文章を入れていただくと、アプリの画面にどう表示されるかをその場でご確認いただけます。切り取り位置もこの場でお決めいただけます。
+        </p>
+        <p style="line-height:2; margin-bottom:28px; font-size:0.88rem; color:var(--text-muted);">
+          お選びいただいた画像は、お使いのブラウザの中だけで処理されます。当社を含め、どこにも送信されません。<br>
+          対応面：<strong style="color:var(--text-sub); font-weight:400;">出会い面</strong>（ほかの掲載面は順次追加いたします）
+        </p>
+
+        <div class="sim-layout">
+          <div class="sim-panel">
+
+            <div class="sim-step">
+              <div class="sim-step-t">1. 画像を選ぶ</div>
+              <label class="sim-drop" id="drop">
+                画像をここにドラッグ、またはクリックして選択
+                <div class="sim-file" id="fileinfo"></div>
+                <input type="file" id="file" accept="image/*">
+              </label>
+            </div>
+
+            <div class="sim-step">
+              <div class="sim-step-t">2. 表示する形を選ぶ</div>
+              <div class="sim-ratios">
+                <button class="sim-ratio on" data-r="auto">素材のまま</button>
+                <button class="sim-ratio" data-r="0.8">縦 4:5</button>
+                <button class="sim-ratio" data-r="1">正方形 1:1</button>
+                <button class="sim-ratio" data-r="1.88">横 1.88:1</button>
+              </div>
+              <p style="font-size:0.82rem; color:var(--text-muted); margin-top:10px; line-height:1.9;">
+                「素材のまま」＝縦4:5から横1.88:1の範囲内であれば、切り取りは発生しません。範囲を外れる素材は、いちばん近い形に合わせて切り取ります。
+              </p>
+            </div>
+
+            <div class="sim-step">
+              <div class="sim-step-t">3. 切り取る位置を決める</div>
+              <div class="sim-zoom">
+                <label for="zoom" style="font-size:0.85rem; color:var(--text-muted); white-space:nowrap;">拡大</label>
+                <input type="range" id="zoom" min="100" max="300" value="100">
+                <span class="sim-zoom-v" id="zoomv">100%</span>
+              </div>
+              <p style="font-size:0.82rem; color:var(--text-muted); margin-top:10px; line-height:1.9;">
+                右のプレビューの画像を、そのままドラッグして位置を動かせます。
+              </p>
+            </div>
+
+            <div class="sim-step">
+              <div class="sim-step-t">4. 文章を入れる</div>
+              <div class="sim-field">
+                <label class="sim-label" for="adv">広告主名（必須・法令により必ず表示されます）</label>
+                <input class="sim-input" id="adv" maxlength="30" value="ご社名">
+              </div>
+              <div class="sim-field">
+                <label class="sim-label" for="ttl">見出し</label>
+                <input class="sim-input" id="ttl" value="見出しはこの一行ぶんです">
+              </div>
+              <div class="sim-field">
+                <label class="sim-label" for="bd">本文（<span id="cnt">0</span>/<span id="cap">140</span>・見出しとの合計）</label>
+                <textarea class="sim-textarea" id="bd">本文もこの一行ぶんが表示されます。</textarea>
+              </div>
+            </div>
+
+            <div class="sim-step">
+              <div class="sim-step-t">5. 書き出す</div>
+              <button class="sim-export" id="export" disabled>この形で画像を書き出す</button>
+              <p class="sim-export-note" id="exportnote">画像を選ぶと書き出せます。</p>
+            </div>
+
+          </div>
+
+          <div class="sim-stage">
+            <div class="sim-scale">
+              <div class="sim-phone">
+                <div class="sim-sa"><div class="sim-island"></div><div class="sim-clock">9:41</div></div>
+                <div class="sim-hdr"><span class="sim-hdr-back">‹</span><span class="sim-hdr-t">出会い</span><span class="sim-hdr-f">絞込</span></div>
+                <div class="sim-main">
+                  <div class="sim-card">
+                    <div class="sim-media" id="media">
+                      <div class="sim-media-empty" id="empty">画像を選んでください</div>
+                      <img id="img" alt="" hidden>
+                      <span class="sim-badge">広告</span>
+                    </div>
+                    <div class="sim-txt">
+                      <p class="sim-adv" id="p-adv">ご社名</p>
+                      <p class="sim-ttl" id="p-ttl">ここに見出しが入ります</p>
+                      <p class="sim-bd" id="p-bd"></p>
+                    </div>
+                    <p class="sim-cta">詳しく見る ›</p>
+                  </div>
+                  <div class="sim-next">次へ</div>
+                </div>
+                <div class="sim-tab"><span class="on">さがす</span><span>マッチ</span><span>マイページ</span></div>
+              </div>
+            </div>
+            <div class="sim-readout" id="readout">
+              <b>表示サイズ</b>　—<br>
+              <b>入稿サイズ</b>　—
+            </div>
+            <div class="sim-warn" id="warn" hidden></div>
+          </div>
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <footer class="footer"><div class="container"><div class="footer-grid"><div class="footer-col"><h4>会社案内</h4><ul><li><a href="../about/message.html">代表メッセージ</a></li><li><a href="../about/profile.html">会社概要</a></li><li><a href="../about/officers.html">役員一覧</a></li><li><a href="../about/history.html">沿革</a></li><li><a href="../about/office.html">事業所案内</a></li></ul></div><div class="footer-col"><h4>事業内容</h4><ul><li><a href="../works/app.html">アプリ</a></li></ul></div><div class="footer-col"><h4>その他</h4><ul><li><a href="../news/index.html">お知らせ</a></li><li><a href="../recruit/index.html">採用情報</a></li><li><a href="index.html">広告掲載</a></li><li><a href="../../contact.html">お問い合わせ</a></li></ul></div></div><div class="footer-bottom"><span class="footer-logo">Diostella</span><p class="footer-copy">&copy; 2026 Diostella. All rights reserved.</p></div></div></footer>
+
+  <script src="../../assets/js/script.js"></script>
+  <script>
+  (() => {
+    // ===== アプリ側の確定値（正本＝Dating.jsx / index.html :root）=====
+    const CARD_W = 368;      // カード内寸の幅（画面402 − 左右16×2 − 枠1×2）＝画面上の表示サイズ
+    const LO = 0.8, HI = 1.88; // 出会い面の比率クランプ（縦4:5 〜 横1.88:1）
+    const OUT_W = 1206;      // 入稿の推奨幅＝画面幅402pt×3。画像投稿の広告と同じ素材が使えるよう合わせている
+    // 文字がいくつ入るかの実測値（ブラウザで採寸・2026-08-14）
+    const CARD_H = 610;      // カード内寸の高さ（外寸612 − 枠1×2）
+    const CTA_H = 36;        // 「詳しく見る」の帯（10+16+10）
+    const TXT_PAD = 26;      // 文章エリアの上下padding（12+14）
+    const PER_LINE = 22;     // 15pxの全角で1行に入る字数（幅340pt）
+    const LINE_ADD = 22;     // 2行目以降の1行ぶんの高さ
+    const BLOCK1 = 37;       // 社名1行＋間隔6×2＋（見出し・本文の1行目ぶんの差）＝行数式の切片
+
+    const el = id => document.getElementById(id);
+    const media = el('media'), img = el('img'), empty = el('empty');
+    let src = null, nw = 0, nh = 0;      // 元画像
+    let mode = 'auto';                    // 選択中の比率
+    let zoom = 1, ox = 0, oy = 0;         // 拡大率・位置（pt）
+
+    // 表示する比率を決める＝アプリと同じクランプ
+    const ratio = () => {
+      if (mode !== 'auto') return +mode;
+      if (!nw) return LO;
+      return Math.min(HI, Math.max(LO, nw / nh));
+    };
+    const frameH = () => CARD_W / ratio();
+
+    // cover の基準倍率＝枠を埋める最小倍率
+    const baseK = () => {
+      const fh = frameH();
+      return nw ? Math.max(CARD_W / nw, fh / nh) : 1;
+    };
+
+    // はみ出し量の範囲内に位置を収める
+    const clampPos = () => {
+      const k = baseK() * zoom;
+      const mx = Math.max(0, (nw * k - CARD_W) / 2);
+      const my = Math.max(0, (nh * k - frameH()) / 2);
+      ox = Math.min(mx, Math.max(-mx, ox));
+      oy = Math.min(my, Math.max(-my, oy));
+    };
+
+    const render = () => {
+      const fh = frameH();
+      media.style.height = fh + 'px';
+      if (!src) { el('readout').innerHTML = '<b>表示サイズ</b>　—<br><b>入稿サイズ</b>　—'; sync(); return; }
+      clampPos();
+      const k = baseK() * zoom;
+      img.style.width = (nw * k) + 'px';
+      img.style.height = (nh * k) + 'px';
+      img.style.transform = `translate(calc(-50% + ${ox}px), calc(-50% + ${oy}px))`;
+      const cut = (nw / nh < LO - 0.001 || nw / nh > HI + 0.001 || mode !== 'auto' || zoom > 1.001);
+      const oh = Math.round(OUT_W / ratio());
+      el('readout').innerHTML =
+        `<b>表示サイズ</b>　${CARD_W} × ${Math.round(fh)} pt（比率 ${ratio().toFixed(2)}）<br>` +
+        `<b>入稿サイズ</b>　${OUT_W} × ${oh} px<br>` +
+        `<b>切り取り</b>　${cut ? 'あり（枠外は表示されません）' : 'なし（素材の形のまま）'}`;
+      el('exportnote').textContent = `${OUT_W} × ${oh} px の PNG を書き出します。`;
+      sync(); // 形が変わると入る字数も変わる＝カウンタと注意書きを引き直す
+    };
+
+    // ---- 画像の読み込み（ブラウザ内のみ・送信なし）----
+    const load = file => {
+      if (!file || !file.type.startsWith('image/')) return;
+      const r = new FileReader();
+      r.onload = e => {
+        const im = new Image();
+        im.onload = () => {
+          src = im; nw = im.naturalWidth; nh = im.naturalHeight;
+          img.src = e.target.result; img.hidden = false; empty.hidden = true;
+          zoom = 1; ox = oy = 0; el('zoom').value = 100; el('zoomv').textContent = '100%';
+          el('export').disabled = false;
+          el('fileinfo').textContent = `${file.name}（${nw} × ${nh} px）`;
+          render();
+        };
+        im.src = e.target.result;
+      };
+      r.readAsDataURL(file);
+    };
+    el('file').addEventListener('change', e => load(e.target.files[0]));
+    const drop = el('drop');
+    ['dragenter','dragover'].forEach(t => drop.addEventListener(t, e => { e.preventDefault(); drop.classList.add('over'); }));
+    ['dragleave','drop'].forEach(t => drop.addEventListener(t, e => { e.preventDefault(); drop.classList.remove('over'); }));
+    drop.addEventListener('drop', e => load(e.dataTransfer.files[0]));
+
+    // ---- 比率 ----
+    document.querySelectorAll('.sim-ratio').forEach(b => b.addEventListener('click', () => {
+      document.querySelectorAll('.sim-ratio').forEach(x => x.classList.remove('on'));
+      b.classList.add('on'); mode = b.dataset.r; ox = oy = 0; render();
+    }));
+
+    // ---- 拡大 ----
+    el('zoom').addEventListener('input', e => {
+      zoom = +e.target.value / 100; el('zoomv').textContent = e.target.value + '%'; render();
+    });
+
+    // ---- ドラッグで位置調整（プレビューの画像を直接動かす）----
+    let dragging = false, sx = 0, sy = 0, sox = 0, soy = 0;
+    const S = 0.78; // プレビューの表示倍率＝画面上の移動量をpt換算するため
+    media.addEventListener('pointerdown', e => {
+      if (!src) return;
+      dragging = true; media.classList.add('drag'); media.setPointerCapture(e.pointerId);
+      sx = e.clientX; sy = e.clientY; sox = ox; soy = oy;
+    });
+    media.addEventListener('pointermove', e => {
+      if (!dragging) return;
+      ox = sox + (e.clientX - sx) / S; oy = soy + (e.clientY - sy) / S; render();
+    });
+    ['pointerup','pointercancel'].forEach(t => media.addEventListener(t, () => { dragging = false; media.classList.remove('drag'); }));
+
+    // ---- この形に余白なく収まる字数 ----
+    // 文章エリアの内寸 A に、社名1行＋見出し＋本文を積んだ高さが収まる行数を出す。
+    // 高さ＝37 + 22×(見出しと本文の合計行数)（実測：1行目23pt・2行目以降22pt・ブロック間6pt）
+    const capacity = () => {
+      const A = CARD_H - frameH() - CTA_H - TXT_PAD;
+      const lines = Math.max(0, Math.floor((A - BLOCK1) / LINE_ADD));
+      return { lines, chars: lines * PER_LINE };
+    };
+
+    // ---- 文章 ----
+    const sync = () => {
+      const adv = el('adv').value, ttl = el('ttl').value, bd = el('bd').value;
+      el('p-adv').textContent = adv;
+      el('p-ttl').textContent = ttl; el('p-ttl').hidden = !ttl;
+      el('p-bd').textContent = bd;   el('p-bd').hidden = !bd;
+      const cap = capacity();
+      el('cap').textContent = cap.chars;
+      const n = [...ttl].length + [...bd].length;
+      el('cnt').textContent = n;
+      el('cnt').parentElement.classList.toggle('sim-over', n > cap.chars);
+      // はみ出しは式でなく実物の高さで判定する（改行位置まで含めて正確）
+      const t = document.querySelector('.sim-txt');
+      const over = Math.round(t.scrollHeight - t.clientHeight);
+      const w = el('warn');
+      if (over > 1) {
+        w.hidden = false;
+        w.innerHTML = `この形には収まりきりません。<b>およそ${Math.ceil(over / LINE_ADD)}行ぶんが画面に出ません。</b><br>` +
+          `いまの形（${ratio().toFixed(2)}）で全部を表示できるのは、見出しと本文をあわせて<b>${cap.chars}字（${cap.lines}行）</b>までです。`;
+      } else {
+        w.hidden = false;
+        w.textContent = `いまの形（${ratio().toFixed(2)}）なら、見出しと本文をあわせて ${cap.chars}字（${cap.lines}行）までが全部表示されます。`;
+      }
+    };
+    ['adv','ttl','bd'].forEach(id => el(id).addEventListener('input', sync));
+    sync();
+
+    // ---- 書き出し（この構図のまま、入稿サイズちょうどのPNG）----
+    el('export').addEventListener('click', () => {
+      if (!src) return;
+      const cw = OUT_W, ch = Math.round(OUT_W / ratio());
+      const cv = document.createElement('canvas');
+      cv.width = cw; cv.height = ch;
+      const cx = cv.getContext('2d');
+      cx.imageSmoothingQuality = 'high';
+      const scale = cw / CARD_W;           // 画面のpt → 入稿pxへの換算
+      const k = baseK() * zoom * scale;
+      const dw = nw * k, dh = nh * k;
+      cx.drawImage(src, (cw - dw) / 2 + ox * scale, (ch - dh) / 2 + oy * scale, dw, dh);
+      cv.toBlob(b => {
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(b);
+        a.download = `diostella-ad-dating-${cw}x${ch}.png`;
+        a.click();
+        setTimeout(() => URL.revokeObjectURL(a.href), 30000); // 保存が始まる前に消さない
+      }, 'image/png');
+    });
+
+    render();
+  })();
+  </script>
+</body>
+</html>
