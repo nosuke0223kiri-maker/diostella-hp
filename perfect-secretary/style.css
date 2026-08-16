@@ -1345,3 +1345,29 @@ body {
   color: var(--text);
 }
 .plan-table thead th.pt-featured { color: var(--gold); }
+
+/* ── ページトップへ戻るボタン（2026-08-16こうくん要望・script.jsが差し込む） ── */
+.to-top {
+  position: fixed;
+  right: 18px;
+  bottom: calc(18px + env(safe-area-inset-bottom));
+  width: 46px;
+  height: 46px;
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  border-radius: 10px;              /* アプリのタイルと同じ角丸 */
+  background: rgba(10, 10, 10, 0.85);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: var(--gold);
+  font-size: 1.1rem;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.45);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(8px);
+  transition: opacity 0.3s, transform 0.3s, visibility 0.3s, border-color 0.3s;
+  z-index: 900;   /* ナビ(1000)・メニュー(999)より下 */
+}
+.to-top.visible { opacity: 1; visibility: visible; transform: translateY(0); }
+.to-top:hover { border-color: var(--gold); background: rgba(212, 175, 55, 0.12); }

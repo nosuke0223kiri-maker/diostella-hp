@@ -94,3 +94,25 @@ if (form) {
     }
   });
 }
+
+/* ── ページトップへ戻るボタン（2026-08-16こうくん要望）
+   全ページ共通なので各HTMLには書かず、ここで作って差し込む。
+   一定量スクロールした時だけ出す＝短いページでは邪魔にならない。 */
+(function () {
+  const btn = document.createElement('button');
+  btn.className = 'to-top';
+  btn.type = 'button';
+  btn.setAttribute('aria-label', 'ページの先頭へ戻る');
+  btn.innerHTML = '<span aria-hidden="true">↑</span>';
+  document.body.appendChild(btn);
+
+  const SHOW_AT = 400;   // px
+  const sync = () => btn.classList.toggle('visible', window.scrollY > SHOW_AT);
+  sync();
+  window.addEventListener('scroll', sync, { passive: true });
+
+  btn.addEventListener('click', () => {
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
+  });
+})();
