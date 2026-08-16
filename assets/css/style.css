@@ -886,7 +886,9 @@ img { max-width: 100%; height: auto; }
 
   .message-hero { flex-direction: column-reverse; }
   .message-photo img { width: 160px; height: 210px; }
-  .officer-card { flex-direction: column; }
+  /* 縦積みになるので写真は少し大きく＝社員より上位であることが見た目で分かるように（2026-08-16） */
+  .officer-card { flex-direction: column; gap: 16px; }
+  .officer-card img { width: 200px; height: 264px; }
 
   .news-item { flex-direction: column; gap: 4px; }
 }
@@ -912,7 +914,9 @@ img { max-width: 100%; height: auto; }
 .staff-card .staff-role { font-size: 0.78rem; color: var(--gold); margin-bottom: 6px; letter-spacing: 0.04em; }
 .staff-card p { font-size: 0.8rem; color: var(--text-sub); line-height: 1.9; }
 @media (max-width: 768px) { .staff-grid { grid-template-columns: repeat(2, 1fr); gap: 22px 16px; } }
-@media (max-width: 480px) { .staff-grid { grid-template-columns: 1fr; } }
+/* 480px以下でも2列を維持＝1列にすると社員の写真が幅いっぱい(約354px)になり、
+   役員の写真(160px)より大きく見えてしまう。縦の長さも倍になる（2026-08-16こうくん指摘） */
+@media (max-width: 480px) { .staff-grid { grid-template-columns: repeat(2, 1fr); gap: 20px 14px; } }
 
 /* ── 3本柱カード（トップAbout・2026-08-11 会社方針の言語化に合わせて追加） ── */
 .pillar-grid {
