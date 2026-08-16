@@ -1065,6 +1065,9 @@ body {
 .store-btn.large .store-txt { font-size: 1.2rem; }
 @media (max-width: 768px) {
   .hero-badges { justify-content: center; }
+  /* 縦積みになるスマホ幅ではボタンの横幅を揃える（文字数で幅が変わるのを止める・2026-08-16） */
+  .hero-actions { flex-direction: column; align-items: center; }
+  .hero-actions .btn { width: 240px; text-align: center; }
   /* 縦積みになるスマホ幅では2つのバッジの横幅を揃える。箱ごと固定すると内側の余白が偏るので、
      文字ブロックの幅だけ長い方（Google Play）に合わせる＝余白は元のまま（2026-08-16） */
   /* スマホ幅ではヒーローが縦に詰まってスクロール表示がスマホ実機の画面に重なる＝

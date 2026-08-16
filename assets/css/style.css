@@ -938,6 +938,12 @@ img { max-width: 100%; height: auto; }
 .staff-more:hover { background: var(--gold-bg); border-color: var(--gold); }
 
 .note-dialog {
+  /* 中央に置くのはブラウザ任せにせず自分で決める（任せると端末により上に寄る・2026-08-16） */
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin: 0;
   width: min(680px, calc(100vw - 32px));
   max-height: min(80vh, 720px);
   padding: 28px 26px 26px;
@@ -948,31 +954,34 @@ img { max-width: 100%; height: auto; }
   box-shadow: 0 24px 60px rgba(0, 0, 0, 0.22);
   overflow: auto;
   overscroll-behavior: contain;
-  position: fixed;   /* 閉じるボタンの位置の基準 */
 }
 .note-dialog::backdrop { background: rgba(0, 0, 0, 0.45); }
 
 /* 頭＝写真・名前・担当・閉じるを1行に。文字だけだと素っ気ないので顔を出す（2026-08-16こうくん指摘） */
+/* 頭は中央揃え＝写真・名前・担当を縦に積む。左上に寄せるとバランスが悪い（2026-08-16こうくん指摘） */
 .note-head {
+  position: relative;   /* 閉じるボタンの基準。dialog自体にpositionを足すと中央配置が壊れる（2026-08-16） */
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 14px;
-  padding-bottom: 16px;
-  margin-bottom: 18px;
+  text-align: center;
+  gap: 10px;
+  padding-bottom: 18px;
+  margin-bottom: 20px;
   border-bottom: 1px solid var(--border);
 }
 .note-photo {
-  width: 64px; height: 64px;
-  flex: 0 0 64px;
+  width: 84px; height: 84px;
+  flex: 0 0 84px;
   object-fit: cover;
   object-position: center top;
   border-radius: 10px;   /* アプリのタイルと同じ角丸 */
 }
-.note-id { min-width: 0; flex: 1 1 auto; }
+.note-id { min-width: 0; }
 /* 閉じるは隅に置く＝頭の並びに入れると名前との間が大きく空いて不格好（2026-08-16こうくん指摘） */
 .note-close {
   position: absolute;
-  top: 14px; right: 14px;
+  top: 0; right: 0;
   width: 28px; height: 28px;
   border: 1px solid var(--border);
   border-radius: 10px;
