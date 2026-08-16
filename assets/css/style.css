@@ -878,7 +878,11 @@ img { max-width: 100%; height: auto; }
 
   .hero-title { font-size: 2.8rem; }
   .works-grid { grid-template-columns: 1fr; }
-  .footer-grid { grid-template-columns: 1fr; gap: 24px; }
+  /* スマホも3列のまま＝1列に落とすとフッターだけで画面3つぶんの長さになる（2026-08-16こうくん指摘）。
+     項目名は最長でも「代表メッセージ」なので3列で収まる */
+  .footer-grid { grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .footer-col h4 { font-size: 0.85rem; }
+  .footer-col li { font-size: 0.8rem; }
 
   .message-hero { flex-direction: column-reverse; }
   .message-photo img { width: 160px; height: 210px; }
