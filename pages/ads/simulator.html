@@ -565,9 +565,9 @@
         w.hidden = false;
         w.textContent = 'この面は画像・ご社名・「詳しく見る」の帯だけで構成されます（見出し・本文は表示されません）。';
       } else {
-        // SNSテキスト／メディア一覧＝文字広告は本文5行まで（DB上限は見出し+本文140字）
-        el('cap').textContent = 140;
-        el('cnt').parentElement.classList.toggle('sim-over', n > 140);
+        // SNSテキスト／メディア一覧＝文字広告は本文5行まで（DB上限は見出し+本文600字＝ads_text_len_600）
+        el('cap').textContent = 600;
+        el('cnt').parentElement.classList.toggle('sim-over', n > 600);
         w.hidden = false;
         if (src) {
           w.textContent = '画像を使う広告＝横1.88:1・文字なしの1種類です（画像投稿面と同じ素材が使えます）。';
@@ -576,7 +576,7 @@
           const hidden = Math.max(0, Math.round((bdEl.scrollHeight - bdEl.clientHeight) / 22.5));
           w.innerHTML = hidden > 0
             ? `本文が5行に収まりません。<b>およそ${hidden}行ぶんが表示されません。</b>${face === 'media' ? '<br>メディア一覧はSNSテキスト面より幅が狭いため、同じ文章でも行数が増えることがあります。' : ''}`
-            : (n > 140 ? `文字数の上限（見出しと本文あわせて140字）を超えています。` : `この文章は全部表示されます（本文は5行まで・見出しと本文あわせて140字まで）。`);
+            : (n > 600 ? `文字数の上限（見出しと本文あわせて600字）を超えています。` : `この文章は全部表示されます（表示は本文5行まで・入稿は見出しと本文あわせて600字まで）。`);
         }
       }
     };
