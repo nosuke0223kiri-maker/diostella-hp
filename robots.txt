@@ -1,4 +1,7 @@
 # サイト制作中のため、全クローラーの巡回を停止しています。
-# 公開準備が整ったら Disallow の行を削除し、Sitemap を追加してください。
+# 公開準備が整ったら Disallow の行を削除してください。
+# ⚠️ robots.txt だけでは解除しきれません＝全HTMLの <meta name="robots" content="noindex, nofollow"> も同時に外すこと。
 User-agent: *
 Disallow: /
+
+Sitemap: https://diostella.jp/sitemap.xml
