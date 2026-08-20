@@ -45,6 +45,7 @@
     .sim-input, .sim-textarea { width:100%; border:1px solid var(--border); border-radius:4px; padding:10px 12px; font-family:inherit; font-size:0.9rem; color:var(--text); background:#fff; }
     .sim-input:focus, .sim-textarea:focus { outline:none; border-color:var(--gold-dim); }
     .sim-textarea { resize:vertical; min-height:88px; line-height:1.8; }
+    .sim-textarea-s { min-height:56px; } /* 文章の前半＝短い想定なので低め（後半と同じ部品・高さだけ変える） */
     .sim-over { color:#b03a3a; }
     .sim-note { font-size:0.82rem; color:var(--text-muted); line-height:1.9; }
 
@@ -106,7 +107,7 @@
     /* 文章エリア＝アプリと同じく中スクロール。バーはWebViewに合わせて隠す */
     .sim-txt { padding:12px 14px 14px; flex:1; min-height:0; display:flex; flex-direction:column; overflow-y:auto; scrollbar-width:none; }
     .sim-txt::-webkit-scrollbar { display:none; }
-    /* 文字組み＝15px・行送り1.5・1段落（見出し行が白100・本文が白50。広告主名は本文に入れない＝2026-08-20規格） */
+    /* 文字組み＝15px・行送り1.5・1段落（文章の前半が白100・後半が白50＝見出しではなく濃さの違い。広告主名は本文に入れない＝2026-08-20規格） */
     .sim-ttl, .sim-bd { font-size:15px; line-height:1.5; margin:0; white-space:pre-wrap; word-break:break-word; }
     .sim-ttl { color:var(--txt); }
     .sim-bd  { color:var(--txt-dim); }
@@ -219,12 +220,12 @@
                 <input class="sim-input" id="adv" maxlength="30" value="ご社名">
               </div>
               <div class="sim-field" id="f-ttl">
-                <label class="sim-label" for="ttl">見出し</label>
-                <input class="sim-input" id="ttl" value="見出しはこの一行ぶんです">
+                <label class="sim-label" for="ttl">文章の前半（濃い文字で表示されます）</label>
+                <textarea class="sim-textarea sim-textarea-s" id="ttl">前半はこの濃さで表示されます。</textarea>
               </div>
               <div class="sim-field" id="f-bd">
-                <label class="sim-label" for="bd">本文（<span id="cnt">0</span>/<span id="cap">176</span>・見出しとの合計）</label>
-                <textarea class="sim-textarea" id="bd">本文もこの一行ぶんが表示されます。</textarea>
+                <label class="sim-label" for="bd">文章の後半（薄い文字で表示されます・前半と合わせて <span id="cnt">0</span>/<span id="cap">176</span> 字）</label>
+                <textarea class="sim-textarea" id="bd">後半はこの薄さで続けて表示されます。</textarea>
               </div>
               <p class="sim-note" id="textnote"></p>
             </div>
@@ -253,7 +254,7 @@
                         <span class="sim-head"><span class="sim-badge">広告</span><span class="sim-advnm js-advnm">ご社名</span></span>
                       </div>
                       <div class="sim-txt" id="dating-txt">
-                        <p class="sim-ttl js-ttl">ここに見出しが入ります</p>
+                        <p class="sim-ttl js-ttl">ここに文章の前半が入ります</p>
                         <p class="sim-bd js-bd"></p>
                       </div>
                       <p class="sim-cta">詳しく見る ›</p>
@@ -300,7 +301,7 @@
                       </div>
                       <p class="sim-cta">詳しく見る ›</p>
                     </div>
-                    <!-- 文字だけの広告＝投稿と同じヘッダー行＋本文（見出し込み7行まで） -->
+                    <!-- 文字だけの広告＝投稿と同じヘッダー行＋本文（前半＋後半で7行まで） -->
                     <div id="text-adtxt" hidden>
                       <div class="sim-adpost">
                         <div class="sim-adpost-h">
@@ -310,7 +311,7 @@
                             <p class="sim-adpost-tm">8/20</p>
                           </div>
                         </div>
-                        <p class="sim-adbody js-adbody"><span class="w js-ttl2">ここに見出しが入ります</span><span class="js-bd2"></span></p>
+                        <p class="sim-adbody js-adbody"><span class="w js-ttl2">ここに文章の前半が入ります</span><span class="js-bd2"></span></p>
                       </div>
                       <p class="sim-cta">詳しく見る ›</p>
                     </div>
@@ -352,7 +353,7 @@
                             <p class="sim-adpost-tm">8/20</p>
                           </div>
                         </div>
-                        <p class="sim-adbody js-adbody"><span class="w js-ttl2">ここに見出しが入ります</span><span class="js-bd2"></span></p>
+                        <p class="sim-adbody js-adbody"><span class="w js-ttl2">ここに文章の前半が入ります</span><span class="js-bd2"></span></p>
                       </div>
                       <p class="sim-cta">詳しく見る ›</p>
                     </div>
@@ -385,8 +386,8 @@
     // ===== アプリ側の確定値（正本＝Dating.jsx / AdCard.jsx / styles/ads.css / index.html :root）=====
     // 出会い：カード内寸368×610・画像1:1固定・文章8行（1行22字・行送り22.5）＝176字（2026-08-20実機一致）
     // SNS画像投稿：全幅402・比率は素材のまま縦4:5〜横1.88:1（clamp [4/5,1.88]）・文章なし
-    // SNSテキスト/メディア一覧：画像広告＝全幅402×1.88:1固定・文字0行／文字広告＝画像なし・見出し込み7行（-webkit-line-clamp:7・幅374＝1行24字）
-    // 入稿の天井＝見出し＋本文600字（DB check ads_text_len_600）＝表示行数を超えた分は画面に出ない
+    // SNSテキスト/メディア一覧：画像広告＝全幅402×1.88:1固定・文字0行／文字広告＝画像なし・前半＋後半で7行（-webkit-line-clamp:7・幅374＝1行24字）
+    // 入稿の天井＝前半＋後半600字（DB check ads_text_len_600）＝表示行数を超えた分は画面に出ない
     const OUT_W = 1206;        // 入稿の推奨幅＝画面幅402pt×3
     const LINE_ADD = 22.5;     // 1行ぶんの高さ（15px×1.5）
     const CARD_H = 610, CTA_H = 36, TXT_PAD = 26; // 出会いカードの内訳
@@ -469,8 +470,8 @@
     const FACE_NOTE = {
       dating: '画像・動画とも正方形（1:1）の固定＝候補プロフィールの写真と同じ形です。正方形でない素材は、正方形に切り取ってのご掲載となります。',
       photo:  '縦4:5〜横1.88:1の範囲内であれば、入稿いただいた形のまま表示されます（範囲を外れる素材は、いちばん近い形に合わせて切り取ります）。この面に文章は載りません。',
-      text:   '画像・動画の広告＝横長1.88:1の固定で、文章は載りません。文字だけの広告＝画像なしで、見出しと本文をあわせて7行まで表示されます。',
-      media:  '画像・動画の広告＝横長1.88:1の固定で、文章は載りません。文字だけの広告＝画像なしで、見出しと本文をあわせて7行まで表示されます。音楽・動画・漫画・小説・絵の各一覧に同じ形で入ります。',
+      text:   '画像・動画の広告＝横長1.88:1の固定で、文章は載りません。文字だけの広告＝画像なしで、前半と後半をあわせて7行まで表示されます。',
+      media:  '画像・動画の広告＝横長1.88:1の固定で、文章は載りません。文字だけの広告＝画像なしで、前半と後半をあわせて7行まで表示されます。音楽・動画・漫画・小説・絵の各一覧に同じ形で入ります。',
     };
     const CROP_NOTE = {
       dating: '出会い面の画像は正方形（1:1）の固定です。',
@@ -504,11 +505,11 @@
     };
     all('#faces .sim-choice').forEach(b => b.addEventListener('click', () => {
       all('#faces .sim-choice').forEach(x => x.classList.remove('on'));
-      b.classList.add('on'); face = b.dataset.face; apply();
+      b.classList.add('on'); face = b.dataset.face; apply(); fitAll(); // 天井は面ごとに違う＝切替後に収まる量まで詰める
     }));
     all('#kinds .sim-choice').forEach(b => b.addEventListener('click', () => {
       all('#kinds .sim-choice').forEach(x => x.classList.remove('on'));
-      b.classList.add('on'); kind = b.dataset.kind; apply();
+      b.classList.add('on'); kind = b.dataset.kind; apply(); fitAll();
     }));
 
     // ---- 画像の読み込み（ブラウザ内のみ・送信なし）----
@@ -576,7 +577,7 @@
       const t1 = document.querySelector('#scr-dating .js-ttl'), b1 = document.querySelector('#scr-dating .js-bd');
       t1.textContent = ttl; t1.hidden = !ttl;
       b1.textContent = bd;  b1.hidden = !bd;
-      // 文字広告（SNSテキスト/メディア）＝1段落（見出し＝白100の先頭行・改行して本文）
+      // 文字広告（SNSテキスト/メディア）＝1段落（前半＝白100・改行して後半＝白50。どちらも本文で、違うのは濃さだけ）
       all('.js-ttl2').forEach(n => { n.textContent = ttl ? ttl + (bd ? '\n' : '') : ''; });
       all('.js-bd2').forEach(n => { n.textContent = bd; });
 
@@ -584,7 +585,7 @@
       if (face === 'photo' || ((face === 'text' || face === 'media') && kind === 'image')) {
         w.hidden = false;
         w.textContent = 'この形の広告に文章は載りません。伝えたい内容は素材の中にお入れください。';
-        return;
+        return 0;
       }
       const cap = capacity();
       el('cap').textContent = cap.chars;
@@ -597,13 +598,44 @@
       if (over > 1) {
         w.hidden = false;
         w.innerHTML = `この枠には収まりきりません。<b>およそ${Math.ceil(over / LINE_ADD)}行ぶんが画面に出ません。</b><br>` +
-          `全部を表示できるのは、見出しと本文をあわせて<b>${cap.chars}字（${cap.lines}行）</b>までです。`;
+          `全部を表示できるのは、前半と後半をあわせて<b>${cap.chars}字（${cap.lines}行）</b>までです。`;
       } else {
         w.hidden = false;
-        w.textContent = `見出しと本文をあわせて ${cap.chars}字（${cap.lines}行）までが全部表示されます。`;
+        w.textContent = `前半と後半をあわせて ${cap.chars}字（${cap.lines}行）までが全部表示されます。`;
       }
+      return over;
     };
-    ['adv','ttl','bd'].forEach(id => el(id).addEventListener('input', sync));
+
+    // 枠に収まる量で入力を止める（2026-08-21こうくん指示）。
+    // 文字数だけで数えると改行ぶんを取りこぼすので、実物の高さがはみ出したら1文字前へ戻す＝
+    // 「打っても増えない」で天井が体感できる。面を切り替えた時は戻さない（既に入っている文は消さない）。
+    const lastOk = { adv: el('adv').value, ttl: el('ttl').value, bd: el('bd').value };
+    // 面や種類を切り替えると収まる量が変わる＝そのままだと前の面で入れた長文がはみ出したまま残る。
+    // 切替後は後半→前半の順に削って収める（後ろから削る＝伝えたい前半が先に残る）。
+    const fitAll = () => { onEdit('bd'); onEdit('ttl'); };
+    // 指定した欄を末尾から削って枠に収める。1文字ずつ試すと貼り付けのたびに数百回の測定が走るので、
+    // 入る長さを二分探索で当てる（測定＝実物の高さ＝改行位置まで含めて正確）。
+    const trimToFit = (id) => {
+      const box = el(id), full = box.value;
+      let lo = 0, hi = full.length;
+      while (lo < hi) {
+        const mid = Math.ceil((lo + hi) / 2);
+        box.value = full.slice(0, mid);
+        if (sync() > 1) hi = mid - 1; else lo = mid;
+      }
+      box.value = full.slice(0, lo);
+      sync();
+    };
+    // はみ出したら「後半」から削る＝前半（伝えたい文）を残す。後半を削り切っても入らない時だけ前半を削る。
+    // どちらの欄を打っていても後ろから減るので、「打っても増えない天井」が体感できる。
+    const onEdit = (id) => {
+      if (sync() > 1) {
+        trimToFit('bd');
+        if (sync() > 1) trimToFit('ttl');
+      }
+      ['adv','ttl','bd'].forEach(k => { lastOk[k] = el(k).value; });
+    };
+    ['adv','ttl','bd'].forEach(id => el(id).addEventListener('input', () => onEdit(id)));
 
     // ---- 書き出し（この構図のまま、入稿サイズちょうどのPNG）----
     el('export').addEventListener('click', () => {
