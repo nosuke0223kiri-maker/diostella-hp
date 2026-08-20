@@ -12,7 +12,7 @@
     /* ===== 入稿シミュレータ専用 =====
        ⚠️ここから下はアプリ（完璧秘書）の実装を再現した見本です。
        アプリ側の規格（比率・帯の高さ・文字サイズ・色）を変えたら、このファイルも必ず直してください。
-       正本＝02_products/秘書アプリ/src/Dating.jsx（出会い面）＋index.html :root（トークン） */
+       正本＝02_products/秘書アプリ/src/Dating.jsx（出会い面）・AdCard.jsx＋styles/ads.css（SNS/メディア）＋index.html :root（トークン） */
 
     .sim-layout { display:grid; grid-template-columns:1fr 340px; gap:40px; align-items:start; }
     @media (max-width: 900px) { .sim-layout { grid-template-columns:1fr; } }
@@ -21,17 +21,18 @@
     .sim-step { margin-bottom:28px; }
     .sim-step-t { font-size:0.95rem; color:var(--gold); margin-bottom:10px; letter-spacing:0.04em; }
 
+    /* 選択ボタン（掲載面・広告の種類） */
+    .sim-choices { display:flex; flex-wrap:wrap; gap:8px; }
+    .sim-choices[hidden] { display:none; }
+    .sim-choice { border:1px solid var(--border); background:#fff; border-radius:4px; padding:8px 14px; font-family:inherit; font-size:0.85rem; color:var(--text-sub); cursor:pointer; transition:all 0.25s; }
+    .sim-choice:hover { border-color:var(--gold-dim); }
+    .sim-choice.on { border-color:var(--gold); background:var(--gold-bg); color:var(--gold); }
+
     /* 画像の受け口 */
     .sim-drop { display:block; border:1px dashed var(--border); border-radius:6px; padding:28px 20px; text-align:center; color:var(--text-muted); cursor:pointer; transition:border-color 0.3s, background 0.3s; }
     .sim-drop:hover, .sim-drop.over { border-color:var(--gold); background:var(--gold-bg); color:var(--text-sub); }
     .sim-drop input { display:none; }
     .sim-file { font-size:0.85rem; color:var(--text-sub); margin-top:8px; overflow-wrap:anywhere; }
-
-    /* 比率の選択 */
-    .sim-ratios { display:flex; flex-wrap:wrap; gap:8px; }
-    .sim-ratio { border:1px solid var(--border); background:#fff; border-radius:4px; padding:8px 14px; font-family:inherit; font-size:0.85rem; color:var(--text-sub); cursor:pointer; transition:all 0.25s; }
-    .sim-ratio:hover { border-color:var(--gold-dim); }
-    .sim-ratio.on { border-color:var(--gold); background:var(--gold-bg); color:var(--gold); }
 
     /* ズーム */
     .sim-zoom { display:flex; align-items:center; gap:12px; }
@@ -45,6 +46,7 @@
     .sim-input:focus, .sim-textarea:focus { outline:none; border-color:var(--gold-dim); }
     .sim-textarea { resize:vertical; min-height:88px; line-height:1.8; }
     .sim-over { color:#b03a3a; }
+    .sim-note { font-size:0.82rem; color:var(--text-muted); line-height:1.9; }
 
     /* 書き出し */
     .sim-export { display:inline-block; border:1px solid var(--gold); background:var(--gold); color:#fff; border-radius:4px; padding:13px 30px; font-family:inherit; font-size:0.92rem; cursor:pointer; transition:opacity 0.25s; }
@@ -62,54 +64,89 @@
       font-family:'Noto Serif JP', serif; font-variant-numeric:lining-nums;
       text-shadow:0 1px 2px rgba(0,0,0,0.4);
       --gold:#d4af37; --gold-mid:rgba(212,175,55,0.5);
-      --txt:#e8e0d0; --txt-dim:rgba(232,224,208,0.5);
+      --txt:#e8e0d0; --txt-dim:rgba(232,224,208,0.5); --txt-faint:rgba(232,224,208,0.25);
       --card:#141414; --ui-bd:#312b19; --ui-sel-bg:#312b19;
       --ui-line:linear-gradient(90deg,transparent,rgba(212,175,55,0.5),transparent);
       --ui-sel-line:linear-gradient(90deg,transparent,rgba(212,175,55,1),transparent);
       --ui-sh:0 1px 2px rgba(0,0,0,0.4);
     }
+    .sim-screen { position:absolute; inset:0; display:flex; flex-direction:column; }
+    .sim-screen[hidden] { display:none; }
     /* 上62pt＝セーフエリア（実機のiPhone 17で実測）。時計とDynamic Island */
-    .sim-sa { height:62px; position:relative; }
+    .sim-sa { flex:none; height:62px; position:relative; }
     .sim-clock { position:absolute; left:34px; top:20px; font-size:15px; color:#fff; }
     .sim-island { position:absolute; left:50%; top:11px; transform:translateX(-50%); width:126px; height:37px; background:#0a0a0a; border-radius:19px; }
     /* ヘッダー＝高さ50＋下線1（アプリの --hdr-minh + border） */
-    .sim-hdr { height:50px; position:relative; display:flex; align-items:center; justify-content:center;
+    .sim-hdr { flex:none; height:50px; position:relative; display:flex; align-items:center; justify-content:center;
       border-bottom:1px solid var(--ui-bd); background:linear-gradient(to top,#141414 0%,#141414 55%,#000 100%); }
     .sim-hdr-t { font-size:15px; letter-spacing:0.2em; color:var(--gold); }
     .sim-hdr-back { position:absolute; left:16px; width:30px; height:30px; display:flex; align-items:center; justify-content:center;
       border:1px solid var(--ui-bd); border-radius:6px; box-shadow:var(--ui-sh); color:var(--gold-mid); font-size:24px; line-height:1; padding-bottom:4px; }
     .sim-hdr-f { position:absolute; right:16px; border:1px solid var(--ui-bd); border-radius:6px; box-shadow:var(--ui-sh);
       padding:6px 10px; font-size:11px; line-height:16px; color:var(--txt-dim); }
-    /* 本体＝画面874 − セーフエリア62 − ヘッダー50 ＝762。上10・左右16・下92（48 + 10 + セーフエリア34） */
-    .sim-main { height:762px; padding:10px 16px 92px; display:flex; flex-direction:column; }
-    /* カード＝外寸612pt（内寸610）。プロフィールカードとまったく同じ枠 */
+    .sim-hicons { position:absolute; right:16px; display:flex; gap:6px; }
+    .sim-hicons span { width:30px; height:30px; display:flex; align-items:center; justify-content:center; border:1px solid var(--ui-bd); border-radius:6px; box-shadow:var(--ui-sh); color:var(--txt-dim); font-size:13px; }
+
+    /* ── 出会い面 ── */
+    .sim-main { flex:1; min-height:0; padding:10px 16px 92px; display:flex; flex-direction:column; }
     .sim-card { flex:1; min-height:0; display:flex; flex-direction:column; position:relative; overflow:hidden;
       background:var(--ui-line) no-repeat top / 100% 1px, var(--card);
       border:1px solid var(--ui-bd); border-radius:6px; box-shadow:var(--ui-sh); }
     .sim-media { position:relative; flex:none; width:100%; overflow:hidden; background:#0a0a0a; cursor:grab; touch-action:none; }
     .sim-media.drag { cursor:grabbing; }
     .sim-media img { position:absolute; left:50%; top:50%; transform-origin:center; user-select:none; -webkit-user-drag:none; max-width:none; }
-    .sim-media-empty { display:flex; align-items:center; justify-content:center; height:100%; color:rgba(232,224,208,0.25); font-size:13px; }
-    .sim-badge { position:absolute; top:10px; left:10px; z-index:2; font-size:11px; line-height:16px; padding:6px 10px;
+    .sim-media-empty { display:flex; align-items:center; justify-content:center; height:100%; color:var(--txt-faint); font-size:13px; }
+    /* 広告バッジ＋広告主名＝画像の左上に1行（アプリの .ad-tile-head と同型。出会い=10px・SNS/メディア=6px寄せ） */
+    .sim-head { position:absolute; top:10px; left:10px; right:10px; z-index:2; display:flex; align-items:center; gap:6px; }
+    .sim-head.is-6 { top:6px; left:6px; right:6px; }
+    .sim-badge { flex-shrink:0; font-size:11px; line-height:16px; padding:6px 10px;
       background:rgba(0,0,0,0.45); color:rgba(255,255,255,0.85); border:1px solid rgba(255,255,255,0.25); border-radius:6px; }
-    /* 文章エリア＝アプリと同じく中スクロール（本文が長いと「詳しく見る」は下へ送られる）。バーはWebViewに合わせて隠す */
+    .sim-advnm { min-width:0; font-size:10px; color:rgba(255,255,255,0.75); text-shadow:0 1px 4px rgba(0,0,0,0.8);
+      overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    /* 文章エリア＝アプリと同じく中スクロール。バーはWebViewに合わせて隠す */
     .sim-txt { padding:12px 14px 14px; flex:1; min-height:0; display:flex; flex-direction:column; overflow-y:auto; scrollbar-width:none; }
     .sim-txt::-webkit-scrollbar { display:none; }
-    /* 文字組み＝テキスト投稿面と同じ .ad-post-line（15px・行送り1.5・間隔6／社名と見出しが白100・本文が白50） */
-    .sim-adv, .sim-ttl, .sim-bd { font-size:15px; line-height:1.5; margin:6px 0 0; white-space:pre-wrap; word-break:break-word; }
-    .sim-adv { margin:0; color:var(--txt); }
+    /* 文字組み＝15px・行送り1.5・1段落（見出し行が白100・本文が白50。広告主名は本文に入れない＝2026-08-20規格） */
+    .sim-ttl, .sim-bd { font-size:15px; line-height:1.5; margin:0; white-space:pre-wrap; word-break:break-word; }
     .sim-ttl { color:var(--txt); }
     .sim-bd  { color:var(--txt-dim); }
-    /* 「詳しく見る」＝38系の帯（1+10+16+10+1＝36pt）。ほかの掲載面（.ad-post-cta / .ad-tile-cta）と同じ形 */
+    /* 「詳しく見る」＝38系の帯（1+10+16+10+1＝36pt） */
     .sim-cta { flex:none; margin:0; box-sizing:border-box; text-align:center; font-size:13px; line-height:16px; padding:10px;
       color:var(--gold); background:var(--ui-sel-line) no-repeat top / 100% 1px, var(--ui-sel-bg); }
     .sim-next { margin-top:10px; text-align:center; font-size:13px; line-height:16px; padding:10px 0;
       background:var(--ui-line) no-repeat top / 100% 1px, var(--card); border:1px solid var(--ui-bd); border-radius:6px; box-shadow:var(--ui-sh); color:var(--txt-dim); }
-    /* 下部タブ＝14 + 38 + (10+34) */
     .sim-tab { position:absolute; left:0; right:0; bottom:0; display:flex; gap:10px; padding:14px 16px 44px; }
     .sim-tab span { flex:1; text-align:center; font-size:13px; line-height:16px; padding:10px 0; border:1px solid var(--ui-bd); border-radius:6px;
-      background:var(--ui-line) no-repeat top / 100% 1px, var(--card); color:rgba(232,224,208,0.25); box-shadow:var(--ui-sh); }
+      background:var(--ui-line) no-repeat top / 100% 1px, var(--card); color:var(--txt-faint); box-shadow:var(--ui-sh); }
     .sim-tab span.on { background:var(--ui-sel-line) no-repeat top / 100% 1px, var(--ui-sel-bg); color:var(--gold); }
+    .sim-tab .sq { flex:0 0 38px; }
+
+    /* ── フィード面の共通部品（SNS・メディア） ── */
+    .sim-feed { flex:1; min-height:0; display:flex; flex-direction:column; overflow:hidden; }
+    .sim-hr { flex:none; height:1px; background:var(--ui-line); }
+    /* まわりの投稿・作品のダミー（グレーの棒） */
+    .sim-ghostimg { flex:none; background:#161616; display:flex; align-items:center; justify-content:center; color:var(--txt-faint); font-size:11px; }
+    .sim-ghost { flex:none; padding:10px 14px; }
+    .sim-ghost-h { display:flex; align-items:center; gap:10px; }
+    .sim-av { width:38px; height:38px; border-radius:11px; background:#141414; border:1px solid var(--ui-bd); box-shadow:var(--ui-sh); flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:18px; }
+    .sim-bar { height:10px; border-radius:3px; background:rgba(232,224,208,0.10); }
+    .sim-ghost-fill { flex:1 1 auto; min-height:0; }
+    /* テキスト面・メディア一覧の「文字の広告」＝投稿と同じヘッダー行 */
+    .sim-adpost { flex:none; padding:10px 14px; }
+    .sim-adpost-h { display:flex; align-items:center; gap:10px; }
+    .sim-adpost-nm { display:flex; align-items:center; gap:8px; margin:0; font-size:13px; color:var(--txt); min-width:0; }
+    .sim-chip { flex-shrink:0; font-size:10px; letter-spacing:0.15em; color:var(--gold-mid); border:1px solid var(--ui-bd); box-shadow:var(--ui-sh); border-radius:4px; padding:1px 6px; }
+    .sim-adpost-tm { margin:0; font-size:11px; color:var(--txt-faint); }
+    .sim-adbody { margin:6px 0 0; font-size:15px; line-height:1.5; color:var(--txt-dim); white-space:pre-wrap; word-break:break-word;
+      display:-webkit-box; -webkit-box-orient:vertical; -webkit-line-clamp:7; overflow:hidden; }
+    .sim-adbody .w { color:var(--txt); }
+    /* メディア一覧のチップ帯と行 */
+    .sim-chiprow { flex:none; display:flex; gap:8px; padding:10px 14px 0; }
+    .sim-chiprow span { font-size:11px; line-height:16px; padding:6px 10px; border:1px solid var(--ui-bd); border-radius:6px;
+      background:var(--ui-line) no-repeat top / 100% 1px, var(--card); color:var(--txt-dim); box-shadow:var(--ui-sh); }
+    .sim-chiprow span.on { background:var(--ui-sel-line) no-repeat top / 100% 1px, var(--ui-sel-bg); color:var(--gold); }
+    .sim-mrow { flex:none; display:flex; align-items:center; gap:12px; padding:8px 14px; }
+    .sim-mthumb { width:56px; height:56px; border-radius:8px; background:#161616; border:1px solid var(--ui-bd); flex-shrink:0; }
 
     .sim-readout { margin-top:16px; font-size:0.82rem; color:var(--text-muted); line-height:1.9; }
     .sim-readout b { color:var(--text-sub); font-weight:400; }
@@ -132,14 +169,29 @@
         </p>
         <p style="line-height:2; margin-bottom:28px; font-size:0.88rem; color:var(--text-muted);">
           お選びいただいた画像は、お使いのブラウザの中だけで処理されます。当社を含め、どこにも送信されません。<br>
-          対応面：<strong style="color:var(--text-sub); font-weight:400;">出会い面</strong>（ほかの掲載面は順次追加いたします）
+          対応面：<strong style="color:var(--text-sub); font-weight:400;">出会い・SNS画像投稿・SNSテキスト・メディア一覧</strong>（全掲載面）
         </p>
 
         <div class="sim-layout">
           <div class="sim-panel">
 
             <div class="sim-step">
-              <div class="sim-step-t">1. 画像を選ぶ</div>
+              <div class="sim-step-t">1. 掲載面を選ぶ</div>
+              <div class="sim-choices" id="faces">
+                <button class="sim-choice on" data-face="dating">出会い</button>
+                <button class="sim-choice" data-face="photo">SNS画像投稿</button>
+                <button class="sim-choice" data-face="text">SNSテキスト</button>
+                <button class="sim-choice" data-face="media">メディア一覧</button>
+              </div>
+              <div class="sim-choices" id="kinds" style="margin-top:10px;" hidden>
+                <button class="sim-choice on" data-kind="image">画像・動画の広告</button>
+                <button class="sim-choice" data-kind="txt">文字だけの広告</button>
+              </div>
+              <p class="sim-note" id="facenote" style="margin-top:10px;"></p>
+            </div>
+
+            <div class="sim-step" id="step-img">
+              <div class="sim-step-t">2. 画像を選ぶ</div>
               <label class="sim-drop" id="drop">
                 画像をここにドラッグ、またはクリックして選択
                 <div class="sim-file" id="fileinfo"></div>
@@ -147,48 +199,37 @@
               </label>
             </div>
 
-            <div class="sim-step">
-              <div class="sim-step-t">2. 表示する形を選ぶ</div>
-              <div class="sim-ratios">
-                <button class="sim-ratio on" data-r="auto">素材のまま</button>
-                <button class="sim-ratio" data-r="0.8">縦 4:5</button>
-                <button class="sim-ratio" data-r="1">正方形 1:1</button>
-                <button class="sim-ratio" data-r="1.88">横 1.88:1</button>
-              </div>
-              <p style="font-size:0.82rem; color:var(--text-muted); margin-top:10px; line-height:1.9;">
-                「素材のまま」＝縦4:5から横1.88:1の範囲内であれば、切り取りは発生しません。範囲を外れる素材は、いちばん近い形に合わせて切り取ります。
-              </p>
-            </div>
-
-            <div class="sim-step">
+            <div class="sim-step" id="step-crop">
               <div class="sim-step-t">3. 切り取る位置を決める</div>
+              <p class="sim-note" id="cropnote" style="margin-bottom:12px;"></p>
               <div class="sim-zoom">
                 <label for="zoom" style="font-size:0.85rem; color:var(--text-muted); white-space:nowrap;">拡大</label>
                 <input type="range" id="zoom" min="100" max="300" value="100">
                 <span class="sim-zoom-v" id="zoomv">100%</span>
               </div>
-              <p style="font-size:0.82rem; color:var(--text-muted); margin-top:10px; line-height:1.9;">
+              <p class="sim-note" style="margin-top:10px;">
                 右のプレビューの画像を、そのままドラッグして位置を動かせます。
               </p>
             </div>
 
-            <div class="sim-step">
+            <div class="sim-step" id="step-text">
               <div class="sim-step-t">4. 文章を入れる</div>
               <div class="sim-field">
                 <label class="sim-label" for="adv">広告主名（必須・法令により必ず表示されます）</label>
                 <input class="sim-input" id="adv" maxlength="30" value="ご社名">
               </div>
-              <div class="sim-field">
+              <div class="sim-field" id="f-ttl">
                 <label class="sim-label" for="ttl">見出し</label>
                 <input class="sim-input" id="ttl" value="見出しはこの一行ぶんです">
               </div>
-              <div class="sim-field">
-                <label class="sim-label" for="bd">本文（<span id="cnt">0</span>/<span id="cap">140</span>・見出しとの合計）</label>
+              <div class="sim-field" id="f-bd">
+                <label class="sim-label" for="bd">本文（<span id="cnt">0</span>/<span id="cap">176</span>・見出しとの合計）</label>
                 <textarea class="sim-textarea" id="bd">本文もこの一行ぶんが表示されます。</textarea>
               </div>
+              <p class="sim-note" id="textnote"></p>
             </div>
 
-            <div class="sim-step">
+            <div class="sim-step" id="step-export">
               <div class="sim-step-t">5. 書き出す</div>
               <button class="sim-export" id="export" disabled>この形で画像を書き出す</button>
               <p class="sim-export-note" id="exportnote">画像を選ぶと書き出せます。</p>
@@ -199,25 +240,129 @@
           <div class="sim-stage">
             <div class="sim-scale">
               <div class="sim-phone">
-                <div class="sim-sa"><div class="sim-island"></div><div class="sim-clock">9:41</div></div>
-                <div class="sim-hdr"><span class="sim-hdr-back">‹</span><span class="sim-hdr-t">出会い</span><span class="sim-hdr-f">絞込</span></div>
-                <div class="sim-main">
-                  <div class="sim-card">
-                    <div class="sim-media" id="media">
-                      <div class="sim-media-empty" id="empty">画像を選んでください</div>
-                      <img id="img" alt="" hidden>
-                      <span class="sim-badge">広告</span>
+
+                <!-- 出会い面 -->
+                <div class="sim-screen" id="scr-dating">
+                  <div class="sim-sa"><div class="sim-island"></div><div class="sim-clock">9:41</div></div>
+                  <div class="sim-hdr"><span class="sim-hdr-back">‹</span><span class="sim-hdr-t">出会い</span><span class="sim-hdr-f">絞込</span></div>
+                  <div class="sim-main">
+                    <div class="sim-card">
+                      <div class="sim-media js-media" data-face="dating">
+                        <div class="sim-media-empty js-empty">画像を選んでください</div>
+                        <img class="js-img" alt="" hidden>
+                        <span class="sim-head"><span class="sim-badge">広告</span><span class="sim-advnm js-advnm">ご社名</span></span>
+                      </div>
+                      <div class="sim-txt" id="dating-txt">
+                        <p class="sim-ttl js-ttl">ここに見出しが入ります</p>
+                        <p class="sim-bd js-bd"></p>
+                      </div>
+                      <p class="sim-cta">詳しく見る ›</p>
                     </div>
-                    <div class="sim-txt">
-                      <p class="sim-adv" id="p-adv">ご社名</p>
-                      <p class="sim-ttl" id="p-ttl">ここに見出しが入ります</p>
-                      <p class="sim-bd" id="p-bd"></p>
+                    <div class="sim-next">次へ</div>
+                  </div>
+                  <div class="sim-tab"><span class="on">さがす</span><span>マッチ</span><span>マイページ</span></div>
+                </div>
+
+                <!-- SNS画像投稿面 -->
+                <div class="sim-screen" id="scr-photo" hidden>
+                  <div class="sim-sa"><div class="sim-island"></div><div class="sim-clock">9:41</div></div>
+                  <div class="sim-hdr"><span class="sim-hdr-back">‹</span><span class="sim-hdr-t">SNS</span><span class="sim-hicons"><span>▤</span><span>✦</span><span>⚙</span></span></div>
+                  <div class="sim-feed">
+                    <div class="sim-ghostimg" style="height:110px;">（前の投稿の写真）</div>
+                    <div class="sim-media js-media" data-face="photo">
+                      <div class="sim-media-empty js-empty">画像を選んでください</div>
+                      <img class="js-img" alt="" hidden>
+                      <span class="sim-head is-6"><span class="sim-badge">広告</span><span class="sim-advnm js-advnm">ご社名</span></span>
                     </div>
                     <p class="sim-cta">詳しく見る ›</p>
+                    <div class="sim-ghostimg sim-ghost-fill">（次の投稿の写真）</div>
                   </div>
-                  <div class="sim-next">次へ</div>
+                  <div class="sim-tab"><span class="on">投稿</span><span>マイページ</span><span class="sq">＋</span></div>
                 </div>
-                <div class="sim-tab"><span class="on">さがす</span><span>マッチ</span><span>マイページ</span></div>
+
+                <!-- SNSテキスト面 -->
+                <div class="sim-screen" id="scr-text" hidden>
+                  <div class="sim-sa"><div class="sim-island"></div><div class="sim-clock">9:41</div></div>
+                  <div class="sim-hdr"><span class="sim-hdr-back">‹</span><span class="sim-hdr-t">SNS</span><span class="sim-hicons"><span>▤</span><span>✦</span><span>⚙</span></span></div>
+                  <div class="sim-feed">
+                    <div class="sim-ghost">
+                      <div class="sim-ghost-h"><span class="sim-av"></span><div style="flex:1;"><div class="sim-bar" style="width:64px;"></div><div class="sim-bar" style="width:38px; margin-top:6px;"></div></div></div>
+                      <div class="sim-bar" style="margin-top:10px;"></div>
+                      <div class="sim-bar" style="width:60%; margin-top:6px;"></div>
+                    </div>
+                    <div class="sim-hr"></div>
+                    <!-- 画像・動画の広告＝1.88:1の固定箱・文字なし -->
+                    <div id="text-adimg">
+                      <div class="sim-media js-media" data-face="text">
+                        <div class="sim-media-empty js-empty">画像を選んでください</div>
+                        <img class="js-img" alt="" hidden>
+                        <span class="sim-head is-6"><span class="sim-badge">広告</span><span class="sim-advnm js-advnm">ご社名</span></span>
+                      </div>
+                      <p class="sim-cta">詳しく見る ›</p>
+                    </div>
+                    <!-- 文字だけの広告＝投稿と同じヘッダー行＋本文（見出し込み7行まで） -->
+                    <div id="text-adtxt" hidden>
+                      <div class="sim-adpost">
+                        <div class="sim-adpost-h">
+                          <span class="sim-av">🏢</span>
+                          <div style="min-width:0; flex:1;">
+                            <p class="sim-adpost-nm"><span class="js-advnm">ご社名</span><span class="sim-chip">広告</span></p>
+                            <p class="sim-adpost-tm">8/20</p>
+                          </div>
+                        </div>
+                        <p class="sim-adbody js-adbody"><span class="w js-ttl2">ここに見出しが入ります</span><span class="js-bd2"></span></p>
+                      </div>
+                      <p class="sim-cta">詳しく見る ›</p>
+                    </div>
+                    <div class="sim-hr"></div>
+                    <div class="sim-ghost sim-ghost-fill">
+                      <div class="sim-ghost-h"><span class="sim-av"></span><div style="flex:1;"><div class="sim-bar" style="width:64px;"></div><div class="sim-bar" style="width:38px; margin-top:6px;"></div></div></div>
+                      <div class="sim-bar" style="margin-top:10px;"></div>
+                      <div class="sim-bar" style="width:72%; margin-top:6px;"></div>
+                    </div>
+                  </div>
+                  <div class="sim-tab"><span class="on">投稿</span><span>マイページ</span><span class="sq">＋</span></div>
+                </div>
+
+                <!-- メディア一覧 -->
+                <div class="sim-screen" id="scr-media" hidden>
+                  <div class="sim-sa"><div class="sim-island"></div><div class="sim-clock">9:41</div></div>
+                  <div class="sim-hdr"><span class="sim-hdr-back">‹</span><span class="sim-hdr-t">音楽</span><span class="sim-hicons"><span>⚙</span></span></div>
+                  <div class="sim-feed">
+                    <div class="sim-chiprow"><span class="on">すべて</span><span>無料</span><span>有料</span></div>
+                    <div class="sim-mrow"><span class="sim-mthumb"></span><div style="flex:1;"><div class="sim-bar" style="width:70%;"></div><div class="sim-bar" style="width:40%; margin-top:8px;"></div></div></div>
+                    <div class="sim-hr" style="margin:0 14px;"></div>
+                    <div class="sim-mrow"><span class="sim-mthumb"></span><div style="flex:1;"><div class="sim-bar" style="width:55%;"></div><div class="sim-bar" style="width:34%; margin-top:8px;"></div></div></div>
+                    <!-- 画像・動画の広告＝1.88:1の固定箱・全幅ブリード -->
+                    <div id="media-adimg">
+                      <div class="sim-media js-media" data-face="media">
+                        <div class="sim-media-empty js-empty">画像を選んでください</div>
+                        <img class="js-img" alt="" hidden>
+                        <span class="sim-head is-6"><span class="sim-badge">広告</span><span class="sim-advnm js-advnm">ご社名</span></span>
+                      </div>
+                      <p class="sim-cta">詳しく見る ›</p>
+                    </div>
+                    <!-- 文字だけの広告 -->
+                    <div id="media-adtxt" hidden>
+                      <div class="sim-adpost">
+                        <div class="sim-adpost-h">
+                          <span class="sim-av">🏢</span>
+                          <div style="min-width:0; flex:1;">
+                            <p class="sim-adpost-nm"><span class="js-advnm">ご社名</span><span class="sim-chip">広告</span></p>
+                            <p class="sim-adpost-tm">8/20</p>
+                          </div>
+                        </div>
+                        <p class="sim-adbody js-adbody"><span class="w js-ttl2">ここに見出しが入ります</span><span class="js-bd2"></span></p>
+                      </div>
+                      <p class="sim-cta">詳しく見る ›</p>
+                    </div>
+                    <div class="sim-mrow"><span class="sim-mthumb"></span><div style="flex:1;"><div class="sim-bar" style="width:64%;"></div><div class="sim-bar" style="width:44%; margin-top:8px;"></div></div></div>
+                    <div class="sim-hr" style="margin:0 14px;"></div>
+                    <div class="sim-mrow sim-ghost-fill" style="align-items:flex-start;"><span class="sim-mthumb"></span><div style="flex:1;"><div class="sim-bar" style="width:58%;"></div><div class="sim-bar" style="width:36%; margin-top:8px;"></div></div></div>
+                  </div>
+                  <div class="sim-tab"><span class="on">一覧</span><span>マイページ</span><span class="sq">＋</span></div>
+                </div>
+
               </div>
             </div>
             <div class="sim-readout" id="readout">
@@ -237,65 +382,134 @@
   <script src="../../assets/js/script.js?v=20260816c"></script>
   <script>
   (() => {
-    // ===== アプリ側の確定値（正本＝Dating.jsx / index.html :root）=====
-    const CARD_W = 368;      // カード内寸の幅（画面402 − 左右16×2 − 枠1×2）＝画面上の表示サイズ
-    const LO = 0.8, HI = 1.88; // 出会い面の比率クランプ（縦4:5 〜 横1.88:1）
-    const OUT_W = 1206;      // 入稿の推奨幅＝画面幅402pt×3。画像投稿の広告と同じ素材が使えるよう合わせている
-    // 文字がいくつ入るかの実測値（ブラウザで採寸・2026-08-14）
-    const CARD_H = 610;      // カード内寸の高さ（外寸612 − 枠1×2）
-    const CTA_H = 36;        // 「詳しく見る」の帯（10+16+10）
-    const TXT_PAD = 26;      // 文章エリアの上下padding（12+14）
-    const PER_LINE = 22;     // 15pxの全角で1行に入る字数（幅340pt）
-    const LINE_ADD = 22;     // 2行目以降の1行ぶんの高さ
-    const BLOCK1 = 37;       // 社名1行＋間隔6×2＋（見出し・本文の1行目ぶんの差）＝行数式の切片
+    // ===== アプリ側の確定値（正本＝Dating.jsx / AdCard.jsx / styles/ads.css / index.html :root）=====
+    // 出会い：カード内寸368×610・画像1:1固定・文章8行（1行22字・行送り22.5）＝176字（2026-08-20実機一致）
+    // SNS画像投稿：全幅402・比率は素材のまま縦4:5〜横1.88:1（clamp [4/5,1.88]）・文章なし
+    // SNSテキスト/メディア一覧：画像広告＝全幅402×1.88:1固定・文字0行／文字広告＝画像なし・見出し込み7行（-webkit-line-clamp:7・幅374＝1行24字）
+    // 入稿の天井＝見出し＋本文600字（DB check ads_text_len_600）＝表示行数を超えた分は画面に出ない
+    const OUT_W = 1206;        // 入稿の推奨幅＝画面幅402pt×3
+    const LINE_ADD = 22.5;     // 1行ぶんの高さ（15px×1.5）
+    const CARD_H = 610, CTA_H = 36, TXT_PAD = 26; // 出会いカードの内訳
+    const FACES = {
+      dating: { imgW: 368, name: '出会い', file: 'dating' },
+      photo:  { imgW: 402, name: 'SNS画像投稿', file: 'sns-photo', lo: 0.8, hi: 1.88 },
+      text:   { imgW: 402, name: 'SNSテキスト', file: 'sns-text', fixed: 1.88 },
+      media:  { imgW: 402, name: 'メディア一覧', file: 'media-list', fixed: 1.88 },
+    };
 
     const el = id => document.getElementById(id);
-    const media = el('media'), img = el('img'), empty = el('empty');
-    let src = null, nw = 0, nh = 0;      // 元画像
-    let mode = 'auto';                    // 選択中の比率
-    let zoom = 1, ox = 0, oy = 0;         // 拡大率・位置（pt）
+    const all = sel => [...document.querySelectorAll(sel)];
+    let face = 'dating', kind = 'image';       // kind＝SNSテキスト/メディア一覧の広告の種類
+    let src = null, nw = 0, nh = 0;            // 元画像
+    let zoom = 1, ox = 0, oy = 0;              // 拡大率・位置（pt）
 
-    // 表示する比率を決める＝アプリと同じクランプ
+    const activeMedia = () => document.querySelector(`.js-media[data-face="${face}"]`);
+    const isTxtKind = () => (face === 'text' || face === 'media') && kind === 'txt';
+
+    // 表示する比率（アプリと同じクランプ）
     const ratio = () => {
-      if (mode !== 'auto') return +mode;
-      if (!nw) return LO;
-      return Math.min(HI, Math.max(LO, nw / nh));
+      const f = FACES[face];
+      if (f.fixed) return f.fixed;
+      if (f.lo) return src ? Math.min(f.hi, Math.max(f.lo, nw / nh)) : f.lo;
+      return 1; // 出会い＝1:1固定
     };
-    const frameH = () => CARD_W / ratio();
+    const imgW = () => FACES[face].imgW;
+    const frameH = () => imgW() / ratio();
 
     // cover の基準倍率＝枠を埋める最小倍率
-    const baseK = () => {
-      const fh = frameH();
-      return nw ? Math.max(CARD_W / nw, fh / nh) : 1;
-    };
+    const baseK = () => (nw ? Math.max(imgW() / nw, frameH() / nh) : 1);
 
     // はみ出し量の範囲内に位置を収める
     const clampPos = () => {
       const k = baseK() * zoom;
-      const mx = Math.max(0, (nw * k - CARD_W) / 2);
+      const mx = Math.max(0, (nw * k - imgW()) / 2);
       const my = Math.max(0, (nh * k - frameH()) / 2);
       ox = Math.min(mx, Math.max(-mx, ox));
       oy = Math.min(my, Math.max(-my, oy));
     };
 
+    const ratioLabel = () => {
+      if (face === 'dating') return '正方形 1:1';
+      if (FACES[face].fixed) return '横長 1.88:1';
+      return `比率 ${ratio().toFixed(2)}`;
+    };
+
     const render = () => {
+      if (isTxtKind()) { el('readout').innerHTML = '<b>表示サイズ</b>　文字だけの広告＝画像はありません'; sync(); return; }
+      const m = activeMedia();
+      const img = m.querySelector('.js-img'), empty = m.querySelector('.js-empty');
       const fh = frameH();
-      media.style.height = fh + 'px';
-      if (!src) { el('readout').innerHTML = '<b>表示サイズ</b>　—<br><b>入稿サイズ</b>　—'; sync(); return; }
+      m.style.height = fh + 'px';
+      if (!src) {
+        img.hidden = true; empty.hidden = false;
+        el('readout').innerHTML = '<b>表示サイズ</b>　—<br><b>入稿サイズ</b>　—';
+        sync(); return;
+      }
       clampPos();
       const k = baseK() * zoom;
+      img.hidden = false; empty.hidden = true;
       img.style.width = (nw * k) + 'px';
       img.style.height = (nh * k) + 'px';
       img.style.transform = `translate(calc(-50% + ${ox}px), calc(-50% + ${oy}px))`;
-      const cut = (nw / nh < LO - 0.001 || nw / nh > HI + 0.001 || mode !== 'auto' || zoom > 1.001);
+      const f = FACES[face];
+      const r = nw / nh;
+      const cut = f.lo
+        ? (r < f.lo - 0.001 || r > f.hi + 0.001 || zoom > 1.001)
+        : (Math.abs(r - ratio()) > 0.001 || zoom > 1.001);
       const oh = Math.round(OUT_W / ratio());
       el('readout').innerHTML =
-        `<b>表示サイズ</b>　${CARD_W} × ${Math.round(fh)} pt（比率 ${ratio().toFixed(2)}）<br>` +
+        `<b>表示サイズ</b>　${imgW()} × ${Math.round(fh)} pt（${ratioLabel()}）<br>` +
         `<b>入稿サイズ</b>　${OUT_W} × ${oh} px<br>` +
         `<b>切り取り</b>　${cut ? 'あり（枠外は表示されません）' : 'なし（素材の形のまま）'}`;
       el('exportnote').textContent = `${OUT_W} × ${oh} px の PNG を書き出します。`;
-      sync(); // 形が変わると入る字数も変わる＝カウンタと注意書きを引き直す
+      sync();
     };
+
+    // ---- 掲載面・種類の切り替え ----
+    const FACE_NOTE = {
+      dating: '画像・動画とも正方形（1:1）の固定＝候補プロフィールの写真と同じ形です。正方形でない素材は、正方形に切り取ってのご掲載となります。',
+      photo:  '縦4:5〜横1.88:1の範囲内であれば、入稿いただいた形のまま表示されます（範囲を外れる素材は、いちばん近い形に合わせて切り取ります）。この面に文章は載りません。',
+      text:   '画像・動画の広告＝横長1.88:1の固定で、文章は載りません。文字だけの広告＝画像なしで、見出しと本文をあわせて7行まで表示されます。',
+      media:  '画像・動画の広告＝横長1.88:1の固定で、文章は載りません。文字だけの広告＝画像なしで、見出しと本文をあわせて7行まで表示されます。音楽・動画・漫画・小説・絵の各一覧に同じ形で入ります。',
+    };
+    const CROP_NOTE = {
+      dating: '出会い面の画像は正方形（1:1）の固定です。',
+      photo:  '「素材のまま」で表示される範囲＝縦4:5〜横1.88:1。範囲内なら切り取りは発生しません。',
+      text:   '横長1.88:1の固定です。ほかの形の素材は、横長に切り取ってのご掲載となります。',
+      media:  '横長1.88:1の固定です。ほかの形の素材は、横長に切り取ってのご掲載となります。',
+    };
+
+    const apply = () => {
+      // 画面の出し分け
+      ['dating','photo','text','media'].forEach(f => { el('scr-' + f).hidden = (f !== face); });
+      const hasKind = (face === 'text' || face === 'media');
+      el('kinds').hidden = !hasKind;
+      if (hasKind) {
+        el(face + '-adimg').hidden = (kind === 'txt');
+        el(face + '-adtxt').hidden = (kind !== 'txt');
+      }
+      // パネルの出し分け
+      const txt = isTxtKind();
+      el('step-img').hidden = txt;
+      el('step-crop').hidden = txt;
+      el('step-export').hidden = txt;
+      el('cropnote').textContent = CROP_NOTE[face];
+      el('facenote').textContent = FACE_NOTE[face];
+      const noText = (face === 'photo') || (hasKind && kind === 'image');
+      el('f-ttl').hidden = noText;
+      el('f-bd').hidden = noText;
+      el('textnote').textContent = noText ? 'この形の広告に文章は載りません（広告主名は画像の左上に表示されます）。' : '';
+      ox = oy = 0; zoom = 1; el('zoom').value = 100; el('zoomv').textContent = '100%';
+      render();
+    };
+    all('#faces .sim-choice').forEach(b => b.addEventListener('click', () => {
+      all('#faces .sim-choice').forEach(x => x.classList.remove('on'));
+      b.classList.add('on'); face = b.dataset.face; apply();
+    }));
+    all('#kinds .sim-choice').forEach(b => b.addEventListener('click', () => {
+      all('#kinds .sim-choice').forEach(x => x.classList.remove('on'));
+      b.classList.add('on'); kind = b.dataset.kind; apply();
+    }));
 
     // ---- 画像の読み込み（ブラウザ内のみ・送信なし）----
     const load = file => {
@@ -305,7 +519,7 @@
         const im = new Image();
         im.onload = () => {
           src = im; nw = im.naturalWidth; nh = im.naturalHeight;
-          img.src = e.target.result; img.hidden = false; empty.hidden = true;
+          all('.js-img').forEach(i => { i.src = e.target.result; });
           zoom = 1; ox = oy = 0; el('zoom').value = 100; el('zoomv').textContent = '100%';
           el('export').disabled = false;
           el('fileinfo').textContent = `${file.name}（${nw} × ${nh} px）`;
@@ -321,12 +535,6 @@
     ['dragleave','drop'].forEach(t => drop.addEventListener(t, e => { e.preventDefault(); drop.classList.remove('over'); }));
     drop.addEventListener('drop', e => load(e.dataTransfer.files[0]));
 
-    // ---- 比率 ----
-    document.querySelectorAll('.sim-ratio').forEach(b => b.addEventListener('click', () => {
-      document.querySelectorAll('.sim-ratio').forEach(x => x.classList.remove('on'));
-      b.classList.add('on'); mode = b.dataset.r; ox = oy = 0; render();
-    }));
-
     // ---- 拡大 ----
     el('zoom').addEventListener('input', e => {
       zoom = +e.target.value / 100; el('zoomv').textContent = e.target.value + '%'; render();
@@ -335,75 +543,90 @@
     // ---- ドラッグで位置調整（プレビューの画像を直接動かす）----
     let dragging = false, sx = 0, sy = 0, sox = 0, soy = 0;
     const S = 0.78; // プレビューの表示倍率＝画面上の移動量をpt換算するため
-    media.addEventListener('pointerdown', e => {
-      if (!src) return;
-      dragging = true; media.classList.add('drag'); media.setPointerCapture(e.pointerId);
-      sx = e.clientX; sy = e.clientY; sox = ox; soy = oy;
+    all('.js-media').forEach(m => {
+      m.addEventListener('pointerdown', e => {
+        if (!src || m !== activeMedia()) return;
+        dragging = true; m.classList.add('drag'); m.setPointerCapture(e.pointerId);
+        sx = e.clientX; sy = e.clientY; sox = ox; soy = oy;
+      });
+      m.addEventListener('pointermove', e => {
+        if (!dragging) return;
+        ox = sox + (e.clientX - sx) / S; oy = soy + (e.clientY - sy) / S; render();
+      });
+      ['pointerup','pointercancel'].forEach(t => m.addEventListener(t, () => { dragging = false; m.classList.remove('drag'); }));
     });
-    media.addEventListener('pointermove', e => {
-      if (!dragging) return;
-      ox = sox + (e.clientX - sx) / S; oy = soy + (e.clientY - sy) / S; render();
-    });
-    ['pointerup','pointercancel'].forEach(t => media.addEventListener(t, () => { dragging = false; media.classList.remove('drag'); }));
 
-    // ---- この形に余白なく収まる字数 ----
-    // 文章エリアの内寸 A に、社名1行＋見出し＋本文を積んだ高さが収まる行数を出す。
-    // 高さ＝37 + 22×(見出しと本文の合計行数)（実測：1行目23pt・2行目以降22pt・ブロック間6pt）
+    // ---- この形に収まる字数 ----
+    // 出会い＝文章エリア内寸(610-368-36-26=180pt)÷22.5＝8行×22字＝176字（2026-08-20実機一致）
+    // SNSテキスト/メディアの文字広告＝line-clamp:7の固定7行×24字（幅374pt）＝168字。入稿は600字まで＝超えた分は表示されない
     const capacity = () => {
-      const A = CARD_H - frameH() - CTA_H - TXT_PAD;
-      const lines = Math.max(0, Math.floor((A - BLOCK1) / LINE_ADD));
-      return { lines, chars: lines * PER_LINE };
+      if (face === 'dating') {
+        const A = CARD_H - frameH() - CTA_H - TXT_PAD;
+        const lines = Math.max(0, Math.floor(A / LINE_ADD));
+        return { lines, chars: lines * 22 };
+      }
+      return { lines: 7, chars: 168 };
     };
 
     // ---- 文章 ----
     const sync = () => {
       const adv = el('adv').value, ttl = el('ttl').value, bd = el('bd').value;
-      el('p-adv').textContent = adv;
-      el('p-ttl').textContent = ttl; el('p-ttl').hidden = !ttl;
-      el('p-bd').textContent = bd;   el('p-bd').hidden = !bd;
+      all('.js-advnm').forEach(n => { n.textContent = adv; });
+      // 出会い
+      const t1 = document.querySelector('#scr-dating .js-ttl'), b1 = document.querySelector('#scr-dating .js-bd');
+      t1.textContent = ttl; t1.hidden = !ttl;
+      b1.textContent = bd;  b1.hidden = !bd;
+      // 文字広告（SNSテキスト/メディア）＝1段落（見出し＝白100の先頭行・改行して本文）
+      all('.js-ttl2').forEach(n => { n.textContent = ttl ? ttl + (bd ? '\n' : '') : ''; });
+      all('.js-bd2').forEach(n => { n.textContent = bd; });
+
+      const w = el('warn');
+      if (face === 'photo' || ((face === 'text' || face === 'media') && kind === 'image')) {
+        w.hidden = false;
+        w.textContent = 'この形の広告に文章は載りません。伝えたい内容は素材の中にお入れください。';
+        return;
+      }
       const cap = capacity();
       el('cap').textContent = cap.chars;
       const n = [...ttl].length + [...bd].length;
       el('cnt').textContent = n;
       el('cnt').parentElement.classList.toggle('sim-over', n > cap.chars);
       // はみ出しは式でなく実物の高さで判定する（改行位置まで含めて正確）
-      const t = document.querySelector('.sim-txt');
-      const over = Math.round(t.scrollHeight - t.clientHeight);
-      const w = el('warn');
+      const box = (face === 'dating') ? el('dating-txt') : document.querySelector(`#${face}-adtxt .js-adbody`);
+      const over = Math.round(box.scrollHeight - box.clientHeight);
       if (over > 1) {
         w.hidden = false;
-        w.innerHTML = `この形には収まりきりません。<b>およそ${Math.ceil(over / LINE_ADD)}行ぶんが画面に出ません。</b><br>` +
-          `いまの形（${ratio().toFixed(2)}）で全部を表示できるのは、見出しと本文をあわせて<b>${cap.chars}字（${cap.lines}行）</b>までです。`;
+        w.innerHTML = `この枠には収まりきりません。<b>およそ${Math.ceil(over / LINE_ADD)}行ぶんが画面に出ません。</b><br>` +
+          `全部を表示できるのは、見出しと本文をあわせて<b>${cap.chars}字（${cap.lines}行）</b>までです。`;
       } else {
         w.hidden = false;
-        w.textContent = `いまの形（${ratio().toFixed(2)}）なら、見出しと本文をあわせて ${cap.chars}字（${cap.lines}行）までが全部表示されます。`;
+        w.textContent = `見出しと本文をあわせて ${cap.chars}字（${cap.lines}行）までが全部表示されます。`;
       }
     };
     ['adv','ttl','bd'].forEach(id => el(id).addEventListener('input', sync));
-    sync();
 
     // ---- 書き出し（この構図のまま、入稿サイズちょうどのPNG）----
     el('export').addEventListener('click', () => {
-      if (!src) return;
+      if (!src || isTxtKind()) return;
       const cw = OUT_W, ch = Math.round(OUT_W / ratio());
       const cv = document.createElement('canvas');
       cv.width = cw; cv.height = ch;
       const cx = cv.getContext('2d');
       cx.imageSmoothingQuality = 'high';
-      const scale = cw / CARD_W;           // 画面のpt → 入稿pxへの換算
+      const scale = cw / imgW();           // 画面のpt → 入稿pxへの換算
       const k = baseK() * zoom * scale;
       const dw = nw * k, dh = nh * k;
       cx.drawImage(src, (cw - dw) / 2 + ox * scale, (ch - dh) / 2 + oy * scale, dw, dh);
       cv.toBlob(b => {
         const a = document.createElement('a');
         a.href = URL.createObjectURL(b);
-        a.download = `diostella-ad-dating-${cw}x${ch}.png`;
+        a.download = `diostella-ad-${FACES[face].file}-${cw}x${ch}.png`;
         a.click();
         setTimeout(() => URL.revokeObjectURL(a.href), 30000); // 保存が始まる前に消さない
       }, 'image/png');
     });
 
-    render();
+    apply();
   })();
   </script>
 </body>
