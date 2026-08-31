@@ -48,7 +48,7 @@ nav a:hover{color:var(--gold-bright)}
 
 /* ===== ヒーロー ===== */
 .hero{position:relative;min-height:92vh;display:flex;align-items:flex-end;justify-content:center;overflow:hidden;padding:0}
-.hero-bg{position:absolute;inset:0;background:url('assets/key_visual.jpg?v=20260901b') center 22%/cover no-repeat;animation:kenburns 22s ease-in-out infinite alternate}
+.hero-bg{position:absolute;inset:0;background:url('assets/key_visual.webp?v=20260901c') center 22%/cover no-repeat;animation:kenburns 22s ease-in-out infinite alternate}
 @keyframes kenburns{from{transform:scale(1)}to{transform:scale(1.08)}}
 .hero-shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(13,11,8,.55) 0%,rgba(13,11,8,0) 30%,rgba(13,11,8,0) 55%,rgba(13,11,8,.96) 100%)}
 .hero-in{position:relative;z-index:2;text-align:center;padding:0 22px 72px}
@@ -154,7 +154,7 @@ nav a:hover{color:var(--gold-bright)}
 
 /* ===== 応募CTA帯 ===== */
 .cta-band{position:relative;text-align:center;padding:100px 22px;overflow:hidden}
-.cta-band::before{content:"";position:absolute;inset:0;background:url('assets/key_visual.jpg?v=20260901b') center 30%/cover no-repeat;filter:brightness(.28) saturate(.9)}
+.cta-band::before{content:"";position:absolute;inset:0;background:url('assets/key_visual.webp?v=20260901c') center 30%/cover no-repeat;filter:brightness(.28) saturate(.9)}
 .cta-band .in{position:relative;z-index:2}
 .cta-band h2{font-family:var(--serif);font-size:clamp(20px,3.4vw,30px);letter-spacing:.14em;margin-bottom:10px}
 .cta-band p{color:var(--ink-sub);font-size:13px;margin-bottom:30px}
