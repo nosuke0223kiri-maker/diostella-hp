@@ -6,7 +6,7 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2.108.1";
 
 const SB_URL = "https://qwsxionvojqnqnwccoij.supabase.co";
 const SB_KEY = "sb_publishable_RjqVoCPAZehQEwqNXvBqLA_FniRc_Sd";
-const TURNSTILE_SITEKEY = ""; // Cloudflare Turnstile のサイトキー（空＝出さない。サーバー側 TURNSTILE_SECRET と対で入れる）
+const TURNSTILE_SITEKEY = "0x4AAAAAAE9-jkZQ9DwOGkS2"; // Cloudflare Turnstile のサイトキー（空＝出さない。サーバー側 TURNSTILE_SECRET と対で入れる）
 const sb = createClient(SB_URL, SB_KEY, { auth: { flowType: "pkce", persistSession: true, detectSessionInUrl: true } });
 
 const $ = (id) => document.getElementById(id);
