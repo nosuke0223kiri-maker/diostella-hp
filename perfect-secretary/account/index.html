@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>アカウント | 完璧秘書</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="canonical" href="https://diostella.jp/perfect-secretary/account/">
+  <link rel="icon" href="../icon-512x512.png">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Noto+Serif+JP:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css?v=20260920">
+  <style>
+    /* 規約ページ（terms.html）と同じ骨組み＝.legal-wrap／.legal-title／.legal-date／.legal-back。カードと行だけこのページ用（色・書体は style.css の変数） */
+    .legal-wrap { max-width: 720px; margin: 0 auto; padding: 140px 24px 80px; }
+    .legal-title { font-size: 1.5rem; color: var(--gold); letter-spacing: 0.1em; text-align: center; margin-bottom: 8px; }
+    .legal-date { text-align: center; font-size: 0.8rem; opacity: 0.6; margin-bottom: 40px; }
+    .legal-wrap p, .legal-wrap li { font-size: 0.9rem; line-height: 1.9; opacity: 0.85; }
+    .legal-back { display: block; text-align: center; margin-top: 56px; color: var(--gold); text-decoration: none; border: 1px solid rgba(212, 175, 55, 0.45); border-radius: 12px; padding: 14px 0; transition: all 0.3s ease; }
+    .legal-back:hover { background: rgba(212, 175, 55, 0.12); }
+    .acct-card { background: var(--black-card); border: 1px solid rgba(212, 175, 55, 0.2); border-radius: 12px; padding: 20px 20px 16px; margin-bottom: 20px; }
+    .acct-card h2 { font-size: 0.95rem; color: var(--gold); letter-spacing: 0.1em; margin-bottom: 12px; font-weight: 500; }
+    .acct-row { display: flex; justify-content: space-between; gap: 16px; padding: 10px 0; border-bottom: 1px solid rgba(212, 175, 55, 0.12); font-size: 0.9rem; }
+    .acct-row:last-of-type { border-bottom: none; }
+    .acct-row .k { color: var(--text-dim); flex: 0 0 auto; }
+    .acct-row .v { text-align: right; word-break: break-all; }
+    .acct-note { font-size: 0.8rem !important; color: var(--text-dim); margin: 10px 0 0; }
+    .acct-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
+    .acct-actions .btn { padding: 12px 22px; font-size: 0.85rem; text-align: center; }
+    .btn-danger { border: 1px solid rgba(220, 80, 80, 0.5); color: #e08080; }
+    .btn-danger:hover { background: rgba(220, 80, 80, 0.08); border-color: #e08080; }
+    button.btn { font-family: var(--font-body); }
+    button.btn-secondary, button.btn-danger { background: transparent; } /* <button> の既定の白背景を消す（style.css の .btn-secondary は <a> 前提） */
+    .btn[disabled] { opacity: 0.45; cursor: default; pointer-events: none; }
+    .acct-login { text-align: center; }
+    .acct-login .store-btn { font-family: var(--font-body); cursor: pointer; min-width: 220px; justify-content: center; } /* <button> 版＝LPの箱と同じ見た目・同じ幅 */
+    .acct-confirm { border: 1px solid rgba(212, 175, 55, 0.35); border-radius: 12px; padding: 16px; margin-top: 14px; background: rgba(212, 175, 55, 0.05); }
+    .acct-confirm p { margin-bottom: 10px; }
+    .acct-msg { position: fixed; left: 50%; bottom: 32px; transform: translateX(-50%); max-width: 92vw; background: rgba(10, 10, 10, 0.95); border: 1px solid rgba(212, 175, 55, 0.4); color: var(--text); border-radius: 12px; padding: 12px 18px; font-size: 0.85rem; z-index: 2000; display: none; }
+    .acct-msg.show { display: block; }
+    .acct-badge { display: inline-block; border: 1px solid rgba(212, 175, 55, 0.5); color: var(--gold); border-radius: 999px; padding: 2px 10px; font-size: 0.75rem; letter-spacing: 0.08em; }
+    .acct-badge.warn { border-color: rgba(220, 80, 80, 0.5); color: #e08080; }
+    [hidden] { display: none !important; }
+    @media (max-width: 480px) { .acct-row { flex-direction: column; gap: 2px; } .acct-row .v { text-align: left; } .acct-actions .btn { flex: 1 1 100%; } }
+  </style>
+</head>
+<body>
+  <nav class="nav scrolled" id="nav">
+    <div class="nav-inner">
+      <a href="../index.html" class="nav-logo">完璧秘書</a>
+    </div>
+  </nav>
+
+  <div class="legal-wrap">
+    <h1 class="legal-title">アカウント</h1>
+    <p class="legal-date">プランの確認・お支払いの管理・解約・利用の一時停止</p>
+
+    <!-- ログイン前 -->
+    <div id="view-login" class="acct-login" hidden>
+      <p style="margin-bottom:24px">アプリでお使いのアカウントと<br>同じ方法でログインしてください。</p>
+      <!-- LPのストアの箱（.store-btn）と同じ形＝2つを揃える（2026-09-20 こうくん指摘） -->
+      <div class="store-badges cta-badges">
+        <button class="store-btn large" id="btn-apple" type="button" aria-label="Appleでログイン">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+          <span class="store-txt"><small>ログイン</small>Apple</span>
+        </button>
+        <button class="store-btn large" id="btn-google" type="button" aria-label="Googleでログイン">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#4285F4" d="M23.5 12.3c0-.8-.1-1.6-.2-2.3H12v4.4h6.5c-.3 1.5-1.1 2.7-2.4 3.6v3h3.9c2.3-2.1 3.5-5.2 3.5-8.7z"/><path fill="#34A853" d="M12 24c3.2 0 6-1.1 7.9-2.9l-3.9-3c-1.1.7-2.4 1.2-4 1.2-3.1 0-5.7-2.1-6.7-4.9H1.3v3.1C3.3 21.4 7.3 24 12 24z"/><path fill="#FBBC05" d="M5.3 14.4c-.2-.7-.4-1.5-.4-2.4s.1-1.6.4-2.4V6.5H1.3C.5 8.2 0 10 0 12s.5 3.8 1.3 5.5l4-3.1z"/><path fill="#EA4335" d="M12 4.8c1.8 0 3.3.6 4.6 1.8l3.4-3.4C18 1.2 15.2 0 12 0 7.3 0 3.3 2.6 1.3 6.5l4 3.1c1-2.8 3.6-4.8 6.7-4.8z"/></svg>
+          <span class="store-txt"><small>ログイン</small>Google</span>
+        </button>
+      </div>
+      <p class="acct-note">※このページから新しいアカウントは作れません。アプリで初期設定を済ませたアカウントだけログインできます。</p>
+    </div>
+
+    <!-- 読み込み中 -->
+    <div id="view-loading" class="acct-login"><p>確認しています…</p></div>
+
+    <!-- ログイン後 -->
+    <div id="view-account" hidden>
+      <div class="acct-card">
+        <h2>アカウント</h2>
+        <p id="acct-name" style="font-size:1.1rem;color:var(--text);margin:0 0 8px" hidden></p>
+        <!-- アプリの設定と同じ行＝「Googleでログイン」「Appleでログイン」（紐づいている物だけ） -->
+        <div id="v-logins"></div>
+        <div class="acct-row" id="row-email" hidden><span class="k">メール</span><span class="v" id="v-email">—</span></div>
+        <div class="acct-row"><span class="k">状態</span><span class="v" id="v-state">—</span></div>
+      </div>
+
+      <div class="acct-card">
+        <h2>プラン</h2>
+        <div class="acct-row"><span class="k">現在のプラン</span><span class="v" id="v-plan">—</span></div>
+        <div class="acct-row"><span class="k">お支払い</span><span class="v" id="v-route">—</span></div>
+        <div class="acct-row" id="row-renew" hidden><span class="k" id="k-renew">次回の更新</span><span class="v" id="v-renew">—</span></div>
+        <div id="plan-stripe" hidden>
+          <div class="acct-actions">
+            <button class="btn btn-secondary" id="btn-portal" type="button">お支払いの管理（領収書・カードの変更）</button>
+            <button class="btn btn-danger" id="btn-cancel" type="button">解約する（次回の更新を止める）</button>
+            <button class="btn btn-secondary" id="btn-uncancel" type="button" hidden>解約を取り消す</button>
+          </div>
+          <div class="acct-confirm" id="confirm-cancel" hidden>
+            <p>解約すると、次回の更新日で有料プランが終わり、フリープランに戻ります。<br>更新日までは今のプランのままお使いいただけます。</p>
+            <div class="acct-actions">
+              <button class="btn btn-danger" id="btn-cancel-yes" type="button">解約する</button>
+              <button class="btn btn-secondary" id="btn-cancel-no" type="button">閉じる</button>
+            </div>
+          </div>
+          <p class="acct-note">※領収書の発行・カードの変更は「お支払いの管理」（決済代行Stripeの画面）で行えます。</p>
+        </div>
+        <div id="plan-iap" hidden>
+          <div class="acct-actions">
+            <a class="btn btn-secondary" href="https://apps.apple.com/account/subscriptions" target="_blank" rel="noopener">App Storeの購読管理を開く</a>
+          </div>
+          <p class="acct-note">※App Storeで加入したプランの解約・領収書はAppleの購読管理で行えます（このページからは変更できません）。</p>
+        </div>
+        <div id="plan-none" hidden>
+          <p class="acct-note">※有料プランへの加入はアプリの設定「プラン」から行えます。</p>
+        </div>
+      </div>
+
+      <div class="acct-card">
+        <h2>利用の一時停止</h2>
+        <p>端末を無くした時などに、アカウントの利用を一時的に止められます。<br>停止中は、どの端末からも投稿・送信・購入・設定の変更・ログインができなくなります。データは消えず、再開すると元どおり使えます。</p>
+        <div class="acct-row"><span class="k">今の状態</span><span class="v" id="v-pause">—</span></div>
+        <div class="acct-actions">
+          <button class="btn btn-danger" id="btn-pause" type="button" hidden>利用を一時停止する</button>
+          <button class="btn btn-primary" id="btn-resume" type="button" hidden>再開する</button>
+        </div>
+        <div class="acct-confirm" id="confirm-pause" hidden>
+          <p>本当に一時停止しますか？<br>停止中は、あなた以外の人からの見え方は変わりません。メッセージや申請は届き続け、再開後にまとめて確認できます。</p>
+          <div class="acct-actions">
+            <button class="btn btn-danger" id="btn-pause-yes" type="button">一時停止する</button>
+            <button class="btn btn-secondary" id="btn-pause-no" type="button">閉じる</button>
+          </div>
+        </div>
+        <div id="turnstile-box" style="margin-top:12px"></div>
+        <p class="acct-note" id="pause-left"></p>
+      </div>
+
+      <div class="acct-actions" style="justify-content:center">
+        <button class="btn btn-secondary" id="btn-logout" type="button">このページからログアウト</button>
+      </div>
+    </div>
+
+    <a href="../index.html" class="legal-back">トップページへ戻る</a>
+  </div>
+  <div class="acct-msg" id="msg"></div>
+
+  <script type="module" src="account.js?v=20260920d"></script>
+</body>
+</html>

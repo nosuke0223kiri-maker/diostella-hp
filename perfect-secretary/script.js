@@ -129,3 +129,25 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
   });
 })();
+
+
+// ---- ログイン済み＝右上に「名前＋ログアウト」（楽天e-NAVIと同じ位置・2026-09-20）・メニューの「ログイン」は名前に ----
+// アカウントページ（account/）が同じサイトに保存するログイン情報の有無だけを見る（中身は読まない）
+(function() {
+  try {
+    const raw = localStorage.getItem('sb-qwsxionvojqnqnwccoij-auth-token');
+    if (!raw || !JSON.parse(raw)?.access_token) return;
+    const name = (localStorage.getItem('ps-account-name') || '').trim() || 'アカウント';
+    const logout = () => { try { localStorage.removeItem('sb-qwsxionvojqnqnwccoij-auth-token'); localStorage.removeItem('ps-account-name'); } catch (e) {} location.reload(); }; // このサイトのログインだけ切る（アプリ側には影響しない）
+    document.querySelectorAll('a[href="account/"]').forEach((a) => { if (a.textContent.trim() === 'ログイン') a.textContent = name; });
+    const inner = document.querySelector('.nav-inner');
+    if (!inner) return;
+    const box = document.createElement('div'); box.className = 'nav-account';
+    const nm = document.createElement('a'); nm.className = 'nav-account-name'; nm.href = 'account/'; nm.textContent = name;
+    const out = document.createElement('a'); out.className = 'nav-logout'; out.href = '#'; out.textContent = 'ログアウト';
+    out.addEventListener('click', (e) => { e.preventDefault(); logout(); });
+    box.append(nm, out);
+    const toggle = inner.querySelector('.nav-toggle');
+    if (toggle) inner.insertBefore(box, toggle); else inner.appendChild(box);
+  } catch (e) { /* 読めない＝未ログイン扱い */ }
+})();

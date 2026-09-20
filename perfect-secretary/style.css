@@ -112,6 +112,14 @@ body {
   letter-spacing: 0.1em;
 }
 
+/* ログイン済みの右上＝名前＋ログアウト（楽天e-NAVIと同じ位置・2026-09-20）。ロゴと同じ行の右端に置く */
+.nav-account { display: flex; align-items: center; gap: 12px; margin-left: auto; margin-right: 16px; font-size: 0.8rem; color: var(--text-dim); letter-spacing: 0.06em; white-space: nowrap; }
+.nav-account .nav-account-name { color: var(--text); text-decoration: none; }
+.nav-account .nav-account-name:hover { color: var(--gold); }
+.nav-account .nav-logout { border: 1px solid rgba(212, 175, 55, 0.45); border-radius: 4px; padding: 6px 14px; color: var(--gold); text-decoration: none; font-size: 0.78rem; transition: all 0.3s; }
+.nav-account .nav-logout:hover { background: rgba(212, 175, 55, 0.12); border-color: var(--gold); }
+@media (max-width: 480px) { .nav-account .nav-account-name { max-width: 96px; overflow: hidden; text-overflow: ellipsis; } }
+
 .nav-toggle {
   display: none;
   flex-direction: column;
