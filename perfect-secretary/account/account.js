@@ -46,6 +46,12 @@ function loadTurnstile() {
 
 // ── 画面 ──
 let me = null;
+// 再開だけの表示（アプリの停止中画面から来た時＝`?mode=resume`）。Apple 3.1.1＝アプリ内からIAP以外の支払い管理へ誘導しないため、
+// プランの区画（お支払いの管理・解約）を出さず「今の状態＋再開する」だけにする（2026-09-21 こうくん確定）。
+// OAuth の往復で ?mode が消えるので sessionStorage に控える（このタブの間だけ）
+const MODE_KEY = "acct-mode";
+try { if (new URLSearchParams(location.search).get("mode") === "resume") sessionStorage.setItem(MODE_KEY, "resume"); } catch { /* 保存できない環境は通常表示 */ }
+const resumeOnly = () => { try { return sessionStorage.getItem(MODE_KEY) === "resume"; } catch { return false; } };
 function renderNav() {
   const inner = document.querySelector(".nav-inner");
   let box = inner.querySelector(".nav-account");
@@ -86,7 +92,8 @@ function render() {
     show("row-renew", !!me.iap.expiresAt); $("k-renew").textContent = "有効期限"; $("v-renew").textContent = fmtDate(me.iap.expiresAt);
   } else show("row-renew", false);
   $("v-pause").textContent = me.paused ? `一時停止中（${fmtDate(me.pausedAt)}から）` : "利用中";
-  show("btn-pause", !me.paused); show("btn-resume", !!me.paused); show("confirm-pause", false);
+  show("card-plan", !resumeOnly()); // 再開だけの表示＝プランの区画（支払い管理・解約）を出さない
+  show("btn-pause", !me.paused && !resumeOnly()); show("btn-resume", !!me.paused); show("confirm-pause", false);
   $("pause-left").textContent = `※一時停止の切り替えは24時間に5回までです（あと${me.pauseLeft ?? 5}回）`;
   if (me.turnstile) loadTurnstile();
 }
