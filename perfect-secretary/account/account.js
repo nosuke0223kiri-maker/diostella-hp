@@ -93,6 +93,7 @@ function render() {
   } else show("row-renew", false);
   $("v-pause").textContent = me.paused ? `一時停止中（${fmtDate(me.pausedAt)}から）` : "利用中";
   show("card-plan", !resumeOnly()); // 再開だけの表示＝プランの区画（支払い管理・解約）を出さない
+  if (resumeOnly()) $("acct-lead").textContent = "利用の一時停止・再開";
   show("btn-pause", !me.paused && !resumeOnly()); show("btn-resume", !!me.paused); show("confirm-pause", false);
   $("pause-left").textContent = `※一時停止の切り替えは24時間に5回までです（あと${me.pauseLeft ?? 5}回）`;
   if (me.turnstile) loadTurnstile();
@@ -120,7 +121,7 @@ async function login(provider) {
 }
 $("btn-apple").addEventListener("click", () => login("apple"));
 $("btn-google").addEventListener("click", () => login("google"));
-$("btn-logout").addEventListener("click", async () => { await sb.auth.signOut({ scope: "local" }); try { localStorage.removeItem("ps-account-name"); } catch { /* noop */ } me = null; render(); say("ログアウトしました"); });
+$("btn-logout").addEventListener("click", async () => { await sb.auth.signOut({ scope: "local" }); try { localStorage.removeItem("ps-account-name"); sessionStorage.removeItem(MODE_KEY); } catch { /* noop */ } me = null; render(); say("ログアウトしました"); });
 
 // ── お支払いの管理（Stripe の管理画面へ） ──
 $("btn-portal").addEventListener("click", async () => {
