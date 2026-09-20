@@ -52,6 +52,7 @@ let me = null;
 const MODE_KEY = "acct-mode";
 try { if (new URLSearchParams(location.search).get("mode") === "resume") sessionStorage.setItem(MODE_KEY, "resume"); } catch { /* 保存できない環境は通常表示 */ }
 const resumeOnly = () => { try { return sessionStorage.getItem(MODE_KEY) === "resume"; } catch { return false; } };
+if (resumeOnly()) document.getElementById("acct-lead").textContent = "利用の一時停止・再開"; // ログイン前の画面でも支払い管理の文言を出さない
 function renderNav() {
   const inner = document.querySelector(".nav-inner");
   let box = inner.querySelector(".nav-account");
@@ -93,7 +94,6 @@ function render() {
   } else show("row-renew", false);
   $("v-pause").textContent = me.paused ? `一時停止中（${fmtDate(me.pausedAt)}から）` : "利用中";
   show("card-plan", !resumeOnly()); // 再開だけの表示＝プランの区画（支払い管理・解約）を出さない
-  if (resumeOnly()) $("acct-lead").textContent = "利用の一時停止・再開";
   show("btn-pause", !me.paused && !resumeOnly()); show("btn-resume", !!me.paused); show("confirm-pause", false);
   $("pause-left").textContent = `※一時停止の切り替えは24時間に5回までです（あと${me.pauseLeft ?? 5}回）`;
   if (me.turnstile) loadTurnstile();
