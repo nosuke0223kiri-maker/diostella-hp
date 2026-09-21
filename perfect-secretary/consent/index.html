@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>保護者の同意 | 完璧秘書</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="canonical" href="https://diostella.jp/perfect-secretary/consent/">
+  <link rel="icon" href="../icon-512x512.png">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Noto+Serif+JP:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css?v=20260921">
+  <style>
+    /* アカウントページ（account/）と同じ骨組み＝.legal-wrap／.legal-title／.legal-date／.acct-card／.acct-actions（色・書体は style.css の変数） */
+    .legal-wrap { max-width: 720px; margin: 0 auto; padding: 140px 24px 80px; }
+    .legal-title { font-size: 1.5rem; color: var(--gold); letter-spacing: 0.1em; text-align: center; margin-bottom: 8px; }
+    .legal-date { text-align: center; font-size: 0.8rem; opacity: 0.6; margin-bottom: 40px; }
+    .legal-wrap p, .legal-wrap li { font-size: 0.9rem; line-height: 1.9; opacity: 0.85; }
+    .legal-wrap ul { padding-left: 1.2em; margin: 0 0 12px; }
+    .legal-back { display: block; text-align: center; margin-top: 56px; color: var(--gold); text-decoration: none; border: 1px solid rgba(212, 175, 55, 0.45); border-radius: 12px; padding: 14px 0; transition: all 0.3s ease; }
+    .legal-back:hover { background: rgba(212, 175, 55, 0.12); }
+    .acct-card { background: var(--black-card); border: 1px solid rgba(212, 175, 55, 0.2); border-radius: 12px; padding: 20px 20px 16px; margin-bottom: 20px; }
+    .acct-card h2 { font-size: 0.95rem; color: var(--gold); letter-spacing: 0.1em; margin-bottom: 12px; font-weight: 500; }
+    .acct-card p { margin-bottom: 10px; }
+    .acct-note { font-size: 0.8rem !important; color: var(--text-dim); margin: 10px 0 0; }
+    .acct-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
+    .acct-actions .btn { padding: 12px 22px; font-size: 0.85rem; text-align: center; }
+    .btn-danger { border: 1px solid rgba(220, 80, 80, 0.5); color: #e08080; }
+    .btn-danger:hover { background: rgba(220, 80, 80, 0.08); border-color: #e08080; }
+    button.btn { font-family: var(--font-body); }
+    button.btn-secondary, button.btn-danger { background: transparent; }
+    .btn[disabled] { opacity: 0.45; cursor: default; pointer-events: none; }
+    .acct-check { display: flex; align-items: flex-start; gap: 10px; margin-top: 8px; cursor: pointer; }
+    .acct-check input { margin-top: 6px; accent-color: var(--gold); }
+    .acct-link { color: var(--gold); text-decoration: underline; }
+    .acct-msg { position: fixed; left: 50%; bottom: 32px; transform: translateX(-50%); max-width: 92vw; background: rgba(10, 10, 10, 0.95); border: 1px solid rgba(212, 175, 55, 0.4); color: var(--text); border-radius: 12px; padding: 12px 18px; font-size: 0.85rem; z-index: 2000; display: none; }
+    .acct-msg.show { display: block; }
+    .acct-confirm { border: 1px solid rgba(212, 175, 55, 0.35); border-radius: 12px; padding: 16px; margin-top: 14px; background: rgba(212, 175, 55, 0.05); }
+    .acct-confirm p { margin-bottom: 10px; }
+    .acct-badge { display: inline-block; border: 1px solid rgba(212, 175, 55, 0.5); color: var(--gold); border-radius: 999px; padding: 2px 10px; font-size: 0.75rem; letter-spacing: 0.08em; }
+    .acct-badge.warn { border-color: rgba(220, 80, 80, 0.5); color: #e08080; }
+    [hidden] { display: none !important; }
+    @media (max-width: 480px) { .acct-actions .btn { flex: 1 1 100%; } }
+  </style>
+</head>
+<body>
+  <nav class="nav scrolled" id="nav">
+    <div class="nav-inner">
+      <a href="../index.html" class="nav-logo">完璧秘書</a>
+    </div>
+  </nav>
+
+  <div class="legal-wrap">
+    <h1 class="legal-title">保護者の方の同意</h1>
+    <p class="legal-date" id="lead">お子さまのAI機能のご利用について</p>
+
+    <!-- 読み込み中・無効 -->
+    <div id="view-loading" class="acct-card"><p>確認しています…</p></div>
+    <div id="view-invalid" class="acct-card" hidden>
+      <h2>このリンクは使えません</h2>
+      <p id="invalid-msg">リンクが無効か、期限切れ（7日間）です。お手数ですが、お子さまのアプリからもう一度ご案内をお送りください。</p>
+    </div>
+
+    <!-- 同意前 -->
+    <div id="view-ask" hidden>
+      <div class="acct-card">
+        <h2>お願いの内容</h2>
+        <p id="ask-who">Diostella（ディオステラ）の「完璧秘書」アプリをご利用のお子さまから、保護者の方の同意のお願いが届いています。</p>
+        <p id="ask-law">完璧秘書では、16歳未満の方が秘書チャットのAI機能をお使いになる際、法律（個人情報の保護に関する法律 第40条の2）にもとづき、保護者（親権者など）の方の同意をいただいています。</p>
+        <p>AI機能では、会話の内容が返答を作るためだけに外国にある事業者（Anthropic, PBC・アメリカ合衆国）へ送られます。会話が学習に使われることはなく、受け取りから30日以内に削除されます。くわしくは <a class="acct-link" id="privacy-link" href="../privacy.html" target="_blank" rel="noopener">プライバシーポリシー</a> をご覧ください。</p>
+        <p class="acct-note">同意されない場合は、このページを閉じていただいて構いません（AI機能以外はそのままお使いいただけます）。同意はいつでもこのリンクから取り消せます。</p>
+      </div>
+      <div class="acct-card">
+        <h2>同意する</h2>
+        <label class="acct-check"><input type="checkbox" id="chk-guardian"><span>私は本人の保護者（親権者または未成年後見人）です</span></label>
+        <label class="acct-check"><input type="checkbox" id="chk-privacy"><span>プライバシーポリシー（外国にある事業者への送信を含む）を確認し、同意します</span></label>
+        <div class="acct-actions">
+          <button class="btn btn-primary" id="btn-confirm" disabled>同意する</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 同意済み -->
+    <div id="view-done" hidden>
+      <div class="acct-card">
+        <h2>同意を受け付けました <span class="acct-badge">同意済み</span></h2>
+        <p>ご協力ありがとうございました。お子さまのアプリでAI機能をお使いいただけます（アプリ側は自動で切り替わります）。</p>
+        <p class="acct-note">同意を取り消したい時は、下のボタンからいつでも取り消せます（取り消すとAI機能は止まります）。</p>
+        <div class="acct-actions">
+          <button class="btn btn-danger" id="btn-revoke">同意を取り消す</button>
+        </div>
+        <!-- 取り消しの確認＝アカウントページの解約と同じ「その場の確認カード」（ブラウザの確認ダイアログは使わない） -->
+        <div class="acct-confirm" id="revoke-confirm" hidden>
+          <p>同意を取り消すと、お子さまのアプリのAI機能が止まります。取り消しますか？</p>
+          <div class="acct-actions">
+            <button class="btn btn-danger" id="btn-revoke-yes">取り消す</button>
+            <button class="btn btn-secondary" id="btn-revoke-no">やめる</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 取り消し済み -->
+    <div id="view-revoked" hidden>
+      <div class="acct-card">
+        <h2>同意は取り消されています <span class="acct-badge warn">取り消し済み</span></h2>
+        <p>お子さまのアプリのAI機能は止まっています。もう一度同意される場合は、下のボタンを押してください。</p>
+        <div class="acct-actions">
+          <button class="btn btn-primary" id="btn-reconfirm">もう一度同意する</button>
+        </div>
+      </div>
+    </div>
+
+    <p class="acct-note">このページに心当たりがない場合は、お手数ですが info@diostella.jp までお知らせください。</p>
+    <a href="../index.html" class="legal-back">完璧秘書のページへ戻る</a>
+  </div>
+
+  <div class="acct-msg" id="msg"></div>
+  <script type="module" src="consent.js?v=20260921b"></script>
+</body>
+</html>
