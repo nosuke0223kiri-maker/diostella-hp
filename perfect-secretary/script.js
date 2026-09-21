@@ -79,10 +79,13 @@ mobileMenu.querySelectorAll('a').forEach(a => {
 
 // ---- Scroll Reveal ----
 const revealElements = document.querySelectorAll(
-  '.feature-card, .secretary-card, .sf-item, .gallery-item, .target-card, .promise-card, .stat, .problem-text, .cta-content'
+  '.strip-item, .show-visual, .show-text, .apps-grid li, .apps-all-note, .theme-visual, .theme-text, .sec-feature, .sec-roster-item, .promise-card, .target-card, .plan-card, .plan-table-wrap, .plans-note, .biz-head, .cta-content'
 );
 
 revealElements.forEach(el => el.classList.add('reveal'));
+document.querySelectorAll('.show-row .show-visual').forEach(el => {
+  el.classList.add(el.closest('.show-row').classList.contains('reverse') ? 'from-right' : 'from-left');
+});
 
 const observer = new IntersectionObserver((entries) => {
   entries.forEach((entry, i) => {
@@ -150,4 +153,29 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     const toggle = inner.querySelector('.nav-toggle');
     if (toggle) inner.insertBefore(box, toggle); else inner.appendChild(box);
   } catch (e) { /* 読めない＝未ログイン扱い */ }
+})();
+
+
+/* ── 数字帯のカウントアップ（見えた時に1回だけ・2026-09-21） ── */
+(function () {
+  const nums = document.querySelectorAll('.strip-num[data-count]');
+  if (!nums.length || !('IntersectionObserver' in window)) return;
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (!e.isIntersecting) return;
+      io.unobserve(e.target);
+      const target = Number(e.target.dataset.count) || 0;
+      if (reduce) { e.target.textContent = target; return; }
+      const start = performance.now(), dur = 1100;
+      const step = (t) => {
+        const k = Math.min(1, (t - start) / dur);
+        const eased = 1 - Math.pow(1 - k, 3);
+        e.target.textContent = Math.round(target * eased);
+        if (k < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    });
+  }, { threshold: 0.6 });
+  nums.forEach((n) => io.observe(n));
 })();

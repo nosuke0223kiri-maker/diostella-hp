@@ -36,6 +36,9 @@ section{padding:88px 0}
 .btn{display:inline-block;font-family:var(--serif);letter-spacing:.2em;font-size:15px;padding:16px 54px;border-radius:999px;border:1px solid var(--gold);color:var(--gold-bright);background:linear-gradient(180deg,rgba(201,169,97,.16),rgba(201,169,97,.04));cursor:pointer;transition:.35s;position:relative;overflow:hidden}
 .btn:hover{background:linear-gradient(180deg,rgba(201,169,97,.34),rgba(201,169,97,.12));box-shadow:0 0 28px rgba(201,169,97,.35);transform:translateY(-2px)}
 .btn.small{padding:10px 30px;font-size:13px}
+/* 主ボタン＝金ベタ（2026-09-21・写真に負けない強さ。ヒーロー／送信／CTA帯） */
+.btn.primary{background:linear-gradient(180deg,var(--gold-bright),var(--gold));color:#1a1408;border-color:var(--gold-bright);font-weight:600;box-shadow:0 10px 30px rgba(201,169,97,.25)}
+.btn.primary:hover{background:linear-gradient(180deg,#f3dfa8,var(--gold-bright));box-shadow:0 14px 40px rgba(201,169,97,.45)}
 
 /* ===== ヘッダー ===== */
 header{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(13,11,8,.82);backdrop-filter:blur(10px);border-bottom:1px solid rgba(201,169,97,.15)}
@@ -50,8 +53,8 @@ nav a:hover{color:var(--gold-bright)}
 .hero{position:relative;min-height:92vh;display:flex;align-items:flex-end;justify-content:center;overflow:hidden;padding:0}
 .hero-bg{position:absolute;inset:0;background:url('assets/key_visual.webp?v=20260901c') center 22%/cover no-repeat;animation:kenburns 22s ease-in-out infinite alternate}
 @keyframes kenburns{from{transform:scale(1)}to{transform:scale(1.08)}}
-.hero-shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(13,11,8,.55) 0%,rgba(13,11,8,0) 30%,rgba(13,11,8,0) 55%,rgba(13,11,8,.96) 100%)}
-.hero-in{position:relative;z-index:2;text-align:center;padding:0 22px 72px}
+.hero-shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(13,11,8,.55) 0%,rgba(13,11,8,0) 28%,rgba(13,11,8,.08) 46%,rgba(13,11,8,.62) 58%,rgba(13,11,8,.9) 70%,rgba(13,11,8,.98) 100%)}
+.hero-in{position:relative;z-index:2;text-align:center;padding:0 22px 64px}
 .hero-badge{display:inline-block;border:1px solid var(--gold);border-radius:999px;padding:6px 26px;font-size:12px;letter-spacing:.4em;color:var(--gold-bright);background:rgba(13,11,8,.5);animation:glowpulse 3s ease-in-out infinite}
 @keyframes glowpulse{0%,100%{box-shadow:0 0 8px rgba(201,169,97,.25)}50%{box-shadow:0 0 26px rgba(201,169,97,.6)}}
 .hero-copy{font-family:var(--serif);font-size:clamp(22px,4.6vw,42px);font-weight:600;letter-spacing:.14em;margin:26px 0 10px;text-shadow:0 2px 24px rgba(0,0,0,.8)}
@@ -103,17 +106,19 @@ nav a:hover{color:var(--gold-bright)}
 .req-row dd .sub{color:var(--ink-sub);font-size:12px}
 @media(max-width:640px){.req-row{grid-template-columns:1fr}.req-row dt{padding:12px 20px 8px}.req-row dd{padding:10px 20px 16px}}
 
-/* ===== 選考の流れ ===== */
+/* ===== 選考の流れ（2026-09-21＝番号の丸＋連結線で「流れ」に見せる） ===== */
 .flow{background:var(--bg2)}
-.flow-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0;max-width:920px;margin:0 auto}
-@media(max-width:760px){.flow-grid{grid-template-columns:1fr;max-width:420px}}
-.flow-step{position:relative;text-align:center;padding:26px 18px}
-.flow-step .fno{font-family:var(--serif);color:var(--gold);font-size:12px;letter-spacing:.3em}
-.flow-step h3{font-family:var(--serif);font-size:16px;margin:8px 0 8px;color:var(--ink);font-weight:600;letter-spacing:.06em}
+.flow-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0;max-width:920px;margin:0 auto;position:relative;counter-reset:step}
+.flow-grid::before{content:"";position:absolute;left:12.5%;right:12.5%;top:48px;height:1px;background:linear-gradient(90deg,transparent,var(--gold-deep) 12%,var(--gold-deep) 88%,transparent)}
+.flow-step{position:relative;text-align:center;padding:26px 18px;counter-increment:step}
+.flow-step::before{content:counter(step,decimal-leading-zero);display:flex;align-items:center;justify-content:center;width:44px;height:44px;margin:0 auto 14px;border-radius:50%;border:1px solid var(--gold);background:var(--bg2);color:var(--gold-bright);font-family:var(--serif);font-size:15px;letter-spacing:.05em;position:relative;z-index:2;box-shadow:0 0 0 6px var(--bg2)}
+.flow-step .fno{font-family:var(--serif);color:var(--gold);font-size:11px;letter-spacing:.3em}
+.flow-step h3{font-family:var(--serif);font-size:16px;margin:6px 0 8px;color:var(--ink);font-weight:600;letter-spacing:.06em}
 .flow-step p{font-size:12px;color:var(--ink-sub)}
-.flow-step::after{content:"";position:absolute;top:50%;right:-9px;width:18px;height:1px;background:var(--gold-deep)}
-.flow-step:last-child::after{display:none}
-@media(max-width:760px){.flow-step::after{top:auto;bottom:-2px;right:50%;transform:rotate(90deg)}}
+@media(max-width:760px){
+  .flow-grid{grid-template-columns:1fr;max-width:420px}
+  .flow-grid::before{left:50%;right:auto;top:40px;bottom:40px;width:1px;height:auto;background:linear-gradient(180deg,transparent,var(--gold-deep) 8%,var(--gold-deep) 92%,transparent)}
+}
 
 /* ===== 応募フォーム ===== */
 .form-box{max-width:760px;margin:0 auto;border:1px solid var(--line);border-radius:var(--rd);background:var(--panel);padding:44px 38px}

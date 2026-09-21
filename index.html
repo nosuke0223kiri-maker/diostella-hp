@@ -9,14 +9,14 @@
   <link rel="canonical" href="https://diostella.jp/">
   <link rel="icon" href="favicon.ico">
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Noto+Serif+JP:wght@400;500;600&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/style.css?v=20260816c">
+  <link rel="stylesheet" href="assets/css/style.css?v=20260921">
 </head>
 <body>
 
   <!-- ========== Navigation ========== -->
   <nav class="nav">
     <div class="nav-inner">
-      <a href="index.html" class="nav-logo">Diostella</a>
+      <a href="index.html" class="nav-logo"><img src="assets/images/logo-mark.webp" alt="" class="nav-mark">Diostella</a>
       <ul class="nav-links">
         <li class="nav-item">
           <a href="pages/about/message.html">会社案内</a>
@@ -79,6 +79,14 @@
         <!-- 社名は画像に焼き込み済み。この見出しは検索エンジン・読み上げ用に残す -->
         <h1 class="hero-title">Diostella</h1>
       </div>
+      <div class="hero-copy">
+        <p class="hero-tagline">個人が安心して稼げる場所を、<br class="sp-only">日本の中に。</p>
+        <p class="hero-lead">Diostellaは、スマートフォンアプリを開発・運営する日本のアプリスタジオです。<br>オールインワン秘書アプリ「完璧秘書」を手がけています。</p>
+        <div class="hero-actions">
+          <a href="pages/works/app.html" class="hp-btn hp-btn-primary">事業内容を見る</a>
+          <a href="contact.html" class="hp-btn hp-btn-outline">お問い合わせ</a>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -122,16 +130,25 @@
     <div class="container">
       <div class="section-header fade-in">
         <h2 class="section-title">事業内容</h2>
-        <p class="section-subtitle">アプリの作品一覧</p>
+        <p class="section-subtitle">オールインワン秘書アプリ</p>
       </div>
-      <div class="works-grid fade-in">
-        <div class="work-card">
-          <img src="assets/images/work-app.webp" alt="完璧秘書" class="work-img">
-          <div class="work-info">
-            <span class="work-tag">アプリ</span>
-            <h3>完璧秘書</h3>
-            <p>暮らしのアプリ、ぜんぶこれひとつに。あなた専属のAIパーソナル秘書。</p>
-            <a href="pages/works/app.html" class="work-link">詳しく見る</a>
+      <div class="showcase fade-in">
+        <div class="showcase-visual">
+          <div class="hp-phone"><img src="perfect-secretary/screens/home.webp" alt="完璧秘書 ホーム画面" loading="lazy"></div>
+          <div class="hp-phone"><img src="perfect-secretary/screens/chat.webp" alt="完璧秘書 秘書チャット画面" loading="lazy"></div>
+        </div>
+        <div class="showcase-text">
+          <span class="work-tag">アプリ</span>
+          <h3>完璧秘書</h3>
+          <p class="showcase-lead">暮らしのアプリを、ぜんぶこれひとつに。16のミニアプリと18人の秘書。話しかけるだけで、予定もメモも片づきます。</p>
+          <ul class="showcase-points">
+            <li>秘書チャット・トーク・SNS・カレンダー・家計簿など、16のミニアプリ</li>
+            <li>動画・書籍・音楽・絵を投稿してそのまま販売。仲介手数料は10%だけ</li>
+            <li>黒×金・白×金・自由な色。見た目はあなたの色で</li>
+          </ul>
+          <div class="showcase-actions">
+            <a href="pages/works/app.html" class="hp-btn hp-btn-primary">詳しく見る</a>
+            <a href="perfect-secretary/index.html" class="hp-btn hp-btn-outline">アプリのページへ</a>
           </div>
         </div>
       </div>
@@ -196,7 +213,7 @@
         </div>
       </div>
       <div class="footer-bottom">
-        <span class="footer-logo">Diostella</span>
+        <span class="footer-logo"><img src="assets/images/logo-mark.webp" alt="" class="nav-mark">Diostella</span>
         <div class="footer-sns">
           <a href="#" class="sns-link" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg><span>Instagram</span></a>
           <a href="#" class="sns-link" aria-label="X"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg><span>X</span></a>
@@ -208,6 +225,6 @@
     </div>
   </footer>
 
-  <script src="assets/js/script.js?v=20260816c"></script>
+  <script src="assets/js/script.js?v=20260921"></script>
 </body>
 </html>
