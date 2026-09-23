@@ -8,7 +8,7 @@
   <link rel="canonical" href="https://diostella.jp/pages/ads/simulator.html">
   <link rel="icon" href="../favicon.ico">
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Noto+Serif+JP:wght@400;500;600&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../assets/css/style.css?v=20260921">
+  <link rel="stylesheet" href="../../assets/css/style.css?v=20260923">
   <style>
     /* ===== 入稿シミュレータ専用 =====
        ⚠️ここから下はアプリ（完璧秘書）の実装を再現した見本です。
@@ -23,11 +23,7 @@
     .sim-step-t { font-size:0.95rem; color:var(--gold); margin-bottom:10px; letter-spacing:0.04em; }
 
     /* 選択ボタン（掲載面・広告の種類） */
-    .sim-choices { display:flex; flex-wrap:wrap; gap:8px; }
-    .sim-choices[hidden] { display:none; }
-    .sim-choice { border:1px solid var(--border); background:#fff; border-radius:4px; padding:8px 14px; font-family:inherit; font-size:0.85rem; color:var(--text-sub); cursor:pointer; transition:all 0.25s; }
-    .sim-choice:hover { border-color:var(--gold-dim); }
-    .sim-choice.on { border-color:var(--gold); background:var(--gold-bg); color:var(--gold); }
+    /* 選択ボタン（.sim-choices/.sim-choice）＝共通CSS style.css に移動（広告掲載ページと共用） */
 
     /* 画像の受け口 */
     .sim-drop { display:block; border:1px dashed var(--border); border-radius:6px; padding:28px 20px; text-align:center; color:var(--text-muted); cursor:pointer; transition:border-color 0.3s, background 0.3s; }

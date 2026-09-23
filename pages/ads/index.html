@@ -8,7 +8,24 @@
   <link rel="canonical" href="https://diostella.jp/pages/ads/index.html">
   <link rel="icon" href="../favicon.ico">
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Noto+Serif+JP:wght@400;500;600&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../assets/css/style.css?v=20260921">
+  <link rel="stylesheet" href="../../assets/css/style.css?v=20260923">
+  <style>
+    /* スポンサードシールの制作見本＝商品写真→キャラクターに着せたシール（5組・上下で対にする） */
+    .sp-samples { display:grid; grid-template-columns:repeat(5, 1fr); gap:14px; max-width:900px; margin:16px 0 8px; }
+    .sp-sample { margin:0; text-align:center; }
+    .sp-sample img { width:100%; height:auto; aspect-ratio:1; display:block; border:1px solid var(--border); border-radius:12px; background:#fff; }
+    .sp-sample .sp-sticker { background:var(--bg-section); }
+    .sp-sample .sp-arrow { display:block; line-height:1; color:var(--gold); font-size:0.9rem; margin:6px 0; }
+    .sp-sample figcaption { font-size:0.82rem; color:var(--text-muted); line-height:1.8; margin-top:8px; }
+    @media (max-width: 640px) { .sp-samples { grid-template-columns:repeat(3, 1fr); gap:10px; } }
+    /* 掲載面の切替＝ボタン列は画面上部に貼り付く・表の行は押せる */
+    .face-tabs { position:sticky; top:var(--nav-height); z-index:5; background:var(--bg); padding:12px 0; margin:0 0 8px; border-bottom:1px solid var(--border); }
+    .face-panel[hidden], #faceShared[hidden] { display:none; }
+    .face-panel > h3:first-child { margin-top: 1.2em; }
+    #adSlotTable tr[data-sel] { cursor:pointer; }
+    #adSlotTable tr[data-sel]:hover td, #adSlotTable tr[data-sel]:hover th { background:var(--gold-bg); }
+    @media (max-width: 640px) { .face-tabs { flex-wrap:nowrap; overflow-x:auto; -webkit-overflow-scrolling:touch; scrollbar-width:none; } .face-tabs::-webkit-scrollbar { display:none; } .face-tabs .sim-choice { white-space:nowrap; flex:0 0 auto; } }
+  </style>
 </head>
 <body>
   <nav class="nav scrolled"><div class="nav-inner"><a href="../../index.html" class="nav-logo"><img src="../../assets/images/logo-mark.webp" alt="" class="nav-mark">Diostella</a><ul class="nav-links"><li class="nav-item"><a href="../about/message.html">会社案内</a><ul class="nav-dropdown"><li><a href="../about/message.html">代表メッセージ</a></li><li><a href="../about/profile.html">事業概要</a></li><li><a href="../about/officers.html">メンバー紹介</a></li><li><a href="../about/history.html">沿革</a></li><li><a href="../about/office.html">事業所案内</a></li></ul></li><li class="nav-item"><a href="../works/index.html">事業内容</a><ul class="nav-dropdown"><li><a href="../works/app.html">アプリ</a></li></ul></li><li class="nav-item"><a href="../news/index.html">お知らせ</a></li><li class="nav-item"><a href="../recruit/index.html">採用情報</a></li><li class="nav-item"><a href="../../contact.html">お問い合わせ</a></li></ul><button class="nav-toggle" aria-label="メニュー"><span></span><span></span><span></span></button></div></nav>
@@ -40,38 +57,41 @@
             ※出会いは成人のみが利用する面です。
           </p>
           <table class="company-table" id="adSlotTable" style="margin-bottom:12px;">
-            <tr><th>スポンサードシール</th><td>トークのシールのショップ（期間限定の無料シートを配布）</td><td>受付中</td></tr>
-            <tr><th>SNS 画像投稿</th><td>写真フィードの投稿の間</td><td data-face="sns_photo">受付中</td></tr>
-            <tr><th>SNS テキスト投稿</th><td>テキスト投稿面の投稿の間</td><td data-face="sns_post">受付中</td></tr>
-            <tr><th>音楽の一覧</th><td>メディア（音楽）の一覧の間</td><td data-face="media_music">受付中</td></tr>
-            <tr><th>漫画の一覧</th><td>メディア（漫画）の一覧の間</td><td data-face="media_manga">受付中</td></tr>
-            <tr><th>絵の一覧</th><td>メディア（絵）の一覧の間</td><td data-face="media_art">受付中</td></tr>
-            <tr><th>動画の一覧</th><td>メディア（動画）の一覧の間</td><td data-face="media_video">受付中</td></tr>
-            <tr><th>小説の一覧</th><td>メディア（小説）の一覧の間</td><td data-face="media_novel">受付中</td></tr>
-            <tr><th>動画リール</th><td>動画のショート再生面（動画専用）</td><td data-face="media_reel">受付中</td></tr>
-            <tr><th>出会い</th><td>「さがす」の候補カードの間</td><td data-face="dating">受付中</td></tr>
+            <tr data-sel="sponsored" tabindex="0"><th>スポンサードシール</th><td>トークのシールのショップ（期間限定の無料シートを配布）</td><td>受付中</td></tr>
+            <tr data-sel="photo" tabindex="0"><th>SNS 画像投稿</th><td>写真フィードの投稿の間</td><td data-face="sns_photo">受付中</td></tr>
+            <tr data-sel="text" tabindex="0"><th>SNS テキスト投稿</th><td>テキスト投稿面の投稿の間</td><td data-face="sns_post">受付中</td></tr>
+            <tr data-sel="media" tabindex="0"><th>音楽の一覧</th><td>メディア（音楽）の一覧の間</td><td data-face="media_music">受付中</td></tr>
+            <tr data-sel="media" tabindex="0"><th>漫画の一覧</th><td>メディア（漫画）の一覧の間</td><td data-face="media_manga">受付中</td></tr>
+            <tr data-sel="media" tabindex="0"><th>絵の一覧</th><td>メディア（絵）の一覧の間</td><td data-face="media_art">受付中</td></tr>
+            <tr data-sel="media" tabindex="0"><th>動画の一覧</th><td>メディア（動画）の一覧の間</td><td data-face="media_video">受付中</td></tr>
+            <tr data-sel="media" tabindex="0"><th>小説の一覧</th><td>メディア（小説）の一覧の間</td><td data-face="media_novel">受付中</td></tr>
+            <tr data-sel="reel" tabindex="0"><th>動画リール</th><td>動画のショート再生面（動画専用）</td><td data-face="media_reel">受付中</td></tr>
+            <tr data-sel="dating" tabindex="0"><th>出会い</th><td>「さがす」の候補カードの間</td><td data-face="dating">受付中</td></tr>
           </table>
           <p style="font-size:0.85rem; color:var(--text-muted, #999); line-height:1.9; margin:0 0 8px;">
             ※「満枠（来月分受付中）」の面は、翌月開始分としてお申込みいただけます。受付状況は自動更新です。
           </p>
 
-          <h3 style="font-size:1.05rem; margin:32px 0 12px; color:var(--gold, #a8842c);">広告の形式と入稿物</h3>
-          <ul style="line-height:2.1; padding-left:1.2em;">
-            <li><strong>画像投稿の広告</strong>（SNSの写真フィード）：画像1枚・広告主名（<strong>縦4:5〜横1.88:1</strong>）</li>
-            <li><strong>テキスト投稿の広告</strong>（SNSのテキスト投稿面）：画像1枚のみ（<strong>1.88:1</strong>）、または画像なしで広告主名・本文（<strong>7行まで</strong>・先頭の行は白色で強調できます）</li>
-            <li><strong>メディア一覧の広告</strong>（音楽・動画・漫画・絵）：テキスト投稿の広告と<strong>同じ規格</strong>（同じ素材をお使いいただけます）</li>
-            <li><strong>動画リールの広告</strong>（メディアの動画のショート再生面）：作品と同じ<strong>全画面の縦動画</strong>（縦9:16推奨）。この面は動画専用です</li>
-            <li><strong>出会いの広告</strong>：候補カードと同じ全画面カード。広告主名・本文・リンク先URL・画像（<strong>縦4:5〜横1.88:1</strong>の範囲でそのまま表示いたします。画像または動画が必須＝文字のみの形はありません）</li>
-            <li><strong>スポンサードシール</strong>：シール画像<strong>10枚</strong>（正方形・透過推奨・512pxに自動調整）・シート名・広告主名。詳細は下記「スポンサードシール」をご覧ください</li>
-            <li><strong>動画の上限（全ての面で共通）</strong>：長さ<strong>30秒</strong>・容量<strong>50MB</strong>以内</li>
-            <li>入稿は画像とテキストのみ（タグ・スクリプト等の埋め込みは不可）</li>
-          </ul>
-
+          <h3 style="font-size:1.05rem; margin:32px 0 12px; color:var(--gold, #a8842c);">掲載面を選ぶ（入稿サイズ・表示例・料金）</h3>
+          <p style="line-height:2; margin-bottom:12px;">
+            掲載したい面を押すと、その面の入稿サイズ・実機の表示例・料金だけを表示します（受付状況の表の行を押しても切り替わります）。
+          </p>
+          <div class="face-tabs sim-choices" id="faceTabs" role="tablist" aria-label="掲載面">
+            <button type="button" class="sim-choice on" role="tab" data-face="photo" aria-selected="true">SNS 画像投稿</button>
+            <button type="button" class="sim-choice" role="tab" data-face="text" aria-selected="false">SNS テキスト投稿</button>
+            <button type="button" class="sim-choice" role="tab" data-face="media" aria-selected="false">メディア一覧</button>
+            <button type="button" class="sim-choice" role="tab" data-face="reel" aria-selected="false">動画リール</button>
+            <button type="button" class="sim-choice" role="tab" data-face="dating" aria-selected="false">出会い</button>
+            <button type="button" class="sim-choice" role="tab" data-face="sponsored" aria-selected="false">スポンサードシール</button>
+          </div>
+          <div id="facePanels">
+            <section class="face-panel" role="tabpanel" data-face="photo">
           <h3 style="font-size:1.05rem; margin:32px 0 12px; color:var(--gold, #a8842c);">入稿サイズ（画像投稿の広告）</h3>
           <p style="line-height:2; margin-bottom:12px;">
             画像・動画とも<strong>入稿いただいた形のまま</strong>表示いたします。縦横比が <strong>縦4:5 〜 横1.88:1</strong> の範囲内であれば、切り取りは発生いたしません。
           </p>
           <ul style="line-height:2.1; padding-left:1.2em; margin-bottom:12px;">
+            <li><strong>入稿物</strong>：画像1枚（または動画）・広告主名（<strong>縦4:5〜横1.88:1</strong>）</li>
             <li><strong>サイズの指定は縦横比のみ</strong>です。縦4:5〜横1.88:1の間であれば、どの形でもそのまま表示いたします</li>
             <li><strong>推奨サイズ</strong>（画質の目安）：縦4:5は 1206×1508px、横1.88:1は 1206×642px。比率が同じであれば、これと違うピクセル数でも表示は同じです（推奨以上なら実機で鮮明に映ります）</li>
             <li>範囲を外れる素材は、枠に合わせて中央を切り取って表示いたします（例：9:16 は上下、2:1 より横長は左右が切り取られます）</li>
@@ -104,12 +124,14 @@
           <p style="font-size:0.85rem; color:var(--text-muted, #999); line-height:1.9; margin:0 0 8px;">
             ※iPhone 17（画面幅402pt・3倍）での表示を撮影したものです。
           </p>
-
+            </section>
+            <section class="face-panel" role="tabpanel" data-face="text" hidden>
           <h3 style="font-size:1.05rem; margin:32px 0 12px; color:var(--gold, #a8842c);">入稿サイズ（テキスト投稿の広告）</h3>
           <p style="line-height:2; margin-bottom:12px;">
             この面では<strong>画像の広告と文字の広告が分かれています</strong>。ひとつの広告に画像と文字が同居することはありません。
           </p>
           <ul style="line-height:2.1; padding-left:1.2em; margin-bottom:12px;">
+            <li><strong>入稿物</strong>：画像1枚のみ（<strong>1.88:1</strong>）、または画像なしで広告主名・本文（<strong>7行まで</strong>）</li>
             <li><strong>画像の広告</strong>：比率 1.88:1 の<strong>1種類</strong>（推奨サイズ 1206×642px）。画像投稿面のいちばん小さい枠と同じで、同じ素材をお使いいただけます</li>
             <li><strong>文字の広告</strong>：画像はありません。アイコン・広告主名・「広告」の表示・日付が並び、その下に文字が<strong>1行から最大7行まで</strong>入ります（先頭の行は白色で強調できます）</li>
             <li><strong>動画</strong>も画像と同じ枠（1.88:1）で、音声付きで入稿できます。音声のない状態で自動再生し、利用者が右下のボタンで音声を出せます</li>
@@ -148,15 +170,17 @@
           <p style="font-size:0.85rem; color:var(--text-muted, #999); line-height:1.9; margin:0 0 8px;">
             ※iPhone 17（画面幅402pt・3倍）での表示を撮影したものです。
           </p>
-
-          <h3 style="font-size:1.05rem; margin:32px 0 12px; color:var(--gold, #a8842c);">入稿サイズ（メディア一覧の広告：音楽・動画・漫画・絵）</h3>
+            </section>
+            <section class="face-panel" role="tabpanel" data-face="media" hidden>
+          <h3 style="font-size:1.05rem; margin:32px 0 12px; color:var(--gold, #a8842c);">入稿サイズ（メディア一覧の広告：音楽・動画・漫画・絵・小説）</h3>
           <p style="line-height:2; margin-bottom:12px;">
             メディアの一覧に挟まる広告は、<strong>テキスト投稿面と同じ規格</strong>です。同じ素材をそのままお使いいただけます。
           </p>
           <ul style="line-height:2.1; padding-left:1.2em; margin-bottom:12px;">
+            <li><strong>入稿物</strong>：テキスト投稿の広告と<strong>同じ規格</strong>（同じ素材をお使いいただけます）</li>
             <li><strong>画像の広告</strong>：1206 × 642 px（比率 1.88:1）の<strong>1種類のみ</strong>。素材が切り取られずそのまま表示されます</li>
             <li><strong>文字の広告</strong>：テキスト投稿面と同じ形式です（文字は7行まで）</li>
-            <li>音楽・動画・漫画・絵のどの一覧でも、利用者が列数の表示設定を変えても、常に同じ形で表示されます</li>
+            <li>音楽・動画・漫画・絵・小説のどの一覧でも、利用者が列数の表示設定を変えても、常に同じ形で表示されます</li>
             <li>表示の大きさも<strong>SNSのテキスト投稿面と同じ画面幅いっぱい</strong>です（一覧の余白に関わらず同じ見え方になります）</li>
             <li>配信面は媒体単位（音楽のみ・漫画のみ等）で指定いただけます</li>
           </ul>
@@ -193,12 +217,14 @@
           <p style="font-size:0.85rem; color:var(--text-muted, #999); line-height:1.9; margin:0 0 8px;">
             ※iPhone 17（画面幅402pt・3倍）での表示を撮影したものです。
           </p>
-
+            </section>
+            <section class="face-panel" role="tabpanel" data-face="reel" hidden>
           <h3 style="font-size:1.05rem; margin:32px 0 12px; color:var(--gold, #a8842c);">入稿サイズ（動画リールの広告）</h3>
           <p style="line-height:2; margin-bottom:12px;">
             メディアの動画（ショート）を縦にめくって見る再生面に、作品と同じ<strong>全画面</strong>で一定間隔で挟まります。この面は<strong>動画専用</strong>です。
           </p>
           <ul style="line-height:2.1; padding-left:1.2em; margin-bottom:12px;">
+            <li><strong>入稿物</strong>：作品と同じ<strong>全画面の縦動画</strong>（縦9:16推奨）。この面は動画専用です</li>
             <li><strong>推奨は縦9:16（1206×2144px）</strong>＝表示枠そのままの形です。9:16でない縦素材（縦4:5等）も入稿でき、枠に合わせて中央を切り取って表示します</li>
             <li>音声のない状態で自動再生・繰り返し再生し、利用者が右下のボタンで音声を出せます</li>
             <li>「広告」の表示と広告主名は画面の左下に重なります。画面のどこをタップしてもリンク先が開きます（リンク帯はありません）</li>
@@ -216,12 +242,14 @@
           <p style="font-size:0.85rem; color:var(--text-muted, #999); line-height:1.9; margin:0 0 8px;">
             ※iPhone 17（画面幅402pt・3倍）での表示を撮影したものです。
           </p>
-
+            </section>
+            <section class="face-panel" role="tabpanel" data-face="dating" hidden>
           <h3 style="font-size:1.05rem; margin:32px 0 12px; color:var(--gold, #a8842c);">入稿サイズ（出会いの広告）</h3>
           <p style="line-height:2; margin-bottom:12px;">
             「さがす」画面で、候補プロフィールと同じ<strong>全画面カード</strong>として一定間隔で表示されます（成人のみが利用する面です）。
           </p>
           <ul style="line-height:2.1; padding-left:1.2em; margin-bottom:12px;">
+            <li><strong>入稿物</strong>：広告主名・本文・リンク先URL・画像または動画（<strong>正方形1:1</strong>）。画像または動画が必須＝文字のみの形はありません</li>
             <li>画像・動画とも<strong>正方形1:1（1206×1206px）の固定</strong>です＝候補プロフィールの写真と同じ形（正方形でない素材は、枠に合わせて中央を切り取って表示します）</li>
             <li>「広告」の表示と広告主名は素材の左上に重なり、素材の下に本文と「詳しく見る」の帯が入ります（先頭の行は白色で強調できます。本文の全文表示は<strong>見出しと本文をあわせて8行（176字）</strong>までです）</li>
           </ul>
@@ -244,25 +272,8 @@
           <p style="font-size:0.85rem; color:var(--text-muted, #999); line-height:1.9; margin:0 0 8px;">
             ※iPhone 17（画面幅402pt・3倍）での表示を撮影したものです。
           </p>
-          <p style="line-height:2; margin:20px 0 8px;">
-            ご入稿予定の素材と文章を入れて、実際の表示と切り取り位置をその場でご確認いただけます。
-            <a href="simulator.html">入稿シミュレータはこちら</a>（画像はブラウザ内でのみ処理され、送信されません）
-          </p>
-
-          <h3 style="font-size:1.05rem; margin:32px 0 12px; color:var(--gold, #a8842c);">料金（表示回数の保証型）</h3>
-          <p style="line-height:2; margin-bottom:12px;">
-            料金は<strong>表示回数の保証型</strong>です。月額ではなく「表示された回数」でお支払いいただき、お申込みの回数に達するまで配信を続けます。
-          </p>
-          <ul style="line-height:2.1; padding-left:1.2em;">
-            <li><strong>単価：表示1,000回＝300円（税込）</strong></li>
-            <li><strong>最小パック：1面 10,000円（約33,000回以上の表示を保証）</strong>。追加は10,000円単位で承ります</li>
-            <li><strong>使い切るまで配信します</strong>。月で打ち切ることはなく、月内に回数へ達しなかった分は翌月へそのまま延長します</li>
-            <li>回数に早く達した場合はその時点で終了します（続けて掲載する場合は追加パックをお申込みください）</li>
-            <li>面の数え方：SNS（画像投稿・テキスト投稿）は各面、メディア一覧（音楽・漫画・絵・動画・小説）は各媒体を1面、動画リール・出会いは各1面として数えます</li>
-            <li>表示回数・タップ数の計測レポートをご提供します（広告主さまご自身でアプリ内からも常時ご確認いただけます）</li>
-            <li>複数面の組み合わせ・大口のお申込みは割引をご相談いただけます</li>
-          </ul>
-
+            </section>
+            <section class="face-panel" role="tabpanel" data-face="sponsored" hidden>
           <h3 style="font-size:1.05rem; margin:32px 0 12px; color:var(--gold, #a8842c);">スポンサードシール（シールで配る広告）</h3>
           <p style="line-height:2; margin-bottom:12px;">
             貴社のシール10種を、期間限定の<strong>無料シート</strong>としてトークのシールのショップで配る広告です。受け取った方はトークで何度でも送れるため、貴社のシールが友達どうしの会話の中で使われ続けます。配布の型は2つです。
@@ -271,6 +282,42 @@
             <li><strong>友だち追加型</strong>：貴社の公式をトークに追加した方だけが受け取れます（公式の友だちを増やす広告。追加は利用者ご自身の操作です）</li>
             <li><strong>誰でも型</strong>：ショップを開いた方ならどなたでも受け取れます（露出のみ）</li>
           </ul>
+          <p style="line-height:2; margin-bottom:6px;"><strong>制作の見本</strong>（商品写真 → 当社のキャラクターに着せる・持たせる・乗せる）</p>
+          <p style="line-height:2; margin-bottom:12px;">
+            貴社の商品写真をお預かりし、当社のキャラクターが身に着けたり手に持ったりする形のシールに仕上げます。上が商品写真、下がシールです（見本の商品はすべて架空のものです）。
+          </p>
+          <div class="sp-samples" id="spSamples">
+            <figure class="sp-sample">
+              <img src="../../assets/images/ads/sponsored-01-hoodie-product.webp?v=20260923" alt="見本の商品写真（パーカー）" loading="lazy">
+              <span class="sp-arrow" aria-hidden="true">▼</span>
+              <img src="../../assets/images/ads/sponsored-01-hoodie-sticker.webp?v=20260923" alt="パーカーを凛に着せたシールの見本" class="sp-sticker" loading="lazy">
+              <figcaption>パーカー × 凛</figcaption>
+            </figure>
+            <figure class="sp-sample">
+              <img src="../../assets/images/ads/sponsored-02-tshirt-product.webp?v=20260923" alt="見本の商品写真（Tシャツ）" loading="lazy">
+              <span class="sp-arrow" aria-hidden="true">▼</span>
+              <img src="../../assets/images/ads/sponsored-02-tshirt-sticker.webp?v=20260923" alt="Tシャツを泰潤に着せたシールの見本" class="sp-sticker" loading="lazy">
+              <figcaption>Tシャツ × 泰潤</figcaption>
+            </figure>
+            <figure class="sp-sample">
+              <img src="../../assets/images/ads/sponsored-03-shoes-product.webp?v=20260923" alt="見本の商品写真（スニーカー）" loading="lazy">
+              <span class="sp-arrow" aria-hidden="true">▼</span>
+              <img src="../../assets/images/ads/sponsored-03-shoes-sticker.webp?v=20260923" alt="スニーカーを誠に着せたシールの見本" class="sp-sticker" loading="lazy">
+              <figcaption>スニーカー × 誠</figcaption>
+            </figure>
+            <figure class="sp-sample">
+              <img src="../../assets/images/ads/sponsored-04-perfume-product.webp?v=20260923" alt="見本の商品写真（香水）" loading="lazy">
+              <span class="sp-arrow" aria-hidden="true">▼</span>
+              <img src="../../assets/images/ads/sponsored-04-perfume-sticker.webp?v=20260923" alt="香水を麗華に着せたシールの見本" class="sp-sticker" loading="lazy">
+              <figcaption>香水 × 麗華</figcaption>
+            </figure>
+            <figure class="sp-sample">
+              <img src="../../assets/images/ads/sponsored-05-car-product.webp?v=20260923" alt="見本の商品写真（車）" loading="lazy">
+              <span class="sp-arrow" aria-hidden="true">▼</span>
+              <img src="../../assets/images/ads/sponsored-05-car-sticker.webp?v=20260923" alt="車をむすぶに着せたシールの見本" class="sp-sticker" loading="lazy">
+              <figcaption>車 × むすぶ</figcaption>
+            </figure>
+          </div>
           <p style="line-height:2; margin-bottom:6px;"><strong>料金</strong>（リリース時の価格・実績により見直します）</p>
           <ul style="line-height:2.1; padding-left:1.2em; margin-bottom:16px;">
             <li><strong>掲載料：1か月 10,000円（税込・前払い）</strong>。続ける場合は月ごとに延長します（前払いは最大3か月まで）</li>
@@ -286,12 +333,38 @@
           </ul>
           <p style="line-height:2; margin-bottom:6px;"><strong>お申込みの条件</strong></p>
           <ul style="line-height:2.1; padding-left:1.2em;">
+            <li><strong>入稿物</strong>：シール画像<strong>10枚</strong>（正方形・透過推奨・512pxに自動調整）・シート名・広告主名</li>
             <li>お申込みはアプリのビジネスの「広告」→広告シミュレーターの「スポンサードシール」から（シート名・画像10枚・配布の型・期間をお送りください）。掲載料のお支払いはアプリの外（請求書によるお振込）です</li>
             <li>1社あたり同時に配布できるシートは1枚です。価格は改定することがあり、改定後の延長・新規は新価格となります（将来の枠は販売しません）</li>
             <li>掲載基準（下記）に沿って事前審査を行います。内容・お取引の進め方によりお受けできない場合があります</li>
             <li>AI生成の画像には独占的な権利をお渡しできません。当社キャラクターの使用は期間と用途を限定した許諾です</li>
           </ul>
-
+            </section>
+          </div>
+          <div id="faceShared">
+          <h3 style="font-size:1.05rem; margin:32px 0 12px; color:var(--gold, #a8842c);">料金（表示回数の保証型）</h3>
+          <p style="line-height:2; margin-bottom:12px;">
+            料金は<strong>表示回数の保証型</strong>です。月額ではなく「表示された回数」でお支払いいただき、お申込みの回数に達するまで配信を続けます。
+          </p>
+          <ul style="line-height:2.1; padding-left:1.2em;">
+            <li><strong>単価：表示1,000回＝300円（税込）</strong></li>
+            <li><strong>最小パック：1面 10,000円（約33,000回以上の表示を保証）</strong>。追加は10,000円単位で承ります</li>
+            <li><strong>使い切るまで配信します</strong>。月で打ち切ることはなく、月内に回数へ達しなかった分は翌月へそのまま延長します</li>
+            <li>回数に早く達した場合はその時点で終了します（続けて掲載する場合は追加パックをお申込みください）</li>
+            <li>面の数え方：SNS（画像投稿・テキスト投稿）は各面、メディア一覧（音楽・漫画・絵・動画・小説）は各媒体を1面、動画リール・出会いは各1面として数えます</li>
+            <li>表示回数・タップ数の計測レポートをご提供します（広告主さまご自身でアプリ内からも常時ご確認いただけます）</li>
+            <li>複数面の組み合わせ・大口のお申込みは割引をご相談いただけます</li>
+          </ul>
+          <p style="line-height:2; margin:20px 0 8px;">
+            ご入稿予定の素材と文章を入れて、実際の表示と切り取り位置をその場でご確認いただけます。
+            <a href="simulator.html">入稿シミュレータはこちら</a>（画像はブラウザ内でのみ処理され、送信されません）
+          </p>
+          <h3 style="font-size:1.05rem; margin:32px 0 12px; color:var(--gold, #a8842c);">入稿の共通ルール（全ての面）</h3>
+          <ul style="line-height:2.1; padding-left:1.2em;">
+            <li><strong>動画の上限</strong>：長さ<strong>30秒</strong>・容量<strong>50MB</strong>以内</li>
+            <li>入稿は画像とテキストのみ（タグ・スクリプト等の埋め込みは不可）</li>
+          </ul>
+          </div>
           <h3 style="font-size:1.05rem; margin:32px 0 12px; color:var(--gold, #a8842c);">掲載基準</h3>
           <p style="line-height:2; margin-bottom:12px;">
             掲載内容は事前審査のうえ承ります。以下に該当する業種・商材・表現はお断りいたします。
@@ -344,6 +417,32 @@
 
   <footer class="footer"><div class="container"><div class="footer-grid"><div class="footer-col"><h4>会社案内</h4><ul><li><a href="../about/message.html">代表メッセージ</a></li><li><a href="../about/profile.html">事業概要</a></li><li><a href="../about/officers.html">メンバー紹介</a></li><li><a href="../about/history.html">沿革</a></li><li><a href="../about/office.html">事業所案内</a></li></ul></div><div class="footer-col"><h4>事業内容</h4><ul><li><a href="../works/app.html">アプリ</a></li></ul></div><div class="footer-col"><h4>その他</h4><ul><li><a href="../news/index.html">お知らせ</a></li><li><a href="../recruit/index.html">採用情報</a></li><li><a href="index.html">広告掲載</a><a href="../collab/index.html">IPコラボ</a></li><li><a href="../domestic/index.html">純日本への取り組み</a></li><li><a href="../support/index.html">ご支援のお願い</a></li><li><a href="../../contact.html">お問い合わせ</a></li></ul></div></div><div class="footer-bottom"><span class="footer-logo"><img src="../../assets/images/logo-mark.webp" alt="" class="nav-mark">Diostella</span><p class="footer-copy">&copy; 2026 Diostella. All rights reserved.</p></div></div></footer>
   <script src="../../assets/js/script.js?v=20260921"></script>
+  <script>
+    // 掲載面の切替＝押した面の入稿サイズ・表示例・料金だけを出す（スポンサードシールは料金が別なので共通の料金を隠す）
+    (() => {
+      const tabs = [...document.querySelectorAll('#faceTabs .sim-choice')];
+      const panels = [...document.querySelectorAll('#facePanels .face-panel')];
+      const shared = document.getElementById('faceShared');
+      const keys = tabs.map(b => b.dataset.face);
+      function select(face, scroll) {
+        if (!keys.includes(face)) return;
+        tabs.forEach(b => { const on = b.dataset.face === face; b.classList.toggle('on', on); b.setAttribute('aria-selected', on ? 'true' : 'false'); });
+        panels.forEach(p => { p.hidden = p.dataset.face !== face; });
+        shared.hidden = face === 'sponsored';
+        const t = tabs.find(b => b.dataset.face === face); if (t) t.parentElement.scrollTo({ left: Math.max(t.offsetLeft - 16, 0), behavior: 'smooth' }); // スマホ＝1段横スクロールなので選んだ面を見える位置へ
+        history.replaceState(null, '', '#' + face);
+        if (scroll) document.getElementById('faceTabs').scrollIntoView({ block: 'start', behavior: 'smooth' });
+      }
+      tabs.forEach(b => b.addEventListener('click', () => select(b.dataset.face, false)));
+      document.querySelectorAll('#adSlotTable tr[data-sel]').forEach(tr => {
+        tr.addEventListener('click', () => select(tr.dataset.sel, true));
+        tr.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); select(tr.dataset.sel, true); } });
+      });
+      const fromHash = () => { const h = location.hash.replace('#', ''); if (keys.includes(h)) select(h, true); };
+      window.addEventListener('hashchange', fromHash);
+      fromHash();
+    })();
+  </script>
   <script>
     // 掲載面ごとの受付状況＝アプリのデータベースの公開の読み取り口（集計済みの「受付中／満枠」だけ・個別データは返さない）。
     // 取得できない時は表の初期値「受付中」のまま。

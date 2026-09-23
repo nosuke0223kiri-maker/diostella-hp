@@ -1278,3 +1278,12 @@ img { max-width: 100%; height: auto; }
   .founder-quote { text-align: left; }
   .page-main th { white-space: normal; }
 }
+
+/* ══════════════════════════════════════════════
+   選択ボタンの列（入稿シミュレータの掲載面・広告掲載ページの面の切替で共用）
+   ══════════════════════════════════════════════ */
+.sim-choices { display: flex; flex-wrap: wrap; gap: 8px; }
+.sim-choices[hidden] { display: none; }
+.sim-choice { border: 1px solid var(--border); background: #fff; border-radius: 4px; padding: 8px 14px; font-family: inherit; font-size: 0.85rem; color: var(--text-sub); cursor: pointer; transition: all 0.25s; }
+.sim-choice:hover { border-color: var(--gold-dim); }
+.sim-choice.on { border-color: var(--gold); background: var(--gold-bg); color: var(--gold); }
