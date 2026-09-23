@@ -1,6 +1,13 @@
 # サイト制作中のため、全クローラーの巡回を停止しています。
 # 公開準備が整ったら Disallow の行を削除してください。
 # ⚠️ robots.txt だけでは解除しきれません＝全HTMLの <meta name="robots" content="noindex, nofollow"> も同時に外すこと。
+# リンクのカード（OGP）を作る仕組みだけは通す＝LINE・Instagram・X等でリンクを送った時に画像付きで出すため。検索エンジンは下の「*」で止めたまま（2026-09-24）
+User-agent: facebookexternalhit
+User-agent: Twitterbot
+User-agent: Slackbot-LinkExpanding
+User-agent: Discordbot
+Disallow:
+
 User-agent: *
 Disallow: /
 
