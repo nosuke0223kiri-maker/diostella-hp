@@ -25,7 +25,7 @@ async function api(action) {
 function render(info) {
   ["view-loading", "view-invalid", "view-ask", "view-done", "view-revoked", "revoke-confirm"].forEach((id) => show(id, false));
   if (!info) { show("view-invalid"); return; }
-  if (info.minAge) $("ask-law").textContent = `Diostella〜完璧秘書〜では、${info.minAge}歳未満の方が秘書チャットのAI機能をお使いになる際、法律（個人情報の保護に関する法律 第40条の2）にもとづき、保護者（親権者など）の方の同意をいただいています。`;
+  if (info.minAge) $("ask-law").textContent = `Diostella 完璧秘書では、${info.minAge}歳未満の方が秘書チャットのAI機能をお使いになる際、法律（個人情報の保護に関する法律 第40条の2）にもとづき、保護者（親権者など）の方の同意をいただいています。`;
   if (info.privacyUrl) $("privacy-link").href = info.privacyUrl;
   if (info.status === "consented") { show("view-done"); return; }
   if (info.expired) { $("invalid-msg").textContent = "このリンクは期限切れ（7日間）です。お手数ですが、お子さまのアプリからもう一度ご案内をお送りください。"; show("view-invalid"); return; }
