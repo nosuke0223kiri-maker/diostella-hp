@@ -290,9 +290,10 @@ img { max-width: 100%; }
 .plan-list li { font-size: 0.85rem; color: var(--text-dim); line-height: 1.8; padding: 8px 0 8px 22px; position: relative; border-bottom: 1px solid var(--line); }
 .plan-list li:last-child { border-bottom: none; }
 .plan-list li::before { content: '✦'; position: absolute; left: 0; color: var(--gold); font-size: 0.7rem; }
-.plans-note { text-align: center; font-size: 0.8rem; color: var(--text-dim); margin-top: 28px; }
-.plans-note a { color: var(--gold); text-decoration: none; }
-.plans-note a:hover { text-decoration: underline; }
+.plans-note, .target-note { text-align: center; font-size: 0.8rem; color: var(--text-dim); margin-top: 28px; line-height: 1.9; }
+.plans-note a, .target-note a { color: var(--gold); text-decoration: none; }
+.plans-note a:hover, .target-note a:hover { text-decoration: underline; }
+.target-note em { display: block; margin-top: 10px; font-style: normal; font-size: 0.72rem; color: var(--text-muted); }
 
 .plan-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin-top: 44px; }
 .plan-table { width: 100%; max-width: 960px; min-width: 640px; margin: 0 auto; border-collapse: collapse; font-size: 0.88rem; }
