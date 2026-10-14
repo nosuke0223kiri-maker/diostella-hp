@@ -217,7 +217,7 @@
           <li><svg viewBox="0 0 24 24"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21.2l7.8-7.8 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg><span>出会い</span></li>
           <li><svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 3v18"/><path d="M12 8.5l1.8 2.8 1.8-2.8M13.8 11.3V16M11.8 12.8h4M11.8 14.6h4"/></svg><span>家計簿</span></li>
         </ul>
-        <p class="apps-all-note">会社で使う「ビジネス」（打刻・日報・仕事の会話・書類の共有）は、ビジネスプランのアカウントに表示されます。</p>
+        <!-- ビジネスが開発のみの間は非表示（2026-10-14）：<p class="apps-all-note">会社で使う「ビジネス」（打刻・日報・仕事の会話・書類の共有）は、ビジネスプランのアカウントに表示されます。</p> -->
       </div>
     </div>
   </section>
@@ -384,7 +384,7 @@
           <p>Googleから受け取ったデータを、AIの学習、画像や動画の生成、広告の配信、ほかの機能に使うことはありません。本アプリは人物の画像を生成する機能を持ちません。</p>
         </div>
       </div>
-      <p class="target-note">連携は <a href="https://myaccount.google.com/permissions" target="_blank" rel="noopener">Googleアカウントの権限設定</a> からいつでも解除できます。詳しくは <a href="privacy.html">プライバシーポリシー</a> 第3条をご覧ください。<br>本アプリの Google API から受け取った情報の利用は、<a href="https://developers.google.com/terms/api-services-user-data-policy" target="_blank" rel="noopener">Google API Services User Data Policy</a>（Limited Use の要件を含む）に準拠します。<br><em>Diostella 完璧秘書 is a personal-secretary app (calendar, notes, chat, and creator marketplace). It uses Google Sign-In only to create and verify your account, and reads your Google Calendar events (read-only) solely to display them in the app. Google user data is never used for AI training, image or video generation, or advertising.</em></p>
+      <p class="target-note">連携は <a href="https://myaccount.google.com/permissions" target="_blank" rel="noopener">Googleアカウントの権限設定</a> からいつでも解除できます。詳しくは <a href="privacy.html">プライバシーポリシー</a>の「6. 外部サービス」をご覧ください。<br>本アプリの Google API から受け取った情報の利用は、<a href="https://developers.google.com/terms/api-services-user-data-policy" target="_blank" rel="noopener">Google API Services User Data Policy</a>（Limited Use の要件を含む）に準拠します。<br><em>Diostella 完璧秘書 is a personal-secretary app (calendar, notes, chat, and creator marketplace). It uses Google Sign-In only to create and verify your account, and reads your Google Calendar events (read-only) solely to display them in the app. Google user data is never used for AI training, image or video generation, or advertising.</em></p>
     </div>
   </section>
 
@@ -434,6 +434,7 @@
       </div>
       <p class="plans-note">「1日の回数」は月の上限を残りの日数で割り直した目安で、1回≒1千トークン。数値は正式リリースまでに見直すことがあります（増える方向のみ）。詳細は<a href="terms.html">利用規約</a>をご覧ください。</p>
 
+      <!-- ビジネスが開発のみの間はビジネスプランを非表示（2026-10-14 こうくん了承）。戻す時はこのコメントを外す
       <div class="biz">
         <div class="biz-head">
           <span class="section-tag">会社で使う</span>
@@ -467,6 +468,7 @@
           </div>
         </div>
       </div>
+      -->
     </div>
   </section>
 
