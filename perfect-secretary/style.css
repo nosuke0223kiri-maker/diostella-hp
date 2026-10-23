@@ -476,3 +476,11 @@ img { max-width: 100%; }
   .btn { padding: 12px 28px; font-size: 0.85rem; }
   .target-grid { grid-template-columns: 1fr; }
 }
+
+/* Apple・Google のログインボタン＝両社の公式規格（アカウントページ）。Apple＝黒地・白字・システム書体／Google＝白地・#747775 の枠・#1F1F1F の字・Roboto Medium 14/20。2つは同じ幅・同じ高さ（Apple を小さくしない） */
+.oauth-btns { display: flex; flex-direction: column; align-items: center; gap: 12px; margin: 32px 0 16px; }
+.oauth-btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; width: min(100%, 300px); height: 44px; padding: 0 16px; border-radius: 8px; cursor: pointer; transition: opacity 0.2s ease; }
+.oauth-btn svg { width: 20px; height: 20px; flex-shrink: 0; }
+.oauth-btn:hover { opacity: 0.9; }
+.oauth-apple { background: #000; color: #fff; border: 1px solid #000; font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Hiragino Sans", sans-serif; font-size: 16px; font-weight: 500; letter-spacing: 0; }
+.oauth-google { background: #fff; color: #1F1F1F; border: 1px solid #747775; font-family: "Roboto", "Google Sans", -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif; font-size: 14px; line-height: 20px; font-weight: 500; letter-spacing: 0; }
