@@ -7,7 +7,25 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2.108.1";
 const SB_URL = "https://qwsxionvojqnqnwccoij.supabase.co";
 const SB_KEY = "sb_publishable_RjqVoCPAZehQEwqNXvBqLA_FniRc_Sd";
 const TURNSTILE_SITEKEY = "0x4AAAAAAE9_NHF8sN51gu75"; // Cloudflare Turnstile のサイトキー（空＝出さない。サーバー側 TURNSTILE_SECRET と対で入れる）
-const sb = createClient(SB_URL, SB_KEY, { auth: { flowType: "pkce", persistSession: true, detectSessionInUrl: true } });
+// ログインの保存先＝タブ限定（sessionStorage）＝タブを閉じたらログインも消える。解約・一時停止ができる画面なので、共用のパソコンで開きっぱなしを防ぐ（2026-10-23 みか提案・こうくん了承）
+const sb = createClient(SB_URL, SB_KEY, { auth: { flowType: "pkce", persistSession: true, detectSessionInUrl: true, storage: window.sessionStorage } });
+// 無操作の期限＝30分（触ると延長）。切れたらこのページだけログアウト（アプリのログインには触らない）
+const IDLE_MS = (() => { try { const v = location.hostname === "localhost" && Number(sessionStorage.getItem("ps-idle-ms")); return v > 0 ? v : 30 * 60 * 1000; } catch { return 30 * 60 * 1000; } })();
+let idleTimer = null;
+async function idleLogout() {
+  idleTimer = null;
+  if (!me) return;
+  await sb.auth.signOut({ scope: "local" });
+  me = null; render();
+  say("30分操作がなかったため、ログアウトしました。続けるにはもう一度ログインしてください", 7000);
+}
+function armIdle() {
+  clearTimeout(idleTimer);
+  if (!me) { idleTimer = null; return; }
+  idleTimer = setTimeout(idleLogout, IDLE_MS);
+}
+for (const ev of ["pointerdown", "keydown", "scroll", "touchstart"]) window.addEventListener(ev, armIdle, { passive: true });
+document.addEventListener("visibilitychange", () => { if (document.visibilityState === "visible") armIdle(); });
 
 const $ = (id) => document.getElementById(id);
 const show = (id, on = true) => { $(id).hidden = !on; };
@@ -103,8 +121,10 @@ async function refresh() {
   try {
     me = await api("me");
     render();
+    armIdle();
   } catch (e) {
     me = null;
+    armIdle();
     if (e.code === 404 && e.body?.notfound) { await sb.auth.signOut({ scope: "local" }); render(); say(e.message, 7000); return; }
     if (e.code === 401) { await sb.auth.signOut({ scope: "local" }); render(); return; }
     render();
@@ -121,7 +141,7 @@ async function login(provider) {
 }
 $("btn-apple").addEventListener("click", () => login("apple"));
 $("btn-google").addEventListener("click", () => login("google"));
-$("btn-logout").addEventListener("click", async () => { await sb.auth.signOut({ scope: "local" }); try { localStorage.removeItem("ps-account-name"); sessionStorage.removeItem(MODE_KEY); } catch { /* noop */ } me = null; render(); say("ログアウトしました"); });
+$("btn-logout").addEventListener("click", async () => { await sb.auth.signOut({ scope: "local" }); try { localStorage.removeItem("ps-account-name"); sessionStorage.removeItem(MODE_KEY); } catch { /* noop */ } me = null; armIdle(); render(); say("ログアウトしました"); });
 
 // ── お支払いの管理（Stripe の管理画面へ） ──
 $("btn-portal").addEventListener("click", async () => {
