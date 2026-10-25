@@ -74,19 +74,19 @@
     .sim-sa { flex:none; height:62px; position:relative; }
     .sim-clock { position:absolute; left:34px; top:20px; font-size:15px; color:#fff; }
     .sim-island { position:absolute; left:50%; top:11px; transform:translateX(-50%); width:126px; height:37px; background:#0a0a0a; border-radius:19px; }
-    /* ヘッダー＝高さ50＋下線1（アプリの --hdr-minh + border） */
-    .sim-hdr { flex:none; height:50px; position:relative; display:flex; align-items:center; justify-content:center;
+    /* ヘッダー＝高さ55＋下線1（＝56。アプリの中＝10+戻る36+10） */
+    .sim-hdr { flex:none; height:55px; position:relative; display:flex; align-items:center; justify-content:center;
       border-bottom:1px solid var(--ui-bd); background:linear-gradient(to top,#141414 0%,#141414 55%,#000 100%); }
-    .sim-hdr-t { font-size:15px; letter-spacing:0.2em; color:var(--gold); }
-    .sim-hdr-back { position:absolute; left:16px; width:30px; height:30px; display:flex; align-items:center; justify-content:center;
-      border:1px solid var(--ui-bd); border-radius:6px; box-shadow:var(--ui-sh); color:var(--gold-mid); font-size:24px; line-height:1; padding-bottom:4px; }
+    .sim-hdr-t { font-size:17px; color:var(--gold); }
+    .sim-hdr-back { position:absolute; left:16px; width:36px; height:36px; display:flex; align-items:center; justify-content:center;
+      border:1px solid var(--ui-bd); border-radius:6px; box-shadow:var(--ui-sh); color:var(--gold-mid); font-size:28px; line-height:1; padding-bottom:4px; }
     .sim-hdr-f { position:absolute; right:16px; border:1px solid var(--ui-bd); border-radius:6px; box-shadow:var(--ui-sh);
-      padding:6px 10px; font-size:11px; line-height:16px; color:var(--txt-dim); }
+      padding:6px 8.8px; font-size:17px; line-height:22px; color:var(--txt-dim); }
     .sim-hicons { position:absolute; right:16px; display:flex; gap:6px; }
-    .sim-hicons span { width:30px; height:30px; display:flex; align-items:center; justify-content:center; border:1px solid var(--ui-bd); border-radius:6px; box-shadow:var(--ui-sh); color:var(--txt-dim); font-size:13px; }
+    .sim-hicons span { width:36px; height:36px; display:flex; align-items:center; justify-content:center; border:1px solid var(--ui-bd); border-radius:6px; box-shadow:var(--ui-sh); color:var(--txt-dim); font-size:15px; }
 
     /* ── 出会い面 ── */
-    .sim-main { flex:1; min-height:0; padding:10px 16px 92px; display:flex; flex-direction:column; }
+    .sim-main { flex:1; min-height:0; padding:10px 16px 98px; display:flex; flex-direction:column; } /* 下98＝アプリの 切替タブ44+10+（10+安全領域34） */
     .sim-card { flex:1; min-height:0; display:flex; flex-direction:column; position:relative; overflow:hidden;
       background:var(--ui-line) no-repeat top / 100% 1px, var(--card);
       border:1px solid var(--ui-bd); border-radius:6px; box-shadow:var(--ui-sh); }
@@ -94,53 +94,54 @@
     .sim-media.drag { cursor:grabbing; }
     .sim-media img { position:absolute; left:50%; top:50%; transform-origin:center; user-select:none; -webkit-user-drag:none; max-width:none; }
     .sim-media-empty { display:flex; align-items:center; justify-content:center; height:100%; color:var(--txt-faint); font-size:13px; }
-    /* 広告バッジ＋広告主名＝画像の左上に1行（アプリの .ad-tile-head と同型。出会い=10px・SNS/メディア=6px寄せ） */
-    .sim-head { position:absolute; top:10px; left:10px; right:10px; z-index:2; display:flex; align-items:center; gap:6px; }
-    .sim-head.is-6 { top:6px; left:6px; right:6px; }
-    .sim-badge { flex-shrink:0; font-size:11px; line-height:16px; padding:6px 10px;
+    /* 広告バッジ＋広告主名＝画像の左上に1行（アプリの .ad-tile-head と同型＝全面とも枠の中10・バッジ→名前10） */
+    .sim-head { position:absolute; top:10px; left:10px; right:10px; z-index:2; display:flex; align-items:center; gap:10px; }
+    .sim-badge { flex-shrink:0; font-size:13px; line-height:22px; padding:2.1px 4.2px 1.9px 6.6px;
       background:rgba(0,0,0,0.45); color:rgba(255,255,255,0.85); border:1px solid rgba(255,255,255,0.25); border-radius:6px; }
-    .sim-advnm { min-width:0; font-size:10px; color:rgba(255,255,255,0.75); text-shadow:0 1px 4px rgba(0,0,0,0.8);
+    .sim-advnm { min-width:0; font-size:13px; color:rgba(255,255,255,0.75); text-shadow:0 1px 4px rgba(0,0,0,0.8);
       overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
     /* 文章エリア＝アプリと同じく中スクロール。バーはWebViewに合わせて隠す */
     .sim-txt { padding:12px 14px 14px; flex:1; min-height:0; display:flex; flex-direction:column; overflow-y:auto; scrollbar-width:none; }
     .sim-txt::-webkit-scrollbar { display:none; }
-    /* 文字組み＝15px・行送り1.5・1段落（文章の前半が白100・後半が白50＝見出しではなく濃さの違い。広告主名は本文に入れない＝2026-08-20規格） */
-    .sim-ttl, .sim-bd { font-size:15px; line-height:1.5; margin:0; white-space:pre-wrap; word-break:break-word; }
-    .sim-ttl { color:var(--txt); }
-    .sim-bd  { color:var(--txt-dim); }
-    /* 「詳しく見る」＝38系の帯（1+10+16+10+1＝36pt） */
-    .sim-cta { flex:none; margin:0; box-sizing:border-box; text-align:center; font-size:13px; line-height:16px; padding:10px;
+    /* サイト共通CSS（.page-main p＝16px・行送り2・下1.4em）に負けないよう、見本の中の p は .sim-phone 付きで上書きする */
+    .sim-phone p { margin:0; max-width:none; }
+    /* 文字組み＝本文17px・行送り22（中）・1段落（文章の前半が白100・後半が白50＝見出しではなく濃さの違い。広告主名は本文に入れない＝2026-08-20規格） */
+    .sim-phone .sim-ttl, .sim-phone .sim-bd { font-size:17px; line-height:22px; margin:0; white-space:pre-wrap; word-break:break-word; }
+    .sim-phone .sim-ttl { color:var(--txt); }
+    .sim-phone .sim-bd  { color:var(--txt-dim); }
+    /* 「詳しく見る」＝1行箱の帯（中44＝11+22+11・文字17） */
+    .sim-phone .sim-cta { flex:none; margin:0; box-sizing:border-box; text-align:center; font-size:17px; line-height:22px; padding:11px;
       color:var(--gold); background:var(--ui-sel-line) no-repeat top / 100% 1px, var(--ui-sel-bg); }
-    .sim-next { margin-top:10px; text-align:center; font-size:13px; line-height:16px; padding:10px 0;
+    .sim-next { margin-top:10px; text-align:center; font-size:17px; line-height:22px; padding:10px 0;
       background:var(--ui-line) no-repeat top / 100% 1px, var(--card); border:1px solid var(--ui-bd); border-radius:6px; box-shadow:var(--ui-sh); color:var(--txt-dim); }
     .sim-tab { position:absolute; left:0; right:0; bottom:0; display:flex; gap:10px; padding:14px 16px 44px; }
-    .sim-tab span { flex:1; text-align:center; font-size:13px; line-height:16px; padding:10px 0; border:1px solid var(--ui-bd); border-radius:6px;
+    .sim-tab span { flex:1; text-align:center; font-size:17px; line-height:22px; padding:10px 0; border:1px solid var(--ui-bd); border-radius:6px;
       background:var(--ui-line) no-repeat top / 100% 1px, var(--card); color:var(--txt-faint); box-shadow:var(--ui-sh); }
     .sim-tab span.on { background:var(--ui-sel-line) no-repeat top / 100% 1px, var(--ui-sel-bg); color:var(--gold); }
-    .sim-tab .sq { flex:0 0 38px; }
+    .sim-tab .sq { flex:0 0 44px; }
 
     /* ── フィード面の共通部品（SNS・メディア） ── */
     .sim-feed { flex:1; min-height:0; display:flex; flex-direction:column; overflow:hidden; }
     .sim-hr { flex:none; height:1px; background:var(--ui-line); }
     /* まわりの投稿・作品のダミー（グレーの棒） */
     .sim-ghostimg { flex:none; background:#161616; display:flex; align-items:center; justify-content:center; color:var(--txt-faint); font-size:11px; }
-    .sim-ghost { flex:none; padding:10px 14px; }
+    .sim-ghost { flex:none; padding:10px 16px; }
     .sim-ghost-h { display:flex; align-items:center; gap:10px; }
-    .sim-av { width:38px; height:38px; border-radius:11px; background:#141414; border:1px solid var(--ui-bd); box-shadow:var(--ui-sh); flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:18px; }
+    .sim-av { width:44px; height:44px; border-radius:11px; background:#141414; border:1px solid var(--ui-bd); box-shadow:var(--ui-sh); flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:22px; }
     .sim-bar { height:10px; border-radius:3px; background:rgba(232,224,208,0.10); }
     .sim-ghost-fill { flex:1 1 auto; min-height:0; }
     /* テキスト面・メディア一覧の「文字の広告」＝投稿と同じヘッダー行 */
-    .sim-adpost { flex:none; padding:10px 14px; }
+    .sim-adpost { flex:none; padding:10px 16px; } /* 左右16＝アプリの投稿カード（--ui-edge）＝本文の幅370 */
     .sim-adpost-h { display:flex; align-items:center; gap:10px; }
-    .sim-adpost-nm { display:flex; align-items:center; gap:8px; margin:0; font-size:13px; color:var(--txt); min-width:0; }
-    .sim-chip { flex-shrink:0; font-size:10px; letter-spacing:0.15em; color:var(--gold-mid); border:1px solid var(--ui-bd); box-shadow:var(--ui-sh); border-radius:4px; padding:1px 6px; }
-    .sim-adpost-tm { margin:0; font-size:11px; color:var(--txt-faint); }
-    .sim-adbody { margin:6px 0 0; font-size:15px; line-height:1.5; color:var(--txt-dim); white-space:pre-wrap; word-break:break-word;
+    .sim-phone .sim-adpost-nm { display:flex; align-items:center; gap:8px; margin:0; font-size:17px; line-height:22px; color:var(--txt); min-width:0; }
+    .sim-chip { flex-shrink:0; font-size:13px; line-height:22px; color:var(--txt-dim); border:1px solid var(--ui-bd); box-shadow:var(--ui-sh); border-radius:6px; padding:2.1px 4.2px 1.9px 6.6px; }
+    .sim-phone .sim-adpost-tm { margin:0; font-size:13px; line-height:22px; color:var(--txt-faint); }
+    .sim-phone .sim-adbody { margin:6px 0 0; font-size:17px; line-height:22px; color:var(--txt-dim); white-space:pre-wrap; word-break:break-word;
       display:-webkit-box; -webkit-box-orient:vertical; -webkit-line-clamp:7; overflow:hidden; }
     .sim-adbody .w { color:var(--txt); }
     /* メディア一覧のチップ帯と行 */
     .sim-chiprow { flex:none; display:flex; gap:8px; padding:10px 14px 0; }
-    .sim-chiprow span { font-size:11px; line-height:16px; padding:6px 10px; border:1px solid var(--ui-bd); border-radius:6px;
+    .sim-chiprow span { font-size:17px; line-height:22px; padding:6px 8.8px; border:1px solid var(--ui-bd); border-radius:6px;
       background:var(--ui-line) no-repeat top / 100% 1px, var(--card); color:var(--txt-dim); box-shadow:var(--ui-sh); }
     .sim-chiprow span.on { background:var(--ui-sel-line) no-repeat top / 100% 1px, var(--ui-sel-bg); color:var(--gold); }
     .sim-mrow { flex:none; display:flex; align-items:center; gap:12px; padding:8px 14px; }
@@ -232,7 +233,7 @@
                 <textarea class="sim-textarea sim-textarea-s" id="ttl">前半はこの濃さで表示されます。</textarea>
               </div>
               <div class="sim-field" id="f-bd">
-                <label class="sim-label" for="bd">文章の後半（薄い文字で表示されます・前半と合わせて <span id="cnt">0</span>/<span id="cap">176</span> 字）</label>
+                <label class="sim-label" for="bd">文章の後半（薄い文字で表示されます・前半と合わせて <span id="cnt">0</span>/<span id="cap">140</span> 字）</label>
                 <textarea class="sim-textarea" id="bd">後半はこの薄さで続けて表示されます。</textarea>
               </div>
               <p class="sim-note" id="textnote"></p>
@@ -281,7 +282,7 @@
                     <div class="sim-media js-media" data-face="photo">
                       <div class="sim-media-empty js-empty">画像を選んでください</div>
                       <img class="js-img" alt="" hidden>
-                      <span class="sim-head is-6"><span class="sim-badge">広告</span><span class="sim-advnm js-advnm">ご社名</span></span>
+                      <span class="sim-head"><span class="sim-badge">広告</span><span class="sim-advnm js-advnm">ご社名</span></span>
                     </div>
                     <p class="sim-cta">詳しく見る ›</p>
                     <div class="sim-ghostimg sim-ghost-fill">（次の投稿の写真）</div>
@@ -305,7 +306,7 @@
                       <div class="sim-media js-media" data-face="text">
                         <div class="sim-media-empty js-empty">画像を選んでください</div>
                         <img class="js-img" alt="" hidden>
-                        <span class="sim-head is-6"><span class="sim-badge">広告</span><span class="sim-advnm js-advnm">ご社名</span></span>
+                        <span class="sim-head"><span class="sim-badge">広告</span><span class="sim-advnm js-advnm">ご社名</span></span>
                       </div>
                       <p class="sim-cta">詳しく見る ›</p>
                     </div>
@@ -347,7 +348,7 @@
                       <div class="sim-media js-media" data-face="media">
                         <div class="sim-media-empty js-empty">画像を選んでください</div>
                         <img class="js-img" alt="" hidden>
-                        <span class="sim-head is-6"><span class="sim-badge">広告</span><span class="sim-advnm js-advnm">ご社名</span></span>
+                        <span class="sim-head"><span class="sim-badge">広告</span><span class="sim-advnm js-advnm">ご社名</span></span>
                       </div>
                       <p class="sim-cta">詳しく見る ›</p>
                     </div>
@@ -391,14 +392,14 @@
   <script src="../../assets/js/script.js?v=20260921"></script>
   <script>
   (() => {
-    // ===== アプリ側の確定値（正本＝Dating.jsx / AdCard.jsx / styles/ads.css / index.html :root）=====
-    // 出会い：カード内寸368×610・画像1:1固定・文章8行（1行22字・行送り22.5）＝176字（2026-08-20実機一致）
+    // ===== アプリ側の確定値（正本＝Dating.jsx / AdCard.jsx / styles/ads.css / index.html :root。文字サイズは既定の「中」基準）=====
+    // 出会い：カード内寸368×592・画像1:1固定・文章7行（1行20字・行送り22）＝140字（中・402×874＝小の実測610から中で伸びる部品18を引いた値）
     // SNS画像投稿：全幅402・比率は素材のまま縦4:5〜横1.88:1（clamp [4/5,1.88]）・文章なし
-    // SNSテキスト/メディア一覧：画像広告＝全幅402×1.88:1固定・文字0行／文字広告＝画像なし・前半＋後半で7行（-webkit-line-clamp:7・幅374＝1行24字）
+    // SNSテキスト/メディア一覧：画像広告＝全幅402×1.88:1固定・文字0行／文字広告＝画像なし・前半＋後半で7行（-webkit-line-clamp:7・幅370＝1行21字）
     // 入稿の天井＝前半＋後半600字（DB check ads_text_len_600）＝表示行数を超えた分は画面に出ない
     const OUT_W = 1206;        // 入稿の推奨幅＝画面幅402pt×3
-    const LINE_ADD = 22.5;     // 1行ぶんの高さ（15px×1.5）
-    const CARD_H = 610, CTA_H = 36, TXT_PAD = 26; // 出会いカードの内訳
+    const LINE_ADD = 22;       // 1行ぶんの高さ（本文17px・行高22＝アプリの中）
+    const CARD_H = 592, CTA_H = 44, TXT_PAD = 26; // 出会いカードの内訳
     const FACES = {
       dating: { imgW: 368, name: '出会い', file: 'dating' },
       photo:  { imgW: 402, name: 'SNS画像投稿', file: 'sns-photo', lo: 0.8, hi: 1.88 },
@@ -565,16 +566,16 @@
       ['pointerup','pointercancel'].forEach(t => m.addEventListener(t, () => { dragging = false; m.classList.remove('drag'); }));
     });
 
-    // ---- この形に収まる字数 ----
-    // 出会い＝文章エリア内寸(610-368-36-26=180pt)÷22.5＝8行×22字＝176字（2026-08-20実機一致）
-    // SNSテキスト/メディアの文字広告＝line-clamp:7の固定7行×24字（幅374pt）＝168字。入稿は600字まで＝超えた分は表示されない
+    // ---- この形に収まる字数（中基準） ----
+    // 出会い＝文章エリア内寸(592-368-44-26=154pt)÷22＝7行×20字＝140字
+    // SNSテキスト/メディアの文字広告＝line-clamp:7の固定7行×21字（幅370pt）＝147字。入稿は600字まで＝超えた分は表示されない
     const capacity = () => {
       if (face === 'dating') {
         const A = CARD_H - frameH() - CTA_H - TXT_PAD;
         const lines = Math.max(0, Math.floor(A / LINE_ADD));
-        return { lines, chars: lines * 22 };
+        return { lines, chars: lines * 20 };
       }
-      return { lines: 7, chars: 168 };
+      return { lines: 7, chars: 147 };
     };
 
     // ---- 文章 ----
