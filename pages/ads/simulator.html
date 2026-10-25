@@ -74,8 +74,8 @@
     .sim-sa { flex:none; height:62px; position:relative; }
     .sim-clock { position:absolute; left:34px; top:20px; font-size:15px; color:#fff; }
     .sim-island { position:absolute; left:50%; top:11px; transform:translateX(-50%); width:126px; height:37px; background:#0a0a0a; border-radius:19px; }
-    /* ヘッダー＝高さ55＋下線1（＝56。アプリの中＝10+戻る36+10） */
-    .sim-hdr { flex:none; height:55px; position:relative; display:flex; align-items:center; justify-content:center;
+    /* ヘッダー＝下線1込みで56（アプリの中＝10+戻る36+10+線1・下端は画面の上から118＝シミュレータ実測） */
+    .sim-hdr { flex:none; height:56px; position:relative; display:flex; align-items:center; justify-content:center;
       border-bottom:1px solid var(--ui-bd); background:linear-gradient(to top,#141414 0%,#141414 55%,#000 100%); }
     .sim-hdr-t { font-size:17px; color:var(--gold); }
     .sim-hdr-back { position:absolute; left:16px; width:36px; height:36px; display:flex; align-items:center; justify-content:center;
