@@ -15,5 +15,6 @@ jobs:
         uses: lycheeverse/lychee-action@e7477775783ea5526144ba13e8db5eec57747ce8 # v2（第三者製Action・同上）
         with:
           # メールリンクは lychee の既定で対象外（--exclude-mail は lychee 0.24 で廃止＝付けると起動前にエラーで落ちる）
-          args: --no-progress "**/*.html"
+          # --root-dir＝「/」始まりのリンク（404.html・card/）をリポジトリ直下から辿るため
+          args: --no-progress --root-dir "${{ github.workspace }}" "**/*.html"
           fail: true
