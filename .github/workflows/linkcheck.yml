@@ -14,5 +14,6 @@ jobs:
       - name: リンク切れ検査（内部リンク＋外部URL・メールリンクは対象外）
         uses: lycheeverse/lychee-action@e7477775783ea5526144ba13e8db5eec57747ce8 # v2（第三者製Action・同上）
         with:
-          args: --no-progress --exclude-mail "**/*.html"
+          # メールリンクは lychee の既定で対象外（--exclude-mail は lychee 0.24 で廃止＝付けると起動前にエラーで落ちる）
+          args: --no-progress "**/*.html"
           fail: true
