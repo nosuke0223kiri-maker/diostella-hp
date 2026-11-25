@@ -26,5 +26,6 @@ jobs:
       - uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa # v3（同上）
         with:
           path: .
+      - run: sleep 30 # 上げた荷物が GitHub の一覧に出るまで数秒遅れ、すぐ公開すると「荷物が無い」で失敗する（2026-11-25）
       - id: deployment
         uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4（同上）
